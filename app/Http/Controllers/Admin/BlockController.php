@@ -45,7 +45,7 @@ class BlockController extends Controller
             "description" => "required",
             "image" => "required",
         ]);
-        $identifier = $request->identifier ? $request->identifier : $data['title'];
+        $identifier = $request->identifier ?? $data['title'];
         $data['identifier'] = generateUniqueidentifier($identifier);
 
         $data['title'] = ucwords($data['title']);

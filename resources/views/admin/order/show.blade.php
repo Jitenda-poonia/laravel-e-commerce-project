@@ -109,9 +109,9 @@
                                     <tr>
                                         <td>{{ $_orderItem->name }}</td>
                                         <td>{{ $_orderItem->sku }}</td>
-                                        <td>{{ $_orderItem->price }}</td>
+                                        <td>₹{{ $_orderItem->price }}</td>
                                         <td>{{ $_orderItem->qty }}</td>
-                                        <td>{{ $_orderItem->row_total }}</td>
+                                        <td>₹{{ $_orderItem->row_total }}</td>
                                         <td>{{ $_orderItem->custom_option }}</td>
                                     </tr>
                                     @endforeach
@@ -140,19 +140,19 @@
                                         </tr>
                                         <tr>
                                             <th>Coupon Discount:</th>
-                                            <th>{{ $order->coupon_discount }}</th>
+                                            <th>₹{{ $order->coupon_discount }}</th>
                                         </tr>
                                         <tr>
                                             <th>Shipping Cost:</th>
-                                            <th>{{ $order->shipping_cost }}</th>
+                                            <th>₹{{ $order->shipping_cost }}</th>
                                         </tr>
                                         <tr>
                                             <th>SubTotal:</th>
-                                            <th>{{ $order->subtotal }}</th>
+                                            <th>₹{{ $order->subtotal }}</th>
                                         </tr>
                                         <tr>
                                             <th>Total:</th>
-                                            <th>{{ $order->total }}</th>
+                                            <th>₹{{ $order->total }}</th>
                                         </tr>
                                     </table>
                                    

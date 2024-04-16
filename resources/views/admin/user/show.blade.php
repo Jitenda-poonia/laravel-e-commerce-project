@@ -30,13 +30,15 @@
         <div class="box">
             <div class="box-header">
                 <div class="pull-left">
+                    
                     @if (auth()->user()->hasMedia('image'))
                         <img src="{{ auth()->user()->getFirstMediaUrl('image') }}" class="user-image" alt="User Image"
                             style="border-radius: 70%; width: 50px; height: 50px;">
                     @else
-                    <div class="user-icon-placeholder" style="background-color: #ccc; border-radius: 70%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
-                       Na<i class="fa fa-user-circle user-icon" style="font-size: 30px; color: #666;"></i>
-                    </div>
+                        <div class="user-icon-placeholder"
+                            style="background-color: #ccc; border-radius: 70%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                            Na<i class="fa fa-user-circle user-icon" style="font-size: 30px; color: #666;"></i>
+                        </div>
                     @endif
                 </div>
                 <a href="{{ route('user.edit', Auth::user()->id) }}">

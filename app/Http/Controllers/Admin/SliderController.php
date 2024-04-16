@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Slider;
 use Gate;
+
 class SliderController extends Controller
 {
     /**
@@ -23,6 +24,7 @@ class SliderController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
+    
     {
         abort_unless(Gate::allows("slider_create"), 403);
 
@@ -40,12 +42,13 @@ class SliderController extends Controller
             "status" => "required",
             "image" => "required",
         ]);
-       
+
         $slider = Slider::create($data);
-        if($request->hasFile('image') && $request->File('image')->isValid()){
-          $slider->addMediaFromRequest('image')->toMediaCollection('image');
+        if ($request->hasFile('image') && $request->File('image')->isValid()) {
+            $slider->addMediaFromRequest('image')->toMediaCollection('image');
+
+        }
         
-        };
         return redirect()->route('slider.index')->with("success", "Record Save Successfullay");
 
     }
@@ -55,7 +58,7 @@ class SliderController extends Controller
      */
     public function show(string $id)
     {
-      
+
     }
 
     /**
@@ -67,7 +70,7 @@ class SliderController extends Controller
 
         $slider = Slider::find($id);
         return view("admin.slider.edit", compact("slider"));
-        
+
     }
 
     /**
@@ -79,21 +82,21 @@ class SliderController extends Controller
             "title" => "required",
             "ordering" => "required",
             "status" => "required",
-            ]);
+        ]);
         $slider = Slider::findOrFail($id);
         $slider->update($data);
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $slider->clearMediaCollection('image');
             $slider->addMediaFromRequest('image')->toMediaCollection('image');
             // ya
             // $slider->addMedia($request->file('image'))->toMediaCollection('image');
-            }
-            if ($request->remove) {
-                $slider->clearMediaCollection('image');
-                
-               }
+        }
+        if ($request->remove) {
+            $slider->clearMediaCollection('image');
+
+        }
         return redirect()->route('slider.index')->with("success", "Record Update Successfullay");
-        
+
     }
 
     /**
@@ -105,6 +108,6 @@ class SliderController extends Controller
         $slider->delete();
         $slider->getFirstMediaUrl('id');
         return redirect()->route('slider.index')->with("success", "Record Delete Successfullay");
-        
+
     }
 }

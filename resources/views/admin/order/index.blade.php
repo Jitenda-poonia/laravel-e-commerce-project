@@ -37,15 +37,15 @@
                             <th>Address</th>
                             <th>City</th>
                             <th>State</th>
-                            <th>Country</th>
+                            {{-- <th>Country</th> --}}
                             <th>Pincode</th>
-                            <th>Subtotal</th>
+                            {{-- <th>Subtotal</th>
                             <th>Coupon</th>
                             <th>Coupon Discount</th>
-                            <th>Shipping Cost</th>
-                            <th>Total</th>
-                            <th>Payment Method</th>
-                            <th>Shipping Method</th>
+                            <th>Shipping Cost</th> --}}
+                            <th>Total Amount</th>
+                            {{-- <th>Payment Method</th> --}}
+                            {{-- <th>Shipping Method</th> --}}
                             <th>Order Date</th>
                             <th>view Detail</th>
                             <th><i class="fa fa-download"></i> Invoice</th>
@@ -66,15 +66,15 @@
                                 <td>{{ $order->address }}</td>
                                 <td>{{ $order->city }}</td>
                                 <td>{{ $order->state }}</td>
-                                <td>{{ $order->country }}</td>
+                                {{-- <td>{{ $order->country }}</td> --}}
                                 <td>{{ $order->pincode }}</td>
-                                <td>{{ $order->subtotal }}</td>
+                                {{-- <td>{{ $order->subtotal }}</td>
                                 <td>{{ $order->coupon ?? 'No' }}</td>
                                 <td>{{ $order->coupon_discount }}</td>
-                                <td>{{ $order->shipping_cost }}</td>
-                                <td>{{ $order->total }}</td>
-                                <td>{{ ucwords(str_replace('_', ' ', $order->payment_method)) }}</td>
-                                <td>{{ ucwords(str_replace('_', ' ', $order->shipping_method)) }}</td>
+                                <td>{{ $order->shipping_cost }}</td> --}}
+                                <td>₹{{ $order->total }}</td>
+                                {{-- <td>{{ ucwords(str_replace('_', ' ', $order->payment_method)) }}</td> --}}
+                                {{-- <td>{{ ucwords(str_replace('_', ' ', $order->shipping_method)) }}</td> --}}
                                 <td>{{ $order->created_at }}</td>
 
                                 <!-- Add any action buttons or links here -->

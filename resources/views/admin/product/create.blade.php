@@ -205,7 +205,7 @@
                                         </select>
                                     </div>
 
-                                    
+
                                     <div class="form-group">
                                         <label>Categories</label>
                                         <select name="categories[]" class="form-control" multiple>
@@ -238,7 +238,7 @@
                                         @foreach (getAttribute() as $key => $attribute)
                                             <div class="checkbox">
                                                 <label style="font-weight: bold;">
-                                                    {{++$key.'.'}}<input type="hidden" name = 'attributes[]'
+                                                    {{ ++$key . '.' }}<input type="hidden" name = 'attributes[]'
                                                         value="{{ $attribute->id }}">{{ $attribute->name }}
                                                 </label>
                                             </div>
@@ -254,26 +254,7 @@
                                         @endforeach
 
                                     </div>
-                                    {{-- <div style="float:left;width:100%;margin-bottom:15px;">
-                                        @foreach (getAttribute() as $attribute)
-                                            <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                                                <input type="hidden" name="attributes[]"
-                                                    value="{{ $attribute->id }}">
-                                                <label> <span style="color:red;">*</span>{{ $attribute->name }}</label>
-                                                <select
-                                                    class="form-control form-control-user @error('attribute_values') is-invalid @enderror"
-                                                    name="attribute_values[{{ $attribute->id }}][]" multiple>
-                                                    @foreach ($attribute->attributeValue as $_attValue)
-                                                        <option value="{{ $_attValue->id }}">{{ $_attValue->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                @error('attribute_values')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        @endforeach
-                                    </div> --}}
+
                                     <div class="box-footer">
                                         <input type="submit" name="save" class="btn btn-primary" value="Save">
                                         <input type="submit" name="save&new" class="btn btn-primary" value="Save&new">

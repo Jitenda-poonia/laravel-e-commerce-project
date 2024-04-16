@@ -42,11 +42,6 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-    //     $attributeValuesId = $request->input('attribute_values');
-    //     echo "<pre>";
-    //    print_r($attributeValuesId);
-    //    die();
-
         $request->validate([
             'name' => 'required',
             'status' => 'required',
@@ -54,7 +49,6 @@ class ProductController extends Controller
             'sku' => 'required|unique:products',
             'qty' => 'required',
             'stock_status' => 'required',
-
             'weight' => 'required',
             'price' => 'required',
             'short_description' => 'required',
@@ -76,14 +70,14 @@ class ProductController extends Controller
         $data['name'] = ucwords($data['name']);
         $product = Product::create($data);
 
-
+        // get prodect Id
         $productId = $product->id;
-
-
+        
         $attributesId = $request->input('attributes');
         $attributeValuesId = $request->input('attribute_values');
-    //    print_r($attributeValuesId);
-    //    die();
+        // echo "<pre>";
+        // print_r($attributeValuesId);
+        // die();
         foreach ($attributesId as $attributeId) {
         //   dd($attributeId);    
             foreach ($attributeValuesId[$attributeId] as $attributeValueId) {
@@ -226,5 +220,7 @@ class ProductController extends Controller
         ProductAttribute::where('product_id',$id)->delete();
         return back()->with('success', 'Data Delete Successfully');
 
+
     }
+   
 }

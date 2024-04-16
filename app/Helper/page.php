@@ -319,6 +319,9 @@ function generatePriceRanges($products, $minPrice, $maxPrice, $interval) {
     return $ranges;
 }
 
-//public function test
+// function getRelatedProdectName($productsID){
+//         $productName = Product::select('name')->where($productsID);
+//         return $productName ;
+// }
 
 

@@ -254,21 +254,7 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    {{-- @foreach (getAttribute() as $attribute)
-                                    <div class="col-sm-6 mb-3 mt-3 mb-sm-0">
-                                        <input type="hidden" name="attributes[]" value="{{$attribute->id}}">
-                                        <span style="color:red;">*</span>{{$attribute->name}}</label>
-                                        <select class="form-control form-control-user @error('attribute_values') is-invalid @enderror" name="attribute_values[{{$attribute->id}}][]" multiple>
-                                            @foreach ($attribute->attributeValue as $_attributeValue)
-                                            <option value="{{$_attributeValue->id}}" {{in_array($_attributeValue->id, $productAttributes->pluck('attribute_value_id')->toArray() ?? [])? 'selected': ''}}>{{$_attributeValue->name}}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('attribute_values')
-                                        <span class="text-danger">{{$message}}</span>  
-                                        @enderror
-                                        
-                                    </div>
-                                    @endforeach --}}
+                                   
                                     <div class="box-footer">
                                         <button type="submit" class="btn btn-primary">Update</button>
 

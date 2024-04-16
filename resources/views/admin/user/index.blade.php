@@ -39,7 +39,7 @@
                             <th>Email</th>
                             <th>Designation</th>
                             <th>Image</th>
-                            <th  style="width: 40px">Role</th>
+                            <th style="width: 40px">Role</th>
                             @if (Gate::allows('user_edit') or Gate::allows('user_delete'))
                                 <th style="width: 40px">Action</th>
                             @endif
@@ -53,7 +53,8 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->designation }}</td>
                                 <td>
-                                    <img src="{{ $user->getFirstMediaUrl('image', 'thumb') }}" / height="100px" width="100px" >
+                                    <img src="{{ $user->getFirstMediaUrl('image', 'thumb') }}" / height="100px"
+                                        width="100px">
 
                                 </td>
                                 <td>{{ implode(',', $user->Roles->pluck('name')->toArray()) }}</td>

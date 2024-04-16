@@ -32,7 +32,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+ 
 
 Route::group([], function () {
 
@@ -80,13 +80,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','front_user']], funct
 
     Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard');
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
     Route::resource("user", UserController::class);
     Route::resource("role", RoleController::class);
     Route::resource("permission", PermissionController::class);
+
     Route::resource("slider", SliderController::class);
     Route::resource("page", PageController::class);
     Route::post('ckeditor/upload', [PageController::class, 'upload'])->name('ckeditor.upload');
     Route::resource("block", BlockController::class);
+    
     Route::resource("product", ProductController::class);
     Route::resource("category", CategoryController::class);
     Route::resource("attribute", AttributeController::class);

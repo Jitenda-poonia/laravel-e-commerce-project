@@ -40,6 +40,7 @@ class PermissionController extends Controller
         ]);
         
         Permission::create($permission);
+        
       if($request->save){
        return redirect()->route('permission.index')->with('success','permission add successfully');
       }else{

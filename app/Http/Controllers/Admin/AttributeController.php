@@ -49,7 +49,7 @@ class AttributeController extends Controller
 
         $nameKey = $data['name_key'];
         $name = $data['name'];
-        $nameKey = $nameKey ? $nameKey : $name;
+        $nameKey = $nameKey ?? $name;
         $data['name_key'] = attrNameKey($nameKey);
 
         $atrData = Attribute::create($data);
@@ -108,16 +108,19 @@ class AttributeController extends Controller
             'status' => $request->status,
             'is_variant' => $request->is_variant,
         ]);
+
+        
         $atrValueId = $request->atrvalueId;
-        // dd($atrValueId);
         $atrValueNames = $request->atrName;
         $atrValueStatus = $request->atrStatus;
+
         if (empty($atrValueId)) {
             AttributeValue::where('attribute_id', $atrValueId)->delete();
         } else {
             AttributeValue::whereNotIn('id', $atrValueId)->where('attribute_id', $id)->delete();
 
         }
+
         if ($atrValueNames) {
             foreach ($atrValueNames as $key => $name) {
                 $atrValue_Id = $atrValueId[$key] ?? 0;

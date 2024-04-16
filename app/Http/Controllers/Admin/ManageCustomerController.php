@@ -11,8 +11,7 @@ class ManageCustomerController extends Controller
 {
     public function index(){
         abort_unless(Gate::allows('manage_customer'), 403);
-
-        // $users = User::where('is_admin',0)->get();
+        
         $users = User::all();
         return view('admin.customer.index',compact('users'));
     }
