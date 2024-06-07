@@ -34,7 +34,7 @@ use App\Http\Controllers\OrderStatusNotificationController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
- 
+
 
 Route::group([], function () {
 
@@ -96,11 +96,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'front_user']], func
     Route::resource("page", PageController::class);
     Route::post('ckeditor/upload', [PageController::class, 'upload'])->name('ckeditor.upload');
     Route::resource("block", BlockController::class);
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> origin/main
     Route::resource("product", ProductController::class);
     Route::resource("category", CategoryController::class);
     Route::resource("attribute", AttributeController::class);
