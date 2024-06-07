@@ -47,10 +47,16 @@ class AttributeController extends Controller
         ]);
         $data = $request->all();
 
+<<<<<<< HEAD
         // $nameKey = $data['name_key'];
         // $name = $data['name'];
 
         $nameKey = $data['name_key'] ?? $data['name'];;
+=======
+        $nameKey = $data['name_key'];
+        $name = $data['name'];
+        $nameKey = $nameKey ?? $name;
+>>>>>>> origin/main
         $data['name_key'] = attrNameKey($nameKey);
 
         $atrData = Attribute::create($data);
@@ -111,7 +117,11 @@ class AttributeController extends Controller
             'is_variant' => $request->is_variant,
         ]);
 
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/main
         $atrValueId = $request->atrvalueId;
         $atrValueNames = $request->atrName;
         $atrValueStatus = $request->atrStatus;

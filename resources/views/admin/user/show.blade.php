@@ -30,8 +30,13 @@
         <div class="box">
             <div class="box-header">
                 <div class="pull-left">
+<<<<<<< HEAD
 
                     @if ($user->hasMedia('image'))
+=======
+                    
+                    @if (auth()->user()->hasMedia('image'))
+>>>>>>> origin/main
                         <img src="{{ auth()->user()->getFirstMediaUrl('image') }}" class="user-image" alt="User Image"
                             style="border-radius: 70%; width: 50px; height: 50px;">
                     @else

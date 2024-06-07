@@ -6,7 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Gate;
+=======
+use Spatie\Permission\Models\Permission;
+use Gate;
+>>>>>>> origin/main
 
 class UserController extends Controller
 {
@@ -38,7 +43,11 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users|email',
+<<<<<<< HEAD
             'password' => ['required', new \App\Rules\StrongPassword],
+=======
+            'password' => 'required',
+>>>>>>> origin/main
             'confirm_password' => 'required|same:password',
             'roles' => 'required',
 
@@ -55,8 +64,13 @@ class UserController extends Controller
         if ($request->hasFile('image') && $request->File('image')->isValid()) {
             $user->addMediaFromRequest('image')->toMediaCollection('image');
         }
+<<<<<<< HEAD
 
         $user->syncRoles($request->roles);
+=======
+        
+        $user->syncRoles($request->input('roles'));
+>>>>>>> origin/main
         return redirect()->route('user.index')->with('success', 'Your details Save Successfully');
     }
 
@@ -100,6 +114,7 @@ class UserController extends Controller
         } else {
             $data = $request->validate([
                 "name" => "required",
+<<<<<<< HEAD
                 'password' => ['required', new \App\Rules\StrongPassword],
                 "confirm_password" => "required|min:3|same:password",
                 'roles' => 'required',
@@ -112,6 +127,22 @@ class UserController extends Controller
                 'designation' => $request->designation
 
             ]);
+=======
+
+                "password" => "required|min:3",
+                "confirm_password" => "required|min:3|same:password",
+                'roles' => 'required',
+
+            ]);
+            $user = User::where('id', $id)->update([
+                "name" => $data["name"],
+
+                "password" => bcrypt($data["password"]),
+                'designation' => $request->designation
+
+            ]);
+
+>>>>>>> origin/main
         }
 
         $user = User::findOrFail($id);
@@ -119,6 +150,10 @@ class UserController extends Controller
         if ($request->hasFile('image')) {
             $user->clearMediaCollection('image');
             $user->addMediaFromRequest('image')->toMediaCollection('image');
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
         }
         $user->syncRoles($request->roles);
         return redirect()->route("user.index")->with("success", "your details update Successfully");

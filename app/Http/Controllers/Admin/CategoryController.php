@@ -29,6 +29,10 @@ class CategoryController extends Controller
         abort_unless(Gate::allows("category_create"), 403);
         $products = Product::all();
         return view('admin.category.create', compact('products'));
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
     }
 
     /**
@@ -46,17 +50,29 @@ class CategoryController extends Controller
 
         $data = $request->all();
 
+<<<<<<< HEAD
         $data['category_parent_id'] = $data['category_parent_id'] ?? 0;
+=======
+        $ctgryPrnt = $data['category_parent_id'];
+        $data['category_parent_id'] = $ctgryPrnt ?? 0;
+>>>>>>> origin/main
 
         $urlKey = $data['url_key'] ?? $data['name'];
         $data['url_key'] = categoryUniqueUrlKey($urlKey);
         $data['name'] = ucwords($data['name']);
+<<<<<<< HEAD
 
         // Data create in categories table
+=======
+>>>>>>> origin/main
         $category = Category::create($data);
 
         if ($request->hasFile('image') && $request->File('image')) {
             $category->addMediaFromRequest('image')->toMediaCollection('image');
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
         }
 
         $category->products()->sync($request->input('products'));
@@ -90,6 +106,10 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         $products = Product::all();
         return view('admin.category.edit', compact('category', 'products'));
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
     }
 
     /**
@@ -106,8 +126,13 @@ class CategoryController extends Controller
         ]);
 
         $data = $request->all();
+<<<<<<< HEAD
 
         $data['category_parent_id'] = $data['category_parent_id'] ?? 0;
+=======
+        $ctgryPrnt = $data['category_parent_id'];
+        $data['category_parent_id'] = $ctgryPrnt ?? 0;
+>>>>>>> origin/main
         $data['name'] = ucwords($data['name']);
 
         $category = Category::findOrFail($id);
@@ -116,6 +141,10 @@ class CategoryController extends Controller
         if ($request->hasFile('image')) {
             $category->clearMediaCollection('image');
             $category->addMediaFromRequest('image')->toMediaCollection('image');
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
         }
         if ($request->has('products')) {
             $category->products()->sync($request->input('products'));

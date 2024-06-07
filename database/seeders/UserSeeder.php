@@ -15,11 +15,17 @@ class UserSeeder extends Seeder
     {
         $data = [
             'name' => 'jitendra choudhary',
+<<<<<<< HEAD
             'email' => 'jitendrakumar0063@gmail.com',
             'password' => bcrypt(1234),
             'designation' => 'admin',
             'role' => 'Admin',
             'is_admin' => 1
+=======
+            'email' =>'jitendrakumar00632@gmail.com',
+            'password' => bcrypt(123),
+            'is_admin' =>1
+>>>>>>> origin/main
 
         ];
         user::create($data);

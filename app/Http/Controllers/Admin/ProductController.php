@@ -74,8 +74,21 @@ class ProductController extends Controller
 
         // get prodect Id
         $productId = $product->id;
+<<<<<<< HEAD
         $attributesId = $request->input('attributes');
         $attributeValuesId = $request->input('attribute_values');
+=======
+        
+        $attributesId = $request->input('attributes');
+        $attributeValuesId = $request->input('attribute_values');
+        // echo "<pre>";
+        // print_r($attributeValuesId);
+        // die();
+        foreach ($attributesId as $attributeId) {
+        //   dd($attributeId);    
+            foreach ($attributeValuesId[$attributeId] as $attributeValueId) {
+        //   dd($attributeValueId);
+>>>>>>> origin/main
 
         foreach ($attributesId as $attributeId) {
 
@@ -214,6 +227,7 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
+<<<<<<< HEAD
         // Detach all categories related to the product
         $product->categories()->detach();
         // Now you can delete the product
@@ -225,5 +239,9 @@ class ProductController extends Controller
         ProductAttribute::where('product_id', $id)->delete();
 
         return back()->with('success', 'Data Deleted Successfully');
+=======
+
+>>>>>>> origin/main
     }
+   
 }

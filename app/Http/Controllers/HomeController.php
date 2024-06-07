@@ -36,7 +36,11 @@ class HomeController extends Controller
         } else {
             abort(404);
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> origin/main
     }
 
 
