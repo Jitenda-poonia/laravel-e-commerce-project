@@ -9,7 +9,8 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
-use Gate;
+use Illuminate\Support\Facades\Gate;
+
 
 class ProductController extends Controller
 {
@@ -21,7 +22,6 @@ class ProductController extends Controller
         abort_unless(Gate::allows("product_index"), 403);
 
         return view('admin.product.index', ['products' => Product::all()]);
-
     }
 
     /**
@@ -32,7 +32,7 @@ class ProductController extends Controller
         abort_unless(Gate::allows("product_create"), 403);
         $categories = Category::all();
         $relatedProducts = Product::all();
-       
+
         return view('admin.product.create', compact('categories', 'relatedProducts'));
     }
 
@@ -42,11 +42,6 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-    //     $attributeValuesId = $request->input('attribute_values');
-    //     echo "<pre>";
-    //    print_r($attributeValuesId);
-    //    die();
-
         $request->validate([
             'name' => 'required',
             'status' => 'required',
@@ -54,7 +49,6 @@ class ProductController extends Controller
             'sku' => 'required|unique:products',
             'qty' => 'required',
             'stock_status' => 'required',
-
             'weight' => 'required',
             'price' => 'required',
             'short_description' => 'required',
@@ -68,28 +62,28 @@ class ProductController extends Controller
             'stock_status.required' => 'Please select stock status',
         ]);
         $data = $request->all();
-        //    dd($data); 
+
 
         $data['related_product'] = implode(', ', $data['related_product'] ?? ['No']);
         $urlKey = $data['url_key'] ?? $data['name'];
         $data['url_key'] = productUniqueUrlKey($urlKey);
         $data['name'] = ucwords($data['name']);
+
+        //Data insert Products table
         $product = Product::create($data);
 
-
+        // get prodect Id
         $productId = $product->id;
-
-
         $attributesId = $request->input('attributes');
         $attributeValuesId = $request->input('attribute_values');
-    //    print_r($attributeValuesId);
-    //    die();
-        foreach ($attributesId as $attributeId) {
-        //   dd($attributeId);    
-            foreach ($attributeValuesId[$attributeId] as $attributeValueId) {
-        //   dd($attributeValueId);
 
-               ProductAttribute::create([
+        foreach ($attributesId as $attributeId) {
+
+            foreach ($attributeValuesId[$attributeId] as $attributeValueId) {
+
+                //Data insert product_attributes table
+
+                ProductAttribute::create([
                     'product_id' => $productId,
                     'attribute_id' => $attributeId,
                     'attribute_value_id' => $attributeValueId
@@ -97,14 +91,18 @@ class ProductController extends Controller
             }
         }
 
+        //images insert media table
+
         if ($request->hasFile('image') && $images = $request->file('image')) {
             foreach ($images as $image) {
                 $product->addMedia($image)->toMediaCollection('image');
             }
         }
-        if ($request->hasFile('thumbnail_image') && $request->File('thumbnail_image')->isValid()) {
+        if ($request->hasFile('thumbnail_image') && $request->file('thumbnail_image')->isValid()) {
             $product->addMediaFromRequest('thumbnail_image')->toMediaCollection('thumbnail_image');
         }
+
+        // product and category  relationship insert to Product_catogries table 
         if ($request->has('categories')) {
             $product->categories()->sync($request->input('categories'));
         }
@@ -113,26 +111,22 @@ class ProductController extends Controller
 
         if ($request->save) {
             return redirect()->route('product.index')->with('success', 'Data Save Successfully');
-
         } else {
             return back()->with('success', 'Data Save Successfully');
-
         }
-
-
     }
 
-    /**
+    /**   
      * Display the specified resource.
      */
     public function show(string $id)
     {
         abort_unless(Gate::allows("product_show"), 403);
-
-        return view('admin.product.show', ['product' => Product::findOrFail($id)]);
+        $product =  Product::findOrFail($id);
+        return view('admin.product.show', compact('product'));
     }
 
-    /**
+    /** 
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
@@ -140,9 +134,9 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $categories = Category::all();
         $relatedProducts = Product::all();
-        $productAttributes = ProductAttribute::all();
+        $productAttributes = ProductAttribute::where('product_id', $id)->get();
         // dd($productAttributes);
-        return view('admin.product.edit', compact('product', 'categories', 'relatedProducts','productAttributes'));
+        return view('admin.product.edit', compact('product', 'categories', 'relatedProducts', 'productAttributes'));
     }
 
     /**
@@ -183,25 +177,21 @@ class ProductController extends Controller
 
         $attributesId = $request->input('attributes');
         $attributeValuesId = $request->input('attribute_values');
-        // echo "<pre>";
-        //         print_r($attributeValuesId);
-        //         echo die();
+
 
         foreach ($attributesId as $attributeId) {
 
-            foreach ($attributeValuesId[$attributeId]??[] as $attributeValueId) {
-                
+            foreach ($attributeValuesId[$attributeId] ?? [] as $attributeValueId) {
+
                 ProductAttribute::create([
                     'product_id' => $id,
                     'attribute_id' => $attributeId,
                     'attribute_value_id' => $attributeValueId
                 ]);
-                
             }
         }
         if ($request->hasFile('image') && $images = $request->file('image')) {
             foreach ($images as $image) {
-
                 $product->addMedia($image)->toMediaCollection('image');
             }
         }
@@ -222,9 +212,18 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        Product::where('id', $id)->delete();
-        ProductAttribute::where('product_id',$id)->delete();
-        return back()->with('success', 'Data Delete Successfully');
+        $product = Product::find($id);
 
+        // Detach all categories related to the product
+        $product->categories()->detach();
+        // Now you can delete the product
+        $product->delete();
+        // Retrieve and delete all media items associated with the product
+        $product->getFirstMediaUrl('id');
+
+        // Delete associated product attributes
+        ProductAttribute::where('product_id', $id)->delete();
+
+        return back()->with('success', 'Data Deleted Successfully');
     }
 }

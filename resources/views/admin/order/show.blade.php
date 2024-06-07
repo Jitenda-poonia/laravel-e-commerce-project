@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @push('title')
-    <title> Admin |order Information</title>
+    <title> Admin | Order Details</title>
 @endpush
 @section('content')
     <section class="content-header">
-        <h1>Order Information</h1>
+        <h1> Order Details</h1>
     </section>
 
     <section class="content">
@@ -12,16 +12,17 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Order Information</h3>
+                        <h3 class="box-title"> Order Details</h3>
                         <a href="{{ route('order.index') }}" class="btn btn-primary fa fa-reply" style="float: right;">Back</a>
                     </div><!-- /.box-header -->
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <h3 style="font-weight:600;">Order Information</h3>
+                                <h3 style="font-weight:600;"> Order Details</h3>
                                 <hr style="margin: 0; border-width:2px;">
                                 <h4><strong> ID :</strong> {{ $order->order_increment_id }}</h4>
-                                <h4><strong>Order Date:</strong> {{ $order->created_at }}</h5>
+                                <h4><strong>Order Date:</strong> {{ $order->created_at }}</h4>
+                                <h4><strong>Order Status:</strong> {{ ucwords(str_replace('_', ' ', $order->status)) }}</h4>
                             </div>
                             <div class="col-md-6">
                                 <h3 style="font-weight:600;">Account Information</h3>
@@ -45,17 +46,17 @@
                                         <p><strong>State:</strong> {{ $billingAddress->state ?? '' }}</p>
                                         <p><strong>Country:</strong> {{ $billingAddress->country ?? '' }}</p>
                                         <p><strong>PIN Code:</strong> {{ $billingAddress->pincode ?? '' }}</p>
-                                        <p><strong>Address:</strong> {{ $billingAddress->address ?? ''}}</p>
-                                        <p><strong>Address 2:</strong> {{ $billingAddress->address_2 ?? ''}}</p>
+                                        <p><strong>Address:</strong> {{ $billingAddress->address ?? '' }}</p>
+                                        <p><strong>Address 2:</strong> {{ $billingAddress->address_2 ?? '' }}</p>
                                     </div>
                                     <div class="col-md-6">
                                         <h4 style="font-weight:600;">Shipping Address</h4>
-                                        <p><strong>City:</strong> {{ $shippingAddress->city ?? ''}}</p>
-                                        <p><strong>State:</strong> {{ $shippingAddress->state ?? ''}}</p>
-                                        <p><strong>Country:</strong> {{ $shippingAddress->country ?? ''}}</p>
-                                        <p><strong>PIN Code:</strong> {{ $shippingAddress->pincode ?? ''}}</p>
-                                        <p><strong>Address:</strong> {{ $shippingAddress->address ?? ''}}</p>
-                                        <p><strong>Address 2:</strong> {{ $shippingAddress->address_2 ?? ''}}</p>
+                                        <p><strong>City:</strong> {{ $shippingAddress->city ?? '' }}</p>
+                                        <p><strong>State:</strong> {{ $shippingAddress->state ?? '' }}</p>
+                                        <p><strong>Country:</strong> {{ $shippingAddress->country ?? '' }}</p>
+                                        <p><strong>PIN Code:</strong> {{ $shippingAddress->pincode ?? '' }}</p>
+                                        <p><strong>Address:</strong> {{ $shippingAddress->address ?? '' }}</p>
+                                        <p><strong>Address 2:</strong> {{ $shippingAddress->address_2 ?? '' }}</p>
                                     </div>
                                 </div>
 
@@ -74,13 +75,15 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <h4 style="font-weight:600;">Payment Information</h4>
-                                        <p><strong>Payment Method:</strong>  {{ucwords(str_replace('_', ' ', $order->payment_method)) }}</p>
-                                        
+                                        <p><strong>Payment Method:</strong>
+                                            {{ ucwords(str_replace('_', ' ', $order->payment_method)) }}</p>
+
                                     </div>
                                     <div class="col-md-6">
                                         <h4 style="font-weight:600;">Shipping Information</h4>
-                                        <p><strong>Shipping Method:</strong>  {{ ucwords(str_replace('_', ' ', $order->shipping_method)) }}</p>
-                                       
+                                        <p><strong>Shipping Method:</strong>
+                                            {{ ucwords(str_replace('_', ' ', $order->shipping_method)) }}</p>
+
                                     </div>
                                 </div>
 
@@ -105,15 +108,15 @@
                                         <th>Row Total</th>
                                         <th>Custom Option</th>
                                     </tr>
-                                    @foreach($orderItems as $_orderItem)
-                                    <tr>
-                                        <td>{{ $_orderItem->name }}</td>
-                                        <td>{{ $_orderItem->sku }}</td>
-                                        <td>{{ $_orderItem->price }}</td>
-                                        <td>{{ $_orderItem->qty }}</td>
-                                        <td>{{ $_orderItem->row_total }}</td>
-                                        <td>{{ $_orderItem->custom_option }}</td>
-                                    </tr>
+                                    @foreach ($orderItems as $_orderItem)
+                                        <tr>
+                                            <td>{{ $_orderItem->name }}</td>
+                                            <td>{{ $_orderItem->sku }}</td>
+                                            <td>₹{{ $_orderItem->price }}</td>
+                                            <td>{{ $_orderItem->qty }}</td>
+                                            <td>₹{{ $_orderItem->row_total }}</td>
+                                            <td>{{ $_orderItem->custom_option }}</td>
+                                        </tr>
                                     @endforeach
                                 </table>
 
@@ -140,22 +143,22 @@
                                         </tr>
                                         <tr>
                                             <th>Coupon Discount:</th>
-                                            <th>{{ $order->coupon_discount }}</th>
+                                            <th>₹{{ $order->coupon_discount }}</th>
                                         </tr>
                                         <tr>
                                             <th>Shipping Cost:</th>
-                                            <th>{{ $order->shipping_cost }}</th>
+                                            <th>₹{{ $order->shipping_cost }}</th>
                                         </tr>
                                         <tr>
                                             <th>SubTotal:</th>
-                                            <th>{{ $order->subtotal }}</th>
+                                            <th>₹{{ $order->subtotal }}</th>
                                         </tr>
                                         <tr>
                                             <th>Total:</th>
-                                            <th>{{ $order->total }}</th>
+                                            <th>₹{{ $order->total }}</th>
                                         </tr>
                                     </table>
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -166,4 +169,3 @@
         </div>
     </section>
 @endsection
-

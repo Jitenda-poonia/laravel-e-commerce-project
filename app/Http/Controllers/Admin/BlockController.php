@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Block;
 use Illuminate\Http\Request;
-use Gate;
+use Illuminate\Support\Facades\Gate;
+
 
 class BlockController extends Controller
 {
@@ -28,7 +29,6 @@ class BlockController extends Controller
         abort_unless(Gate::allows("block_create"), 403);
 
         return view('admin.block.create');
-
     }
 
     /**
@@ -45,7 +45,7 @@ class BlockController extends Controller
             "description" => "required",
             "image" => "required",
         ]);
-        $identifier = $request->identifier ? $request->identifier : $data['title'];
+        $identifier = $request->identifier ?? $data['title'];
         $data['identifier'] = generateUniqueidentifier($identifier);
 
         $data['title'] = ucwords($data['title']);
@@ -74,7 +74,6 @@ class BlockController extends Controller
 
         $block = Block::findOrFail($id);
         return view('admin.block.edit', compact('block'));
-
     }
 
     /**
@@ -101,7 +100,6 @@ class BlockController extends Controller
             $block->addMedia($request->file('image'))->toMediaCollection('image');
         }
         return redirect()->route('block.index')->with('success', 'Data Update Successfully');
-
     }
 
     /**

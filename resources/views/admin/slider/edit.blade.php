@@ -76,6 +76,7 @@
                                 <label for="exampleInputFile">Image Upload</label>
                                 <input type="file" id="exampleInputFile" name="image"
                                     value='{{ $slider->getFirstMediaUrl('image') }}'>
+                                    <input type="checkbox" name="remove" id="">Remove Image (if already exist)
 
                                 <p class="help-block" style="color: red">
                                     @error('image')

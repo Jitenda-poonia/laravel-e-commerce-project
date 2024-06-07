@@ -86,7 +86,7 @@
                                     <div class="form-group">
                                         <label>Name Key</label>
                                         <input type="text" name="name_key" class="form-control"
-                                            value="{{ old('url_key') }}" placeholder="attribute name key">
+                                            value="{{ old('name_key') }}" placeholder="attribute name key">
 
                                     </div>
 

@@ -5,17 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
-use Gate;
+use Illuminate\Support\Facades\Gate;
+
 class CouponController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {   
-        abort_unless(Gate::allows('manage_coupon'), 403);
+    {
+        abort_unless(Gate::allows('coupon_index'), 403);
         $coupons = Coupon::all();
-        return view('admin.coupon.index',compact('coupons'));
+        return view('admin.coupon.index', compact('coupons'));
     }
 
     /**
@@ -23,10 +24,9 @@ class CouponController extends Controller
      */
     public function create()
     {
-        abort_unless(Gate::allows('manage_coupon'), 403);
+        abort_unless(Gate::allows('coupon_create'), 403);
 
         return view('admin.coupon.create');
-        
     }
 
     /**
@@ -44,7 +44,7 @@ class CouponController extends Controller
         ]);
 
         Coupon::create($request->all());
-        return redirect()->route('coupon.index')->with('success','Data save Successfully');
+        return redirect()->route('coupon.index')->with('success', 'Data save Successfully');
     }
 
     /**
@@ -60,10 +60,10 @@ class CouponController extends Controller
      */
     public function edit(string $id)
     {
-        abort_unless(Gate::allows('manage_coupon'), 403);
+        abort_unless(Gate::allows('coupon_edit'), 403);
 
         $coupon = Coupon::findOrFail($id);
-        return view('admin.coupon.edit',compact('coupon'));
+        return view('admin.coupon.edit', compact('coupon'));
     }
 
     /**
@@ -73,7 +73,7 @@ class CouponController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'coupon_code' => 'required|unique:coupons,coupon_code,'.$id,
+            'coupon_code' => 'required|unique:coupons,coupon_code,' . $id,
             'status' => 'required',
             'valid_from' => 'required|date',
             'valid_to' => 'required|date',
@@ -81,7 +81,7 @@ class CouponController extends Controller
         ]);
         $coupon = Coupon::findOrFail($id);
         $coupon->update($request->all());
-        return redirect()->route('coupon.index')->with('success','Data Update Successfully');
+        return redirect()->route('coupon.index')->with('success', 'Data Update Successfully');
     }
 
     /**
@@ -89,8 +89,7 @@ class CouponController extends Controller
      */
     public function destroy(string $id)
     {
-        Coupon::where('id',$id)->delete();
-        return redirect()->route('coupon.index')->with('success','Data Delete Successfully');
-
+        Coupon::where('id', $id)->delete();
+        return redirect()->route('coupon.index')->with('success', 'Data Delete Successfully');
     }
 }

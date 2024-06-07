@@ -26,6 +26,7 @@ class HomeController extends Controller
     {
         return view('web.contact');
     }
+    //get page.blade.php me 
     public function page($urlkey)
     {
         // $pages = Page::where('url_key', $urlkey)->where('status', 1)->first() ? Page::where('url_key', $urlkey)->where('status', 1)->first() : Block::where('identifier', $urlkey)->where('status', 1)->first();
@@ -35,8 +36,6 @@ class HomeController extends Controller
         } else {
             abort(404);
         }
-
-
 
     }
 
@@ -111,5 +110,5 @@ class HomeController extends Controller
         return view('web.product', compact('product', 'attributes'));
     }
 
-    
+
 }

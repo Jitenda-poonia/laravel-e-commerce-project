@@ -60,7 +60,7 @@
                                 <th>Attribute Value</th>
 
                                 <td>
-                                    {{ implode(', ', $attribute->atrValues->pluck('name')->toArray()) }}
+                                    {{ implode(', ', $attribute->attributeValue->pluck('name')->toArray()) }}
                                 </td>
                             </tr>
                         </table>

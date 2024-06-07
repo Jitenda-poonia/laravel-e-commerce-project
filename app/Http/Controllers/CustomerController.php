@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Mail;
 use App\Mail\RegisterEmail;
 use App\Models\OrderAddress;
@@ -144,6 +145,9 @@ class CustomerController extends Controller
                                 </p>
                                 <p><strong>Order Date:</strong>
                                     <?= $order->created_at ?>
+                                </p>
+                                <p><strong>Order Status:</strong>
+                                    <?= ucwords(str_replace('_', ' ', $order->status)) ?>
                                 </p>
                             </div>
                             <div class="col-md-6">

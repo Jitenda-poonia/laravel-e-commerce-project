@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('status');
             $table->string('url_key');
             $table->text('description');
-            $table->string('parent_id')->nullable();
+            $table->integer('parent_id')->default(0);
             $table->timestamps();
         });
     }

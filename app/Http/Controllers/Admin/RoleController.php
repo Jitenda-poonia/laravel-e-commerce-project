@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;  
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Gate;
+use Illuminate\Support\Facades\Gate;
+
 class RoleController extends Controller
 {
     /**
@@ -17,7 +18,6 @@ class RoleController extends Controller
         abort_unless(Gate::allows("manage_role"), 403);
         $roles = Role::all();
         return view("admin.role.index", compact("roles"));
-
     }
 
     /**
@@ -28,7 +28,7 @@ class RoleController extends Controller
         abort_unless(Gate::allows("manage_role"), 403);
 
         $permissions = Permission::select('name')->get();
-       return view("admin.role.create" , compact("permissions"));
+        return view("admin.role.create", compact("permissions"));
     }
 
     /**
@@ -41,11 +41,10 @@ class RoleController extends Controller
             'permissions' => 'required',
         ]);
         $role = Role::create([
-            'name'=> ucfirst($request->name)
+            'name' => ucfirst($request->name)
         ]);
         $role->syncPermissions($request->permissions);
-        return redirect()->route('role.index')->with('success','Data Add Successfully');
-
+        return redirect()->route('role.index')->with('success', 'Data Add Successfully');
     }
 
     /**
@@ -62,11 +61,11 @@ class RoleController extends Controller
     public function edit(string $id)
     {
         abort_unless(Gate::allows("manage_role"), 403);
-        
+
         $role = Role::findOrFail($id);
         $slctdPrmsn = $role->Permissions->pluck('name')->toArray();
         $permissions = Permission::select('name')->get();
-        return view('admin.role.edit', compact('role','slctdPrmsn','permissions'));
+        return view('admin.role.edit', compact('role', 'slctdPrmsn', 'permissions'));
     }
 
     /**
@@ -80,13 +79,13 @@ class RoleController extends Controller
         ]);
         $role = Role::findOrFail($id);
         $role->update([
-            'name'=> ucfirst($request->name)
+            'name' => ucfirst($request->name)
         ]);
-        if($request->has('permissions')){
+        if ($request->has('permissions')) {
             $role->syncPermissions($request->permissions);
-        };
-        return redirect()->route('role.index')->with('success','Data update Successfully');
-
+        }
+        ;
+        return redirect()->route('role.index')->with('success', 'Data update Successfully');
     }
 
     /**
@@ -94,9 +93,7 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        Role::where('id',$id)->delete();
-        return redirect()->route('role.index')->with('success','Data Delelte Successfully');
-
-
+        Role::where('id', $id)->delete();
+        return redirect()->route('role.index')->with('success', 'Data Delelte Successfully');
     }
 }

@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
-use Gate;
+use Illuminate\Support\Facades\Gate;
+
 
 class CategoryController extends Controller
 {
@@ -16,9 +17,8 @@ class CategoryController extends Controller
     public function index()
     {
         abort_unless(Gate::allows("category_index"), 403);
-
-        return view('admin.category.index', ['categories' => Category::all()]);
-
+        $categories = Category::all();
+        return view('admin.category.index', compact('categories'));
     }
 
     /**
@@ -28,8 +28,7 @@ class CategoryController extends Controller
     {
         abort_unless(Gate::allows("category_create"), 403);
         $products = Product::all();
-       return view('admin.category.create',compact('products'));
-
+        return view('admin.category.create', compact('products'));
     }
 
     /**
@@ -47,24 +46,26 @@ class CategoryController extends Controller
 
         $data = $request->all();
 
-        $ctgryPrnt = $data['category_parent_id'];
-        $data['category_parent_id'] = $ctgryPrnt ? $ctgryPrnt : 0;
+        $data['category_parent_id'] = $data['category_parent_id'] ?? 0;
 
-        $urlKey = $data['url_key'] ? $data['url_key'] : $data['name'];
+        $urlKey = $data['url_key'] ?? $data['name'];
         $data['url_key'] = categoryUniqueUrlKey($urlKey);
-        $data['name'] = ucwords( $data['name']);
-        $category =   Category::create($data);
-        if($request->hasFile('image') && $request->File('image')){
+        $data['name'] = ucwords($data['name']);
+
+        // Data create in categories table
+        $category = Category::create($data);
+
+        if ($request->hasFile('image') && $request->File('image')) {
             $category->addMediaFromRequest('image')->toMediaCollection('image');
-          
-          };
+        }
+
         $category->products()->sync($request->input('products'));
+
+
         if ($request->save) {
             return redirect()->route('category.index')->with('success', 'Data Save Successfully');
-
         } else {
             return back()->with('success', 'Data Save Successfully');
-
         }
     }
 
@@ -88,8 +89,7 @@ class CategoryController extends Controller
 
         $category = Category::findOrFail($id);
         $products = Product::all();
-        return view('admin.category.edit', compact('category','products'));
-
+        return view('admin.category.edit', compact('category', 'products'));
     }
 
     /**
@@ -106,19 +106,18 @@ class CategoryController extends Controller
         ]);
 
         $data = $request->all();
-        $ctgryPrnt = $data['category_parent_id'];
-        $data['category_parent_id'] = $ctgryPrnt ? $ctgryPrnt : 0;
-        $data['name'] = ucwords( $data['name']);
+
+        $data['category_parent_id'] = $data['category_parent_id'] ?? 0;
+        $data['name'] = ucwords($data['name']);
 
         $category = Category::findOrFail($id);
         $category->update($data);
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $category->clearMediaCollection('image');
             $category->addMediaFromRequest('image')->toMediaCollection('image');
-        
-            }
-        if($request->has('products')){
+        }
+        if ($request->has('products')) {
             $category->products()->sync($request->input('products'));
         }
         return redirect()->route('category.index')->with('success', 'Data Update Successfully');
@@ -130,8 +129,20 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        Category::where('category_parent_id', $id)->delete();
-        Category::where('id', $id)->delete();
-        return back()->with('success', 'Data Delete Successfully');
+           // Delete subcategories recursively
+           Category::where('category_parent_id', $id)->delete(); 
+
+           $category =   Category::find($id);
+   
+            // Detach all products related to the category
+           $category->products()->detach();
+   
+           //now delete the category
+           $category->delete();
+           
+           // Retrieve and delete all media items associated with the category
+           $category->getFirstMediaUrl('id');
+          
+           return back()->with('success', 'Data Delete Successfully');
     }
 }

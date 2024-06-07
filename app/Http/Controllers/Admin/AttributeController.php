@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
-use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AttributeController extends Controller
 {
@@ -16,8 +16,8 @@ class AttributeController extends Controller
     public function index()
     {
         abort_unless(Gate::allows('attribute_index'), 403);
-        return view('admin.attribute.index', ['attributes' => Attribute::all()]);
-
+        $attributes  =  Attribute::all();
+        return view('admin.attribute.index', compact('attributes'));
     }
 
     /**
@@ -40,22 +40,24 @@ class AttributeController extends Controller
             'is_variant' => 'required',
             'atrName.0' => 'required',
             'atrStatus.0' => 'required',
-        ],[
-            'is_variant.required' =>'please select variant',
+        ], [
+            'is_variant.required' => 'please select variant',
             'atrName.0.required' => 'Attribute value  name is required',
             'atrStatus.0.required' => 'Attribute value status is required'
         ]);
         $data = $request->all();
 
-        $nameKey = $data['name_key'];
-        $name = $data['name'];
-        $nameKey = $nameKey ? $nameKey : $name;
+        // $nameKey = $data['name_key'];
+        // $name = $data['name'];
+
+        $nameKey = $data['name_key'] ?? $data['name'];;
         $data['name_key'] = attrNameKey($nameKey);
 
         $atrData = Attribute::create($data);
 
         $atrVluNames = $request->atrName;
         $atrVluStatus = $request->atrStatus;
+        
         foreach ($atrVluNames as $key => $name) {
             $status = $atrVluStatus[$key];
             AttributeValue::create([
@@ -97,31 +99,33 @@ class AttributeController extends Controller
             'is_variant' => 'required',
             'atrName.0' => 'required',
             'atrStatus.0' => 'required',
-        ],[
-            'is_variant.required' =>'please select variant',
+        ], [
+            'is_variant.required' => 'please select variant',
             'atrName.0.required' => 'Attribute value  name is required',
             'atrStatus.0.required' => 'Attribute value status is required'
         ]);
-      
-         Attribute::where('id', $id)->update([
+
+        Attribute::where('id', $id)->update([
             'name' => $request->name,
             'status' => $request->status,
             'is_variant' => $request->is_variant,
         ]);
+
+
         $atrValueId = $request->atrvalueId;
-        // dd($atrValueId);
         $atrValueNames = $request->atrName;
         $atrValueStatus = $request->atrStatus;
+
         if (empty($atrValueId)) {
             AttributeValue::where('attribute_id', $atrValueId)->delete();
         } else {
             AttributeValue::whereNotIn('id', $atrValueId)->where('attribute_id', $id)->delete();
-
         }
+
         if ($atrValueNames) {
             foreach ($atrValueNames as $key => $name) {
                 $atrValue_Id = $atrValueId[$key] ?? 0;
-        
+
                 if ($atrValue_Id) {
                     AttributeValue::where('id', $atrValue_Id)->update([
                         'name' => $name,
@@ -135,14 +139,12 @@ class AttributeController extends Controller
 
                     ]);
                 }
-
             }
         }
 
-
+        
 
         return redirect()->route('attribute.index')->with('success', 'Data update Successfully');
-
     }
 
     /**
@@ -153,6 +155,5 @@ class AttributeController extends Controller
         AttributeValue::where('attribute_id', $id)->delete();
         Attribute::where('id', $id)->delete();
         return redirect()->route('attribute.index')->with('success', 'Data Delete Successfully');
-
     }
 }

@@ -1,6 +1,8 @@
 <?php
+
 use Illuminate\Support\Str;
 use App\Models\UserLog;
+use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('generateUniqueUrlKey')) {
     function generateUniqueUrlKey($name)
@@ -23,7 +25,7 @@ if (!function_exists('urlKeyExists')) {
     function urlKeyExists($urlKey)
     {
         // Assuming Product is your model name
-        return \App\Models\Page ::where('url_key', $urlKey)->exists();
+        return \App\Models\Page::where('url_key', $urlKey)->exists();
     }
 }
 
@@ -48,27 +50,27 @@ if (!function_exists('identifierExists')) {
     function identifierExists($identifier)
     {
         // Assuming Product is your model name
-        return \App\Models\Block ::where('identifier', $identifier)->exists();
+        return \App\Models\Block::where('identifier', $identifier)->exists();
     }
 }
 
-function logintime(){
-     $loginTime = UserLog:: orderBy('id','DESC')->limit('1')->where('user_id',Auth::user()->id)->first();
-    return  $loginTime->created_at;
+function logintime()
+{
+    $loginTime = UserLog::latest()->first();
+    return $loginTime->created_at;
 }
 
 function lastLoginTime()
 {
     $lastLoginTime = UserLog::orderBy('id', 'desc')
-    ->where('user_id', Auth::user()->id)
-    ->skip(1) // Skip the latest login
-    ->take(1) // Take the second-to-last login
-    ->pluck('created_at')
-    ->first();
+        ->skip(1) // Skip the latest login
+        ->take(1) // Take the second-to-last login
+        ->pluck('created_at')
+        ->first();
     // Now $lastLoginTime contains the last login time for the authenticated user
-    return  "Last Login Time: " . ($lastLoginTime ? $lastLoginTime->diffForHumans() : "N/A");
+    return "Last Login Time: " . ($lastLoginTime ? $lastLoginTime->diffForHumans() : "N/A");
 }
-    
+
 if (!function_exists('productUniqueUrlKey')) {
     function productUniqueUrlKey($name)
     {
@@ -90,7 +92,7 @@ if (!function_exists('urlKeyExists')) {
     function urlKeyExists($urlKey)
     {
         // Assuming Product is your model name
-        return \App\Models\Product ::where('url_key', $urlKey)->exists();
+        return \App\Models\Product::where('url_key', $urlKey)->exists();
     }
 }
 if (!function_exists('categoryUniqueUrlKey')) {
@@ -114,14 +116,14 @@ if (!function_exists('urlKeyExists')) {
     function urlKeyExists($urlKey)
     {
         // Assuming category is your model name
-        return \App\Models\Category ::where('url_key', $urlKey)->exists();
+        return \App\Models\Category::where('url_key', $urlKey)->exists();
     }
 }
 
 if (!function_exists('attrNameKey')) {
     function attrNameKey($name)
     {
-        $baseSlug = Str::lower(Str::replace(' ', '_',$name));
+        $baseSlug = Str::lower(Str::replace(' ', '_', $name));
         $nameKey = $baseSlug;
         $counter = 1;
 
@@ -139,7 +141,6 @@ if (!function_exists('nameKeyExists')) {
     function nameKeyExists($nameKey)
     {
         // Assuming attribute is your model name
-        return \App\Models\Attribute ::where('name_key', $nameKey)->exists();
+        return \App\Models\Attribute::where('name_key', $nameKey)->exists();
     }
 }
-

@@ -5,16 +5,16 @@
 @section('content')
     <section class="content-header">
         <h1>
-            Add User 
+            Add User
             <small></small>
         </h1>
         <ol class="breadcrumb">
-            <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
             <li>Manage User</li>
             <li class="active">Add user</li>
             <li>
                 @can('user_index')
-                <a href="{{ route('user.index') }}"><i class="fa fa-users"></i>User List</a>
+                    <a href="{{ route('user.index') }}"><i class="fa fa-users"></i>User List</a>
                 @endcan
             </li>
         </ol>
@@ -26,7 +26,7 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Add User</h3>
-                       
+
                     </div>
                     <!-- form start -->
                     <form role="form" action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
@@ -57,8 +57,8 @@
                         <div class="box-body">
                             <label>Designation</label>
                             <div class="form-group @error('designation') has-error @enderror">
-                                <input type="text" class="form-control" name="designation" value="{{ old('designation') }}"
-                                    placeholder="Enter designation">
+                                <input type="text" class="form-control" name="designation"
+                                    value="{{ old('designation') }}" placeholder="Enter designation">
                                 @error('designation')
                                     <label class="control-label" for="inputError"><i
                                             class="fa fa-times-circle-o"></i>{{ $message }}</label>
@@ -69,7 +69,13 @@
                         <div class="box-body">
                             <label>Password</label>
                             <div class="form-group @error('password') has-error @enderror">
-                                <input type="password" class="form-control" name="password" placeholder="Password">
+                                <div class="input-group"> <!-- Wrap the input and icon within an input-group -->
+                                    <input type="password" class="form-control" name="password" id="password"
+                                        placeholder="Password">
+                                    <span class="input-group-addon toggle-password" onclick="togglePassword('password')">
+                                        <i class="fa fa-eye"></i>
+                                    </span>
+                                </div>
                                 @error('password')
                                     <label class="control-label" for="inputError"><i
                                             class="fa fa-times-circle-o"></i>{{ $message }}</label>
@@ -77,16 +83,25 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <label>Re Enter Password</label>
+                            <label>Re-enter Password</label>
                             <div class="form-group @error('confirm_password') has-error @enderror">
-                                <input type="password" class="form-control" name="confirm_password"
-                                    placeholder=" Re Enter Password">
+                                <div class="input-group"> <!-- Wrap the input and icon within an input-group -->
+                                    <input type="password" class="form-control" name="confirm_password"
+                                        id="confirm_password" placeholder="Re-enter Password">
+                                    <span class="input-group-addon toggle-password"
+                                        onclick="togglePassword('confirm_password')">
+                                        <i class="fa fa-eye"></i>
+                                    </span>
+                                </div>
                                 @error('confirm_password')
                                     <label class="control-label" for="inputError"><i
                                             class="fa fa-times-circle-o"></i>{{ $message }}</label>
                                 @enderror
                             </div>
                         </div>
+
+
+
                         <div class="box-body">
                             <label>Roles :-</label>
                             <div class="form-group @error('roles') has-error @enderror">
@@ -107,7 +122,7 @@
                             <div class="form-group">
                                 <label for="exampleInputFile">image upload</label>
                                 <input type="file" id="exampleInputFile" name="image">
-                                
+
                             </div>
                         </div>
 
@@ -124,4 +139,17 @@
             </div>
         </div>
     </section>
+    <script>
+        function togglePassword(fieldId) {
+            var field = document.getElementById(fieldId);
+            var icon = document.querySelector('.toggle-password i');
+            if (field.type === "password") {
+                field.type = "text";
+                icon.className = 'fa fa-eye-slash';
+            } else {
+                field.type = "password";
+                icon.className = 'fa fa-eye';
+            }
+        }
+    </script>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @push('title')
-    <title> Admin | Order list</title>
+    <title> Admin | Order List</title>
 @endpush
 @section('content')
     <section class="content-header">
@@ -11,7 +11,6 @@
         <ol class="breadcrumb">
             <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
             <li>Order List</li>
-
         </ol>
     </section>
     <div class="col-md-12">
@@ -35,19 +34,9 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Address</th>
-                            <th>City</th>
-                            <th>State</th>
-                            <th>Country</th>
-                            <th>Pincode</th>
-                            <th>Subtotal</th>
-                            <th>Coupon</th>
-                            <th>Coupon Discount</th>
-                            <th>Shipping Cost</th>
-                            <th>Total</th>
-                            <th>Payment Method</th>
-                            <th>Shipping Method</th>
                             <th>Order Date</th>
-                            <th>view Detail</th>
+                            <th>Update Status</th>
+                            <th>View Detail</th>
                             <th><i class="fa fa-download"></i> Invoice</th>
                         </tr>
                     </thead>
@@ -59,43 +48,59 @@
                             <tr>
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $order->order_increment_id }}</td>
-                                <td>{{ $order->user_id }}</td>
+                                <td>
+                                    @if ($order->user_id == 0)
+                                        {{ 'user not registered' }}
+                                    @else
+                                        {{ $order->user_id }}
+                                    @endif
+
+                                </td>
                                 <td>{{ $order->name }}</td>
                                 <td>{{ $order->email }}</td>
                                 <td>{{ $order->phone }}</td>
                                 <td>{{ $order->address }}</td>
-                                <td>{{ $order->city }}</td>
-                                <td>{{ $order->state }}</td>
-                                <td>{{ $order->country }}</td>
-                                <td>{{ $order->pincode }}</td>
-                                <td>{{ $order->subtotal }}</td>
-                                <td>{{ $order->coupon ?? 'No' }}</td>
-                                <td>{{ $order->coupon_discount }}</td>
-                                <td>{{ $order->shipping_cost }}</td>
-                                <td>{{ $order->total }}</td>
-                                <td>{{ ucwords(str_replace('_', ' ', $order->payment_method)) }}</td>
-                                <td>{{ ucwords(str_replace('_', ' ', $order->shipping_method)) }}</td>
                                 <td>{{ $order->created_at }}</td>
 
-                                <!-- Add any action buttons or links here -->
-                                <td><a href="{{ route('order.show', $order->id) }}" class="btn btn-primary btn-success fa fa-eye">View</a></td>
-
                                 <td>
-                                    <a href="{{ route('order.invoice', $order->id) }}" class="btn btn-success fa fa-print"> Invoice</a>
-                                  </td>
+                                    <form action="{{ route('order.updateStatus', $order->id) }}" method="POST">
+                                        @csrf
+                                        <div class="form-group">
+                                            <select name="status" id="status-{{ $order->id }}" class="form-control"
+                                                onchange="this.form.submit()">
+                                                <option value="pending"
+                                                    {{ $order->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                                <option value="item_booked"
+                                                    {{ $order->status == 'item_booked' ? 'selected' : '' }}>Booked
+                                                </option>
+                                                <option value="on_the_way"
+                                                    {{ $order->status == 'on_the_way' ? 'selected' : '' }}>On The Way
+                                                </option>
+                                                <option value="delivered"
+                                                    {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered
+                                                </option>
+                                                <option value="cancelled"
+                                                    {{ $order->status == 'cancelled' ? 'selected' : '' }}>Cancelled
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </td>
+                                <td><a href="{{ route('order.show', $order->id) }}"
+                                        class="btn btn-primary btn-success fa fa-eye">View</a></td>
+                                <td>
+                                    <a href="{{ route('order.invoice', $order->id) }}" class="btn btn-success fa fa-print">
+                                        Invoice</a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div><!-- /.box-body -->
             {{-- table end --}}
-
         </div>
-
-
     </div>
     <!-- Datatable initialization script -->
-
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable();

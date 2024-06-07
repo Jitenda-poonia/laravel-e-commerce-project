@@ -26,5 +26,10 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+        $this->renderable(function (CustomException $e, $request) {
+            return response()->json([
+                'error' => 'Custom exception message: ' . $e->getMessage()
+            ], 400);
+        });
     }
 }

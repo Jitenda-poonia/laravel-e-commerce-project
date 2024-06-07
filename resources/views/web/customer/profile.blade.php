@@ -144,9 +144,8 @@
                                         <th style="width: 10px">#</th>
 
                                         <th>OrderId</th>
-                                        <th>Subtotal</th>
-                                        <th>Coupon</th>
-                                        <th>Coupon Discount</th>
+                                        <th>Status</th>
+                                        <th>Discount</th>
                                         <th>Shipping Cost</th>
                                         <th>Total</th>
                                         <th>Payment Method</th>
@@ -162,8 +161,7 @@
                                             <td>{{ ++$key . '.' }}</td>
 
                                             <td>#{{ $_order->order_increment_id }}</td>
-                                            <td>{{ $_order->subtotal }}</td>
-                                            <td>{{ $_order->coupon ?? 'No' }}</td>
+                                            <td>{{ ucwords(str_replace('_', ' ', $_order->status)) }}</td>
                                             <td>{{ $_order->coupon_discount }}</td>
                                             <td>{{ $_order->shipping_cost }}</td>
                                             <td>{{ $_order->total }}</td>
@@ -174,8 +172,9 @@
                                                     class="btn btn-primary detail_show fa fa-eye">View</button>
                                             </td>
                                             <td>
-                                                <a href="{{ route('order.invoice', $_order->id) }}" class="fa fa-print">Invoice</a>
-                                              </td>
+                                                <a href="{{ route('order.invoice', $_order->id) }}"
+                                                    class="fa fa-print">Invoice</a>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -205,7 +204,7 @@
                                             {{ $shippingAddress->country ?? '' }} -
                                             <span class="_2dQV-8">{{ $shippingAddress->pincode ?? '' }}</span>
                                         </span>
-                                        
+
                                     </p>
                                 </div>
 

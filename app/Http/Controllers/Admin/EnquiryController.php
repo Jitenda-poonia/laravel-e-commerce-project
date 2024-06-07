@@ -16,11 +16,12 @@ class EnquiryController extends Controller
   public function store(Request $request)
   {
     $data = $request->validate([
-      'name' => 'required',
-      'email' => 'required',
-      'phone' => 'required',
+      'name' => 'required|max:25',
+      'email' => 'required|email',
+      'phone' => 'required|max:15|min:10',
       'message' => 'required',
     ]);
+    // dd($data);
     Enquiry::create($data);
     return redirect("contact")->with("success", "Data submit Successfully");
 

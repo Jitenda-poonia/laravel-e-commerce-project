@@ -197,21 +197,16 @@
 
                 </li>
             @endcan
-            {{-- <li>
-                <a href="{{ asset('pages/calendar.html') }}">
-                    <i class="fa fa-calendar"></i> <span>Calendar</span>
-                    <small class="label pull-right bg-red">3</small>
+            <li class="treeview">
+                <a href="{{ route('logout') }}">
+                    <i class="fa fa-sign-out"></i>
+                    <span>Logout</span>
+
                 </a>
+
             </li>
-            <li>
-                <a href="{{ asset('pages/mailbox/mailbox.html') }}">
-                    <i class="fa fa-envelope"></i> <span>Mailbox</span>
-                    <small class="label pull-right bg-yellow">12</small>
-                </a>
-            </li> --}}
 
-
-        </ul> 
+        </ul>
     </section>
     <!-- /.sidebar -->
 </aside>

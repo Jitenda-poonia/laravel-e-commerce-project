@@ -17,13 +17,13 @@ use App\Models\User;
 |
 */
 
-Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function(){
+Route::group(['prefix' => 'v1', 'middleware' => 'auth:sanctum'], function () {
     Route::resource('users', UserController::class);
 });
 
 
-Route::get('get-token', function() {
-    $user = User::find(29);
+Route::get('get-token', function () {
+    $user = User::find(124);
     $token = $user->createToken('auth:sanctum');
     return $token->plainTextToken;
 });

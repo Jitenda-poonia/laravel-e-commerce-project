@@ -12,9 +12,15 @@ class LoginController extends Controller
 {
     public function index()
     {
+        // Check if the user is already authenticated
+        if (Auth::check()) {
+            // If the user is authenticated, redirect them to the dashboard (or any other desired route)
+            return redirect()->route('dashboard');
+        }
+
+        // If the user is not authenticated, show the login page
         return view('admin.login.index');
     }
-
 
 
     public function login(Request $request)
@@ -23,15 +29,13 @@ class LoginController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
-
+        // dd($loginData);
         if (Auth::attempt($loginData)) {
-           
+
             // Create user log for admin
             UserLog::create(['user_id' => Auth::user()->id]);
 
             return redirect()->route('dashboard')->with('success', 'User Login Successfully');
-
-
         } else {
             return redirect()->route('login')->with('error', 'Email and Password not valid, please try again');
         }
@@ -42,6 +46,5 @@ class LoginController extends Controller
     {
         Auth::logout();
         return redirect()->route('login')->with('success', 'Logout Successfully');
-
     }
 }

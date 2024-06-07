@@ -16,11 +16,11 @@ class RegisterEmail extends Mailable
     /**
      * Create a new message instance.
      */
-    public $user ;
+    public $user;
     public function __construct($user)
     {
         $this->user = $user;
-        
+
     }
 
     /**
@@ -39,7 +39,7 @@ class RegisterEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.email.register',
+            view: 'email.register',
         );
     }
 

@@ -36,11 +36,6 @@
                                     </a>
                                 </li>
 
-                                {{-- <li>
-                                    <a href="{{ route('user.edit', Auth::user()->id) }}">
-                                        <i class="fa fa-user text-red"></i> You changed your username
-                                    </a>
-                                </li> --}}
                             </ul>
                         </li>
 

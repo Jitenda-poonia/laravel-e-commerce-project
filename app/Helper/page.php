@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Attribute;
 use App\Models\Block;
 use App\Models\Page;
@@ -10,6 +11,8 @@ use App\Models\Quote;
 use App\Models\QuoteItem;
 use App\Models\Wishlist;
 use PHPUnit\Metadata\Version\Requirement;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 function getPages()
 {
@@ -80,7 +83,6 @@ function block($identifier)
 {
     $block = Block::where('status', 1)->where('identifier', $identifier)->first();
     return $block;
-
 }
 
 //Home page pr limited category show 
@@ -126,7 +128,6 @@ function getProductPrice($pId)
     } else {
         return $product->price;
     }
-
 }
 //CartItem count 
 function cartSummaryCount()
@@ -134,7 +135,7 @@ function cartSummaryCount()
     $cartId = Session::get('cart_id');
     if ($cartId) {
         $quote = Quote::where('cart_id', $cartId)->first();
-        return($quote->items ?? 0) ? $quote->items->count() : 0;
+        return ($quote->items ?? 0) ? $quote->items->count() : 0;
     } else {
         return 0;
     }
@@ -150,7 +151,6 @@ function recalculateCart()
     foreach ($items as $item) {
         $item->row_total = $item->qty * $item->price;
         $item->save();
-
     }
 
     $quote->subtotal = $quote->items->sum('row_total');
@@ -197,8 +197,6 @@ function getProductPriceShow($pId)
         <?php
     }
     return;
-
-
 }
 
 // wishlist count 
@@ -214,7 +212,6 @@ function wishlistCount()
 
         return 0;
     }
-
 }
 
 // get Auth User Id
@@ -225,7 +222,6 @@ function getAuthUserId()
     } else {
         return 0;
     }
-
 }
 
 /**
@@ -244,12 +240,12 @@ function getActivateCart($userId)
     if ($cartId) {
         // Find any existing quotes associated with the user and a different cart
         $quoteOld = Quote::where('user_id', $userId)->where('cart_id', '!=', $cartId)->first();
-       
+
         // If there is an existing quote, merge its items with the current cart
         if ($quoteOld) {
             $newQuote = Quote::where('cart_id', $cartId)->first();
             $quoteId = $newQuote->id ?? 0;
-           
+
             // Update the quote ID for the items in the existing quote
             QuoteItem::where('quote_id', $quoteOld->id)->update(['quote_id' => $quoteId]);
 
@@ -272,14 +268,15 @@ function getActivateCart($userId)
  * Get price ranges for a given category.
 
  */
-function getProductPriceFilter($categoryId) {
+function getProductPriceFilter($categoryId)
+{
     // Retrieve the category with its associated products
     $category = Category::with('products')->where('id', $categoryId)->first();
 
     // Find the minimum and maximum prices among the products
     $minPrice = $category->products->min('price');
     $maxPrice = $category->products->max('price');
-  
+
     // Define the price interval
     $interval = 3000;
 
@@ -291,9 +288,10 @@ function getProductPriceFilter($categoryId) {
  * Generate price ranges based on product prices.
  
  */
-function generatePriceRanges($products, $minPrice, $maxPrice, $interval) {
+function generatePriceRanges($products, $minPrice, $maxPrice, $interval)
+{
     $ranges = [];
-    
+
     // Calculate the number of intervals needed
     $numIntervals = ceil(($maxPrice - $minPrice + 1) / $interval);
 
@@ -305,8 +303,8 @@ function generatePriceRanges($products, $minPrice, $maxPrice, $interval) {
 
         // Count the number of products within the current price range
         $productCount = $products->where('price', '>=', $startPrice)
-                                ->where('price', '<=', $endPrice)
-                                ->count();
+            ->where('price', '<=', $endPrice)
+            ->count();
 
         // Store the range information in the result array
         $ranges[] = [
@@ -319,6 +317,7 @@ function generatePriceRanges($products, $minPrice, $maxPrice, $interval) {
     return $ranges;
 }
 
-//public function test
-
-
+// function getRelatedProdectName($productsID){
+//         $productName = Product::select('name')->where($productsID);
+//         return $productName ;
+// }

@@ -18,7 +18,6 @@ class CheckoutController extends Controller
         $cartId = Session::get('cart_id');
         $quote = Quote::where('cart_id', $cartId)->first();
         return view('web.checkout', compact('quote'));
-
     }
 
     public function CheckoutPlaceOrderStore(request $request)
@@ -47,7 +46,7 @@ class CheckoutController extends Controller
 
                 'billing_name' => 'required|string|max:25',
                 'billing_email' => 'required|email|max:50',
-                'billing_phone' => 'required|string|max:12',
+                'billing_phone' => 'required|string|max:15',
                 'billing_address' => 'required|string|max:150',
                 'billing_country' => 'required|string|max:15',
                 'billing_state' => 'required|string|max:25',
@@ -59,7 +58,6 @@ class CheckoutController extends Controller
                 'billing_phone.required' => ' phone field is required.',
                 'billing_address.required' => 'address field is required.',
             ]);
-
         }
         $request->validate([
             'shipping_method' => 'required',
@@ -81,8 +79,7 @@ class CheckoutController extends Controller
             $shippingCost = 50;
         } elseif ($request->shipping_method == "next_business_day") {
             $shippingCost = 100;
-        }
-        ;
+        };
 
         //order increment ID create
         $lastOrder = Order::orderBy('order_increment_id', 'desc')->first();
@@ -165,7 +162,7 @@ class CheckoutController extends Controller
             'pincode' => $data['shipping_pincode'],
             'address_type' => "shipping"
         ];
-        
+
         OrderAddress::create($billingAddress);
 
         if ($request->ship_to_different_address == "on") {
@@ -177,12 +174,11 @@ class CheckoutController extends Controller
             OrderAddress::create($billingAddress);
         }
 
-        
+
         Quote::where('cart_id', $cartId)->delete();
         QuoteItem::where('quote_id', $quote->id)->delete();
 
         return redirect()->route('make.payment')->with(['order_increment' => $orderIncrementId]);
-
     }
 
     public function makePayment()

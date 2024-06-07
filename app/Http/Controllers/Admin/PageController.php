@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Page;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\JsonResponse;
 
 class PageController extends Controller
@@ -15,17 +15,17 @@ class PageController extends Controller
      */
     public function index()
     {
-        abort_unless(Gate::allows('page_index'),403);
-        $pages = Page::orderBy("id", "desc")->get();
+        abort_unless(Gate::allows('page_index'), 403);
+        // $pages = Page::orderBy("id", "desc")->get();
+        $pages = Page::latest()->get();
         return view("admin.page.index", compact("pages"));
-    
     }
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
-    {    
+    {
         abort_unless(Gate::allows("page_create"), 403);
 
         $pages = Page::all("id", "title");
@@ -45,17 +45,16 @@ class PageController extends Controller
             "description" => "required",
             "image" => "required",
         ]);
-        $urlKey = $request->url_key ? $request->url_key : $data['title'] ;
+        $urlKey =  $request->url_key ?? $data['title'];
         $data['url_key'] = generateUniqueUrlKey($urlKey);
 
         $data['title'] = ucwords($data['title']);
 
-        $prntId = $request->parent_id;
-        $data['parent_id'] = $prntId ? $prntId : 0;
-         
+        $data['parent_id'] = $request->parent_id ?? 0;
+
         $page = Page::create($data);
         $page->addMediaFromRequest('image')->toMediaCollection('image');
-        return redirect()->route('page.index')->with('success','Data Save Successfully');
+        return redirect()->route('page.index')->with('success', 'Data Save Successfully');
     }
 
     /**
@@ -86,17 +85,15 @@ class PageController extends Controller
     {
         $data = $request->validate([
             "title" => "required",
-            "heading" => "required", 
+            "heading" => "required",
             "ordering" => "required|numeric",
             "status" => "required",
             "description" => "required",
-            
+
         ]);
-        
-      
+
         $data['title'] = ucwords($data['title']);
-        $prntId = $request->parent_id;
-        $data['parent_id'] = $prntId ? $prntId : 0;
+        $data['parent_id'] = $request->parent_id ?? 0;
 
         $page = Page::findOrFail($id);
         $page->update($data);
@@ -106,7 +103,7 @@ class PageController extends Controller
             $page->addMedia($request->file('image'))->toMediaCollection('image');
         }
 
-        return redirect()->route('page.index')->with('success', 'Data Upadate Successfully'); 
+        return redirect()->route('page.index')->with('success', 'Data Upadate Successfully');
     }
 
     /**
@@ -116,7 +113,7 @@ class PageController extends Controller
     {
         $page = Page::findOrFail($id);
         $page->delete();
-        $data = $page->getFirstMediaUrl('id');
+        $page->getFirstMediaUrl('id');
         return redirect()->route('page.index')->with('success', 'Record Delete Successfully');
     }
     public function upload(Request $request): JsonResponse

@@ -30,14 +30,14 @@
             <div class="box-body">
                 <table class="table table-bordered" id="myTable">
                     <thead>
-                    <tr>
-                        <th style="width: 30px">#</th>
-                        <th>Name</th>
-                        <th>Permissions</th>
-                        <th style="width: 40px">Edit</th>
-                        <th style="width: 40px">Delete</th>
-                    </tr>
-                </thead>
+                        <tr>
+                            <th style="width: 30px">#</th>
+                            <th>Name</th>
+                            <th>Permissions</th>
+                            <th style="width: 40px">Edit</th>
+                            <th style="width: 40px">Delete</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         @foreach ($roles as $key => $role)
                             <tr>
@@ -68,8 +68,8 @@
 
 
     </div>
-     <!-- Datatable initialization script -->
-     <script>
+    <!-- Datatable initialization script -->
+    <script>
         $(document).ready(function() {
             $('#myTable').DataTable();
         });

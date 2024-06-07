@@ -47,6 +47,8 @@
                     {{ getProductPriceShow($product->id) }}
 
                     <p class="mb-4">{{ $product->short_description }}</p>
+
+                     {{-- Add to Cart --}}
                     <form action="{{ route('cart.store', $product->id) }}" method="POST"> 
                         @csrf
                         @foreach ($attributes as $attributeName => $attributeValues)
@@ -74,6 +76,8 @@
 
 
                     </form>
+                    {{-- ----------------------end Add to Cart----------------- --}}
+
 
                     {{-- wishlist --}}
 

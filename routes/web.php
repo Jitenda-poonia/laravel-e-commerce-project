@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CategoryController;
@@ -20,7 +21,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\TableCheckController;
+use App\Http\Controllers\OrderStatusNotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +39,8 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::group([], function () {
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/check-table/{tableName}', [TableCheckController::class, 'checkTable']);
+
     Route::get('contact', [HomeController::class, 'contact'])->name('contact');
     Route::Post('enquiry/store', [EnquiryController::class, 'store'])->name('enquiry.store');
     Route::get('admin', [LoginController::class, 'index'])->name('login');
@@ -59,34 +63,40 @@ Route::group([], function () {
     Route::get('customer/login', [CustomerController::class, 'custemerLogin'])->name('customer.login');
     Route::post('customer/authenticate', [CustomerController::class, 'login'])->name('customer.authenticate');
     Route::get('customer/logout', [CustomerController::class, 'logout'])->name('customer.logout');
+
     Route::get('customer/profile', [CustomerController::class, 'profile'])->name('customer.profile');
     Route::post('customer/update', [CustomerController::class, 'update'])->name('customer.update');
     Route::get('customer/address/update', [CustomerController::class, 'addressUpdate'])->name('customer.address.update');
     Route::get('customer/product/show/{id}', [CustomerController::class, 'customerProductShow'])->name('customer.product.show');
+
+    Route::get('/orders/{id}', [OrderStatusNotificationController::class, 'show'])->name('order.show');
 
     Route::post('wishlist/store', [WishlistController::class, 'store'])->name('wishlist.store');
     Route::delete('wishlist/delete{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
     Route::get('/category/{urlkey}', [HomeController::class, 'category'])->name('categoryData');
     Route::get('/product/{urlkey}', [HomeController::class, 'product'])->name('productData');
-   
+
 
     // ------------------------------------Ending route---------------------------------
     Route::get('/{urlkey}', [HomeController::class, 'page'])->name('page');
 });
 
 
-Route::group(['prefix' => 'admin', 'middleware' => ['auth','front_user']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'front_user']], function () {
 
     Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard');
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
     Route::resource("user", UserController::class);
     Route::resource("role", RoleController::class);
     Route::resource("permission", PermissionController::class);
+
     Route::resource("slider", SliderController::class);
     Route::resource("page", PageController::class);
     Route::post('ckeditor/upload', [PageController::class, 'upload'])->name('ckeditor.upload');
     Route::resource("block", BlockController::class);
+
     Route::resource("product", ProductController::class);
     Route::resource("category", CategoryController::class);
     Route::resource("attribute", AttributeController::class);
@@ -98,12 +108,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth','front_user']], funct
 
     Route::get('order', [ManageOrderController::class, 'index'])->name('order.index');
     Route::get('/order/show{id}', [ManageOrderController::class, 'show'])->name('order.show');
+    Route::post('order/status/{id}', [ManageOrderController::class, 'updateStatus'])->name('order.updateStatus');
     Route::get('order/invoice/{id}', [ManageOrderController::class, 'generateInvoice'])->name('order.invoice');
+
 
     Route::get('customer', [ManageCustomerController::class, 'index'])->name('customer.index');
     Route::get('/customer/show{id}', [ManageCustomerController::class, 'show'])->name('customer.show');
-
 });
+
 
 
 Route::fallback(function () {
