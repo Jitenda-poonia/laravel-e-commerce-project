@@ -21,7 +21,7 @@
     </section>
     <section class="content">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
 
                 <div class="box box-primary">
                     <div class="box-header">
@@ -111,13 +111,13 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                @foreach ($roles as $role)
-                                    <div class="checkbox">
+                                <div class="checkbox">
+                                    @foreach ($roles as $role)
                                         <label></label>
                                         <input type="checkbox" name ="roles[]"
                                             value="{{ $role->name }}">{{ $role->name }}
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">image upload</label>

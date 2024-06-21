@@ -14,8 +14,6 @@
     </div>
     <!-- Breadcrumb End -->
 
-    {{-- {{ $quote->items }} --}}
-
     <!-- Cart Start -->
     @if (cartSummaryCount())
         <div class="container-fluid">
@@ -32,48 +30,38 @@
                             </tr>
                         </thead>
                         <tbody class="align-middle">
-
-                            {{-- <h1>{{ $quote }}</h1> --}}
+                            @php $allInStock = true; @endphp
                             @foreach ($quote->items as $item)
-                                
                                 <tr>
                                     <td class="align-middle"><img src="{{ productImage($item->product_id) }}" alt=""
                                             style="width: 50px;">{{ $item->name }} <br>
-                                        
                                         {{-- Decode and display custom options --}}
                                         @if ($item->custom_option)
                                             @php
                                                 $customOptions = json_decode($item->custom_option, true);
                                             @endphp
-                                              
                                             @foreach ($customOptions as $attrName => $attrValue)
-                                                <strong>{{ $attrName }}:</strong>
-                                                {{ $attrValue }} <br>
+                                                <strong>{{ $attrName }}:</strong> {{ $attrValue }} <br>
                                             @endforeach
                                         @endif
                                     </td>
                                     <td class="align-middle">₹{{ $item->price }}</td>
 
-                                   {{-- --------------------------------Qty Update-- Start------------------------ --}}
+                                    {{-- Quantity Update Start --}}
                                     <td class="align-middle">
                                         <div class="input-group quantity mx-auto" style="width: 100px;">
-
                                             <form action="{{ route('cart.update', $item->id) }}" method="POST">
                                                 @csrf
                                                 <input type="number" name="qty" style="width: 65%;"
                                                     value="{{ $item->qty }}" step="1" min="1" max="20"
-                                                    class="c-input-text qty text qty-box">{{-- ya class="qty-box"> --}}
-                                                    
+                                                    class="c-input-text qty text qty-box">
                                                 <div class="update-qty" style="display: none">
                                                     <input type="submit" class="btn btn-dark w-200" value="✓">
-
                                                 </div>
                                             </form>
-
                                         </div>
                                     </td>
-
-                                    {{-- ---------------------------------Qty Update End---------------------------------- --}}
+                                    {{-- Quantity Update End --}}
 
                                     <td class="align-middle">₹ {{ $item->row_total }}</td>
 
@@ -85,10 +73,11 @@
                                                     class="fa fa-times"></i></button>
                                         </form>
                                     </td>
-
                                 </tr>
+                                @if ($item->stock_status != 1)
+                                    @php $allInStock = false; @endphp
+                                @endif
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
@@ -106,7 +95,6 @@
                     <form class="mb-30" action="{{ route('coupon.apply', $quote->id) }}" method="POST">
                         @csrf
                         <div class="input-group">
-
                             <input type="text" name="coupon" value="{{ $quote->coupon }}"
                                 class="form-control border-0 p-4" placeholder="Coupon Code">
                             <div class="input-group-append">
@@ -128,23 +116,27 @@
                                 <h6>Subtotal</h6>
                                 <h6>₹{{ $quote->subtotal }}</h6>
                             </div>
-
-
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Discount</h6>
-                                <h6 class="font-weight-medium">-₹{{ $quote->coupon_discount ?? 0.00 }}</h6>
+                                <h6 class="font-weight-medium">-₹{{ $quote->coupon_discount ?? 0.0 }}</h6>
                             </div>
-                            <br>
-                            
                         </div>
                         <div class="pt-2">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5>Total</h5>
                                 <h5>₹ {{ $quote->total }}</h5>
                             </div>
-                            <a href="{{ route('checkout') }}"
-                                class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To
-                                Checkout</a>
+                            @if ($allInStock)
+                                <a href="{{ route('checkout') }}"
+                                    class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>
+                            @else
+                                <button class="btn btn-block btn-primary font-weight-bold my-3 py-3" disabled>Proceed To
+                                    Checkout</button>
+                                <div class="text-center mt-2">
+                                    <span class="text-danger">One or more items are out of stock. Please remove them to
+                                        proceed to checkout.</span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -167,7 +159,6 @@
         $(document).ready(function() {
             $('.qty-box').on('change', function() {
                 var form = $(this).closest('form');
-                // alert(form);
                 form.find('.update-qty').css('display', 'block');
             });
         });

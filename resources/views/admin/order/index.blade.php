@@ -34,8 +34,7 @@
                             <th>Email</th>
                             <th>Phone</th>
                             <th>Address</th>
-<<<<<<< HEAD
-=======
+
                             <th>City</th>
                             <th>State</th>
                             {{-- <th>Country</th> --}}
@@ -47,7 +46,6 @@
                             <th>Total Amount</th>
                             {{-- <th>Payment Method</th> --}}
                             {{-- <th>Shipping Method</th> --}}
->>>>>>> origin/main
                             <th>Order Date</th>
                             <th>Update Status</th>
                             <th>View Detail</th>
@@ -74,8 +72,7 @@
                                 <td>{{ $order->email }}</td>
                                 <td>{{ $order->phone }}</td>
                                 <td>{{ $order->address }}</td>
-<<<<<<< HEAD
-=======
+
                                 <td>{{ $order->city }}</td>
                                 <td>{{ $order->state }}</td>
                                 {{-- <td>{{ $order->country }}</td> --}}
@@ -87,7 +84,7 @@
                                 <td>₹{{ $order->total }}</td>
                                 {{-- <td>{{ ucwords(str_replace('_', ' ', $order->payment_method)) }}</td> --}}
                                 {{-- <td>{{ ucwords(str_replace('_', ' ', $order->shipping_method)) }}</td> --}}
->>>>>>> origin/main
+
                                 <td>{{ $order->created_at }}</td>
 
                                 <td>

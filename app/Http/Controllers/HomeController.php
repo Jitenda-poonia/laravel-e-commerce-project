@@ -36,25 +36,21 @@ class HomeController extends Controller
         } else {
             abort(404);
         }
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> origin/main
     }
 
 
     public function category(Request $request, $url_key)
     {
         // Full URL
-        $fullUrl = URL::full();
+        // $fullUrl = URL::full();
 
-        // dd(explode('-', $request->price));
+
         // Retrieve the category based on the provided URL key
         $category = Category::where('url_key', $url_key)->first();
 
         // Start building the product query based on the category
-        $query = $category->products();
+        $query = $category->products()->where('status', 1);
 
 
         // $category = Category::with(['products' => function ($query) use ($request) {

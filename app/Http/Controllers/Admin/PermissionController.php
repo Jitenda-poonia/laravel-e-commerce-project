@@ -17,7 +17,6 @@ class PermissionController extends Controller
         abort_unless(Gate::allows("manage_permission"), 403);
 
         $permissions = Permission::orderBy('name')->get();
-        // dd($permissions);
         return view('admin.permission.index', compact('permissions'));
     }
 
@@ -37,36 +36,24 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $permission = $request->validate([
-            'name' => 'required | unique:permissions'
+            'name' => 'required|unique:permissions'
         ]);
-<<<<<<< HEAD
-=======
-        
-        Permission::create($permission);
-        
-      if($request->save){
-       return redirect()->route('permission.index')->with('success','permission add successfully');
-      }else{
-        return back()->with('success','permission Save Successfully');
-      }
->>>>>>> origin/main
 
         Permission::create($permission);
 
         if ($request->save) {
-            return redirect()->route('permission.index')->with('success', 'permission add successfully');
+            return redirect()->route('permission.index')->with('success', 'Permission added successfully');
         } else {
-            return back()->with('success', 'permission Save Successfully');
+            return back()->with('success', 'Permission saved successfully');
         }
     }
-
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        // Method not implemented
     }
 
     /**
@@ -88,9 +75,9 @@ class PermissionController extends Controller
         $permission = $request->validate([
             'name' => 'required|unique:permissions,name,' . $id
         ]);
-        $per = Permission::where('id', $id)->update($permission);
-        //    dd($per);
-        return redirect()->route('permission.index')->with('success', 'Data update successfully');
+
+        Permission::where('id', $id)->update($permission);
+        return redirect()->route('permission.index')->with('success', 'Data updated successfully');
     }
 
     /**
@@ -99,6 +86,6 @@ class PermissionController extends Controller
     public function destroy(string $id)
     {
         Permission::where('id', $id)->delete();
-        return redirect()->route('permission.index')->with('success', 'data delete successfully');
+        return redirect()->route('permission.index')->with('success', 'Data deleted successfully');
     }
 }

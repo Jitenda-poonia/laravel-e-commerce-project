@@ -26,7 +26,7 @@
     </section>
     <section class="content">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
 
                 <div class="box box-primary">
                     <div class="box-header">
@@ -110,14 +110,14 @@
                                             class="fa fa-times-circle-o"></i>{{ $message }}</label>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                @foreach ($roles as $role)
-                                    <div class="checkbox">
+                            <div class="checkbox">
+                                <div class="form-group">
+                                    @foreach ($roles as $role)
                                         <label></label>
                                         <input type="checkbox" name ="roles[]" value="{{ $role->name }}"
                                             {{ in_array($role->name, $slctRole) ? 'checked' : '' }}>{{ $role->name }}
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">Image Upload</label>
