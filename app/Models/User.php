@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -25,8 +26,10 @@ class User extends Authenticatable implements HasMedia
         'email',
         'password',
         'designation',
-        'is_admin'
-        
+        'is_admin',
+        'google_id',
+        'facebook_id',
+        'email_verified_at',
     ];
 
     // Other existing code...
@@ -41,5 +44,8 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaCollection('profile_photos')
             ->singleFile(); // Allows only one file per collection (for profile photos)
     }
+    public function image()
+    {
+        return $this->morphMany(Image::class, 'imagable');
+    }
 }
-?>

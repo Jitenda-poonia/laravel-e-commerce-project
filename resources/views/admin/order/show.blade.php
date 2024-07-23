@@ -6,7 +6,6 @@
     <section class="content-header">
         <h1> Order Details</h1>
     </section>
-
     <section class="content">
         <div class="row">
             <div class="col-md-12">
@@ -108,7 +107,6 @@
                                         <th>Row Total</th>
                                         <th>Custom Option</th>
                                     </tr>
-<<<<<<< HEAD
                                     @foreach ($orderItems as $_orderItem)
                                         <tr>
                                             <td>{{ $_orderItem->name }}</td>
@@ -118,17 +116,17 @@
                                             <td>₹{{ $_orderItem->row_total }}</td>
                                             <td>{{ $_orderItem->custom_option }}</td>
                                         </tr>
-=======
-                                    @foreach($orderItems as $_orderItem)
-                                    <tr>
-                                        <td>{{ $_orderItem->name }}</td>
-                                        <td>{{ $_orderItem->sku }}</td>
-                                        <td>₹{{ $_orderItem->price }}</td>
-                                        <td>{{ $_orderItem->qty }}</td>
-                                        <td>₹{{ $_orderItem->row_total }}</td>
-                                        <td>{{ $_orderItem->custom_option }}</td>
-                                    </tr>
->>>>>>> origin/main
+                                    @endforeach
+
+                                    @foreach ($orderItems as $_orderItem)
+                                        <tr>
+                                            <td>{{ $_orderItem->name }}</td>
+                                            <td>{{ $_orderItem->sku }}</td>
+                                            <td>₹{{ $_orderItem->price }}</td>
+                                            <td>{{ $_orderItem->qty }}</td>
+                                            <td>₹{{ $_orderItem->row_total }}</td>
+                                            <td>{{ $_orderItem->custom_option }}</td>
+                                        </tr>
                                     @endforeach
                                 </table>
 

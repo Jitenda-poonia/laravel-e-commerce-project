@@ -31,13 +31,9 @@ class CartController extends Controller
 
         if ($cart_id) {
             // echo $cart_id . 'Update time';
-
             // Session::forget('cart_id');
-
             $quote = Quote::firstOrCreate(['cart_id' => $cart_id]);
             $quoteId = $quote->id;
-
-
             $quoteItem = QuoteItem::where('quote_id', $quoteId)->where('product_id', $productId)->first();
 
             if ($quoteItem) {
@@ -62,8 +58,6 @@ class CartController extends Controller
             $cart_id = Str::uuid()->toString();
             Session::put('cart_id', $cart_id);
             // echo $cart_id . "First time";
-
-         
             $quote = Quote::create([
                 'cart_id' => $cart_id,
                 'user_id' => $user->id ?? 0,
@@ -85,10 +79,8 @@ class CartController extends Controller
         recalculateCart();
 
         return redirect()->route('cart');
-        
+
     }
-
-
 
     // View Cart method
     public function viewCart()
@@ -100,7 +92,7 @@ class CartController extends Controller
     }
 
     // cart delete method
-    public function cartDelete(Request $request, $id)
+    public function cartDelete($id)
     {
         QuoteItem::where('id', $id)->delete();
         recalculateCart();
@@ -111,19 +103,14 @@ class CartController extends Controller
     // apply coupon method
     public function couponApply(Request $request, $quoteId)
     {
-
-        // dd($request->all());
-
         $couponCode = $request->coupon;
         $cartId = Session::get('cart_id');
         $quote = Quote::where('cart_id', $cartId)->first();
         if ($request->get('action') == 'apply_coupon') {
 
             $coupon = Coupon::where('coupon_code', $couponCode)->where('status', 1)->first();
-            // dd($coupon);
-            // $quote = Quote::where('id', $quoteId)->first();
-            // dd($quote);
-            if ($coupon) { 
+
+            if ($coupon) {
                 if (($coupon->valid_from <= now()) && ($coupon->valid_to >= now()) && $coupon->discount_amount < $quote->subtotal) {
                     $quote = Quote::where('id', $quoteId)->update([
                         'coupon' => $coupon->coupon_code,
@@ -152,19 +139,18 @@ class CartController extends Controller
 
     public function cartUpdate(Request $request, $id)
     {
-        // dd($request->all());
         $quoteItem = QuoteItem::find($id);
-      
+
         $qty = $request->qty;
         $rowTotal = $quoteItem->price * $qty;
       QuoteItem::where('id', $id)->update([
             'qty' => $qty,
             'row_total' => $rowTotal,
         ]);
-        
+
         recalculateCart();
         return redirect()->back();
-        
+
 
     }
 

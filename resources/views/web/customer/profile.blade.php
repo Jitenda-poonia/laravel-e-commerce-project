@@ -119,7 +119,7 @@
 
                                     </a>
                                     <div style="padding:20px;float:left;width:10%;">
-                                        <form action="{{ route('wishlist.destroy', $wishlistItem->product_id) }}"
+                                        <form action="{{ route('remove-from-wishlist', $wishlistItem->id) }}"
                                             method="post">
                                             @method('DELETE')
                                             @csrf
@@ -210,7 +210,6 @@
 
                             </div>
                         </div>
-                        {{-- address end --}}
 
 
                     </div>
@@ -224,19 +223,12 @@
 
     <script>
         $(document).ready(function() {
-            // $(".detail_show").click(function(){
-            //     alert('test test');
-
-            // });
 
             $(".detail_show").on('click', function(e) {
                 e.preventDefault();
                 var orderId = $(this).data('order-id');
-                // alert(orderI);
                 var url = "{{ route('customer.product.show', ':id') }}".replace(':id', orderId);
-
                 console.log(url);
-
                 $.ajax({
                     url: url,
                     type: 'GET',
@@ -256,7 +248,5 @@
 
         });
     </script>
-    <script>
-        $(document).ready();
-    </script>
+
 @endsection

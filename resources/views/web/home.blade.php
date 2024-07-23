@@ -51,9 +51,7 @@
 
         </div>
     </div>
-    <!-- Carousel End -->
 
-    <!-- Featured Start -->
 
     @php
         $featured = block('featured'); //Helper/page.php se
@@ -61,9 +59,7 @@
 
     {!! $featured->description !!}
 
-    <!-- Featured End -->
 
-    <!-- Categories Start -->
     <div class="container-fluid pt-5">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span
                 class="bg-secondary pr-3">Categories</span></h2>
@@ -73,14 +69,14 @@
                     <a class="text-decoration-none" href="{{ route('categoryData', $category->url_key) }}">
                         <div class="cat-item d-flex align-items-center mb-4">
                             <div class="overflow-hidden" style="width: 100px; height: 100px;">
-                                <img class="img-fluid" src="{{ $category->getFirstMediaUrl('image') }}" alt="" >
+                                <img class="img-fluid" src="{{ $category->getFirstMediaUrl('image') }}" alt="">
                             </div>
                             <div class="flex-fill pl-3">
                                 <h6>{{ $category->name }}</h6>
 
                                 <small class="text-body"> {{ $category->products->count() }} Products </small>
-                                   
-                               
+
+
                             </div>
                         </div>
                     </a>
@@ -104,10 +100,8 @@
                                 alt="" style="height: 250px">
                             <div class="product-action">
 
-                                <form action="{{ route('wishlist.store') }}" method="post">
+                                <form action="{{ route('add-to-wishlist', $product->id) }}" method="post">
                                     @csrf
-                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id ?? '' }}">
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <button type="submit" class="btn btn-outline-dark btn-square"><i
                                             class="far fa-heart"></i></button>
                                 </form>
@@ -124,7 +118,7 @@
 
 
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -154,17 +148,12 @@
                             <img class="img-fluid w-100" src="{{ $recentProduct->getFirstMediaUrl('thumbnail_image') }}"
                                 alt="" style="height: 250px">
                             <div class="product-action">
-                                
-                               
-                                <form action="{{ route('wishlist.store') }}" method="post">
+
+                                <form action="{{ route('add-to-wishlist', $product->id) }}" method="post">
                                     @csrf
-                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id ?? '' }}">
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
                                     <button type="submit" class="btn btn-outline-dark btn-square"><i
                                             class="far fa-heart"></i></button>
                                 </form>
-
-                                
                             </div>
                         </div>
                         <div class="text-center py-4">
@@ -176,7 +165,7 @@
                                 {{ getProductPriceShow($recentProduct->id) }}
 
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -193,3 +182,23 @@
     {!! $Vendor->description !!}
     <!-- Vendor End -->
 @endsection
+@push('custom-scripts')
+{{-- <script>
+    $(document).ready(function(){
+        $('#add-to-wishlist').on('click',function(e){
+            e.preventDefault();
+        var productId = '{{$product->id}}';
+            $.ajax({
+                method: 'POST',
+                url:'{{route('add-to-wishlist',["product_id",":product_id"])}}'.replace('product_id',productId),
+                data:{
+                    'product_id':productId
+                }
+                success:
+            });
+        });
+    });
+
+</script> --}}
+
+@endpush

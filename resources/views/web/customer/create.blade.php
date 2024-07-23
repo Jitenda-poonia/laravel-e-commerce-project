@@ -24,7 +24,7 @@
                             <p style="color: red;">{{ $message }}</p>
                         @enderror
                     </div>
-                   
+
                     <div class="col-md-6 form-group">
                         <label>E-mail</label>
                         <input class="form-control" name="email" value="{{ old('email') }}" type="text" placeholder="Enter email">
@@ -50,7 +50,7 @@
             </div>
         </div>
         </div>
-      
+
     </div>
 </div>
 

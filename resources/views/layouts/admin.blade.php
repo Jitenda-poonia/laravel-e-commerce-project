@@ -24,7 +24,7 @@
             @yield('content')
         </div><!-- /.content-wrapper -->
         @include('includes.footer')
-
+    </div>
 </body>
 
 </html>

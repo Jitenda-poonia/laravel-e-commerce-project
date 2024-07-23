@@ -1,7 +1,6 @@
 @extends('layouts.web')
 
 @section('content')
-    {{-- <h1>Auth Id: {{ getAuthUserId() }} </h1> --}}
 
     <div class="container-fluid">
         <div class="row px-xl-5">
@@ -50,6 +49,8 @@
                                     <button type="submit" class="form-control btn btn-primary"
                                         style="width: 50%;">Login</button>
                                     <a href="{{ route('customer.create') }}" class="btn btn-primary">Create Account</a>
+                                     <a href="{{ route('login.google') }}" class="btn btn-primary">Login with google </a>
+
                                 </div>
 
                             </div>

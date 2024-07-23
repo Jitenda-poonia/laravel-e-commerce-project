@@ -36,11 +36,7 @@ class HomeController extends Controller
         } else {
             abort(404);
         }
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> origin/main
     }
 
 
@@ -54,8 +50,8 @@ class HomeController extends Controller
         $category = Category::where('url_key', $url_key)->first();
 
         // Start building the product query based on the category
-        $query = $category->products();
-
+        $query = $category->products()->where('status',1);
+    
 
         // $category = Category::with(['products' => function ($query) use ($request) {
         // Extracted price range from the request

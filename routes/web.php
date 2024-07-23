@@ -23,66 +23,76 @@ use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TableCheckController;
 use App\Http\Controllers\OrderStatusNotificationController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
+use App\Http\Controllers\Auth\SocialAuthController;
+use Illuminate\Support\Str;
 
 Route::group([], function () {
-
-    Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/check-table/{tableName}', [TableCheckController::class, 'checkTable']);
-
-    Route::get('contact', [HomeController::class, 'contact'])->name('contact');
+    //enquiry store
     Route::Post('enquiry/store', [EnquiryController::class, 'store'])->name('enquiry.store');
-    Route::get('admin', [LoginController::class, 'index'])->name('login');
-    Route::post('admin/login', [LoginController::class, 'login'])->name('login.post');
 
-    Route::get('cart', [CartController::class, 'viewCart'])->name('cart');
-    Route::post('cart/store/{id}', [CartController::class, 'addToCart'])->name('cart.store');
-    Route::post('cart/update/{id}', [CartController::class, 'cartUpdate'])->name('cart.update');
-    Route::delete('cart/delete/{id}', [CartController::class, 'cartDelete'])->name('cart.delete');
+    //login
+    Route::group(['controller' => LoginController::class], function () {
+        Route::get('admin',  'index')->name('login');
+        Route::post('admin/login',  'login')->name('login.post');
+    });
 
-    Route::post('coupon/apply{id}', [CartController::class, 'couponApply'])->name('coupon.apply');
+    //google login
+    Route::group(['controller' => SocialAuthController::class], function () {
+        Route::get('/login/google', 'redirectToGoogle')->name('login.google');
+        Route::get('/callback-url', 'handleGoogleCallback');
+    });
 
-    Route::get('checkout', [CheckoutController::class, 'checkOut'])->name('checkout');
-    Route::post('checkout/store', [CheckoutController::class, 'CheckoutPlaceOrderStore'])->name('checkout.store');
-    Route::get('makePayment', [CheckoutController::class, 'makePayment'])->name('make.payment');
-    Route::post('checkout/order/success', [CheckoutController::class, 'CheckoutOrderSuccess'])->name('checkout.order.success');
+    //cart
+    Route::group(['controller' => CartController::class], function () {
+        Route::get('cart', 'viewCart')->name('cart');
+        Route::post('cart/store/{id}', 'addToCart')->name('cart.store');
+        Route::post('cart/update/{id}', 'cartUpdate')->name('cart.update');
+        Route::delete('cart/delete/{id}', 'cartDelete')->name('cart.delete');
+        Route::post('coupon/apply{id}', 'couponApply')->name('coupon.apply');
+    });
 
-    Route::get('customer/register', [CustomerController::class, 'create'])->name('customer.create');
-    Route::post('customer/store', [CustomerController::class, 'store'])->name('customer.store');
-    Route::get('customer/login', [CustomerController::class, 'custemerLogin'])->name('customer.login');
-    Route::post('customer/authenticate', [CustomerController::class, 'login'])->name('customer.authenticate');
-    Route::get('customer/logout', [CustomerController::class, 'logout'])->name('customer.logout');
+    //checkOut
+    Route::group(['controller' => CheckoutController::class], function () {
+        Route::get('checkout', 'checkOut')->name('checkout');
+        Route::post('checkout/store', 'CheckoutPlaceOrderStore')->name('checkout.store');
+        Route::get('makePayment', 'makePayment')->name('make.payment');
+        Route::post('checkout/order/success', 'CheckoutOrderSuccess')->name('checkout.order.success');
+    });
 
-    Route::get('customer/profile', [CustomerController::class, 'profile'])->name('customer.profile');
-    Route::post('customer/update', [CustomerController::class, 'update'])->name('customer.update');
-    Route::get('customer/address/update', [CustomerController::class, 'addressUpdate'])->name('customer.address.update');
-    Route::get('customer/product/show/{id}', [CustomerController::class, 'customerProductShow'])->name('customer.product.show');
+    //customer
+    Route::group(['controller' => CustomerController::class], function () {
+        Route::get('customer/register',  'create')->name('customer.create');
+        Route::post('customer/store',  'store')->name('customer.store');
+        Route::get('customer/login',  'custemerLogin')->name('customer.login');
+        Route::post('customer/authenticate',  'login')->name('customer.authenticate');
+        Route::get('customer/logout',  'logout')->name('customer.logout');
+        Route::get('customer/profile',  'profile')->name('customer.profile');
+        Route::post('customer/update',  'update')->name('customer.update');
+        Route::get('customer/address/update',  'addressUpdate')->name('customer.address.update');
+        Route::get('customer/product/show/{id}',  'customerProductShow')->name('customer.product.show');
+    });
 
+    //Order Status Notification
     Route::get('/orders/{id}', [OrderStatusNotificationController::class, 'show'])->name('order.show');
 
-    Route::post('wishlist/store', [WishlistController::class, 'store'])->name('wishlist.store');
-    Route::delete('wishlist/delete{id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+    //wishlist
+    Route::group(['controller' => WishlistController::class], function () {
+        Route::post('add-to-c/{product_id}', 'addToWishlist')->name('add-to-wishlist');
+        Route::delete('remove-from-wishlist/{id}', 'removeFromWishlist')->name('remove-from-wishlist');
+    });
 
-    Route::get('/category/{urlkey}', [HomeController::class, 'category'])->name('categoryData');
-    Route::get('/product/{urlkey}', [HomeController::class, 'product'])->name('productData');
-
-
-    // ------------------------------------Ending route---------------------------------
-    Route::get('/{urlkey}', [HomeController::class, 'page'])->name('page');
+    // home
+    Route::group(['controller' => HomeController::class], function () {
+        Route::get('/', 'index')->name('home');
+        Route::get('contact', 'contact')->name('contact');
+        Route::get('/category/{urlkey}', 'category')->name('categoryData');
+        Route::get('/product/{urlkey}', 'product')->name('productData');
+        Route::get('/{urlkey}', 'page')->name('page');
+    });
 });
 
-
+// admin
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'front_user']], function () {
 
     Route::get("dashboard", [DashboardController::class, 'index'])->name('dashboard');
@@ -102,22 +112,28 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'front_user']], func
     Route::resource("attribute", AttributeController::class);
     Route::resource("coupon", CouponController::class);
 
-    Route::get("enquiry", [EnquiryController::class, 'index'])->name('enquiry');
-    Route::post("enquiry/status", [EnquiryController::class, 'status'])->name('enquiry.status');
-    Route::delete("enquiry/destroy{id}", [EnquiryController::class, 'destroy'])->name('enquiry.destroy');
+    //enquiry
+    Route::group(['controller' => EnquiryController::class], function () {
+        Route::get("enquiry", 'index')->name('enquiry');
+        Route::post("enquiry/status", 'status')->name('enquiry.status');
+        Route::delete("enquiry/destroy{id}", 'destroy')->name('enquiry.destroy');
+    });
 
-    Route::get('order', [ManageOrderController::class, 'index'])->name('order.index');
-    Route::get('/order/show{id}', [ManageOrderController::class, 'show'])->name('order.show');
-    Route::post('order/status/{id}', [ManageOrderController::class, 'updateStatus'])->name('order.updateStatus');
-    Route::get('order/invoice/{id}', [ManageOrderController::class, 'generateInvoice'])->name('order.invoice');
+    //Manage Order
+    Route::group(['controller' => ManageOrderController::class], function () {
+        Route::get('order', 'index')->name('order.index');
+        Route::get('/order/show{id}', 'show')->name('order.show');
+        Route::post('order/status/{id}', 'updateStatus')->name('order.updateStatus');
+        Route::get('order/invoice/{id}', 'generateInvoice')->name('order.invoice');
+    });
 
-
-    Route::get('customer', [ManageCustomerController::class, 'index'])->name('customer.index');
-    Route::get('/customer/show{id}', [ManageCustomerController::class, 'show'])->name('customer.show');
+    //Manage Customer
+    Route::group(['controller' => ManageCustomerController::class], function () {
+        Route::get('customer', 'index')->name('customer.index');
+        Route::get('/customer/show{id}', 'show')->name('customer.show');
+    });
 });
 
-
-
-Route::fallback(function () {
-    return abort(404);
-});
+// Route::fallback(function () {
+//     return abort(404);
+// });

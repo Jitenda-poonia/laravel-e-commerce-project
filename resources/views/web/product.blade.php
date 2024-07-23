@@ -42,14 +42,14 @@
             <div class="col-lg-7 h-auto mb-30">
                 <div class="h-100 bg-light p-30">
                     <h3> {{ $product->name }}</h3>
-                    
+
                     {{-- according to conditon price &&  special price show --}}
                     {{ getProductPriceShow($product->id) }}
 
                     <p class="mb-4">{{ $product->short_description }}</p>
 
                      {{-- Add to Cart --}}
-                    <form action="{{ route('cart.store', $product->id) }}" method="POST"> 
+                    <form action="{{ route('cart.store', $product->id) }}" method="POST">
                         @csrf
                         @foreach ($attributes as $attributeName => $attributeValues)
                             <br><strong class="text-dark mr-3">{{ $attributeName }} : </strong>
@@ -81,14 +81,12 @@
 
                     {{-- wishlist --}}
 
-                    <form action="{{ route('wishlist.store') }}" method="post">
+                    <form action="{{ route('add-to-wishlist', $product->id) }}" method="post">
                         @csrf
-                        <input type="hidden" name="user_id" value="{{ Auth::user()->id ?? '' }}">
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <button type="submit" class="btn btn-outline-dark btn-square"><i class="far fa-heart"></i></button>
                     </form>
 
-                    
+
                 </div>
             </div>
         </div>
@@ -104,7 +102,7 @@
                             <h4 class="mb-3">Product Description</h4>
                             <p>{!! $product->description !!}</p>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -124,18 +122,16 @@
                                 <img class="img-fluid w-100" src="{{ $_relatedProduct->getFirstMediaUrl('image') }}"
                                     alt="" style="height: 250px">
                                 <div class="product-action">
-                                    
+
                                     {{-- ----- wishlist--------------- --}}
-                                    <form action="{{ route('wishlist.store') }}" method="post">
+                                    <form action="{{ route('add-to-wishlist', $product->id) }}" method="post">
                                         @csrf
-                                        <input type="hidden" name="user_id" value="{{ Auth::user()->id ?? '' }}">
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <button type="submit" class="btn btn-outline-dark btn-square"><i
                                                 class="far fa-heart"></i></button>
                                     </form>
                                     {{-- ----End- wishlist--------------- --}}
 
-                                  
+
                                 </div>
                             </div>
                             <div class="text-center py-4">
@@ -151,7 +147,7 @@
                                         <h4 class="font-weight-semi-bold mb-4">{{ $_relatedProduct->price }}</h4>
                                     @endif
                                 </div>
-                               
+
                             </div>
                         </div>
                     @endforeach

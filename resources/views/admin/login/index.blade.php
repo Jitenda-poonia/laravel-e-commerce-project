@@ -76,6 +76,7 @@
 
 
             <a href="">I forgot my password</a><br>
+            <a href="{{ route('login.google') }}" class="btn btn-primary">Login with google </a>
 
 
         </div><!-- /.login-box-body -->

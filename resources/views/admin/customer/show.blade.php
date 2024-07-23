@@ -27,8 +27,8 @@
                         <h3 class="box-title">Customer Order List</h3>
                         <a href="{{ route('customer.index') }}" class="btn btn-primary fa fa-reply"
                             style="float: right;">Back</a>
-                    </div><!-- /.box-header -->
-                    
+                    </div>
+
                     <div class="box-body">
                         <table id="myTable" class="table table-bordered display" style="overflow: auto;display:block;" id="myTable">
                             <thead>
@@ -57,16 +57,15 @@
                                        <td><a href="{{ route('order.show', $order->id) }}"
                                             class="btn btn-primary btn-success fa fa-eye">view</a></td>
                                     </tr>
-                                
+
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-                </div><!-- /.box -->
-            </div><!-- /.col -->
+                </div>
+            </div>
         </div>
     </section>
-    <!-- Datatable initialization script -->
 <script>
     $(document).ready(function(){
         $('#myTable').DataTable();

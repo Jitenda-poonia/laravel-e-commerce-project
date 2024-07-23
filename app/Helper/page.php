@@ -93,7 +93,7 @@ function mostCategories()
 }
 function featuredProducts()
 {
-    $Products = Product::where('is_featured', 1)->limit(15)->get();
+    $Products = Product::where('is_featured', 1)->where('status', 1)->limit(15)->get();
     return $Products;
 }
 // getting related product 
@@ -101,7 +101,7 @@ function getRelatedProducts($ids)
 {
     $ids = explode(', ', $ids);
     // dd($ids);
-    $relatedProducts = Product::whereIn('id', $ids)->get();
+    $relatedProducts = Product::whereIn('id', $ids)->where('status', 1)->get();
     // SELECT * FROM products WHERE id IN (1, 2, 3, 4, 5);   
 
     // dd($relatedProducts);
@@ -321,8 +321,3 @@ function generatePriceRanges($products, $minPrice, $maxPrice, $interval)
 //         $productName = Product::select('name')->where($productsID);
 //         return $productName ;
 // }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> origin/main

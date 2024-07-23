@@ -47,13 +47,14 @@
                     </thead>
                     <tbody>
                         @foreach ($users as $key => $user)
+
                             <tr>
                                 <td>{{ ++$key . '.' }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->designation }}</td>
                                 <td>
-                                    <img src="{{ $user->getFirstMediaUrl('image', 'thumb') }}" / height="100px"
+                                    <img src="{{ $user->getFirstMediaUrl('image') }}" / height="100px"
                                         width="100px">
 
                                 </td>
