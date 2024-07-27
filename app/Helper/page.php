@@ -6,11 +6,9 @@ use App\Models\Page;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Enquiry;
-use App\Models\ProductAttribute;
 use App\Models\Quote;
 use App\Models\QuoteItem;
 use App\Models\Wishlist;
-use PHPUnit\Metadata\Version\Requirement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -85,7 +83,7 @@ function block($identifier)
     return $block;
 }
 
-//Home page pr limited category show 
+//Home page pr limited category show
 function mostCategories()
 {
     $categories = Category::where('status', 1)->orderBy('id', 'DESC')->limit(15)->get();
@@ -96,18 +94,18 @@ function featuredProducts()
     $Products = Product::where('is_featured', 1)->limit(15)->get();
     return $Products;
 }
-// getting related product 
+// getting related product
 function getRelatedProducts($ids)
 {
     $ids = explode(', ', $ids);
     // dd($ids);
     $relatedProducts = Product::whereIn('id', $ids)->get();
-    // SELECT * FROM products WHERE id IN (1, 2, 3, 4, 5);   
+    // SELECT * FROM products WHERE id IN (1, 2, 3, 4, 5);
 
     // dd($relatedProducts);
     return $relatedProducts;
 }
-// add last products 
+// add last products
 function recentProducts()
 {
     $recentProducts = Product::orderBy('id', 'DESC')->where('status', 1)->limit(8)->get();
@@ -129,7 +127,7 @@ function getProductPrice($pId)
         return $product->price;
     }
 }
-//CartItem count 
+//CartItem count
 function cartSummaryCount()
 {
     $cartId = Session::get('cart_id');
@@ -199,7 +197,7 @@ function getProductPriceShow($pId)
     return;
 }
 
-// wishlist count 
+// wishlist count
 function wishlistCount()
 {
     // Use the authenticated user to get the wishlist count
@@ -286,7 +284,7 @@ function getProductPriceFilter($categoryId)
 
 /**
  * Generate price ranges based on product prices.
- 
+
  */
 function generatePriceRanges($products, $minPrice, $maxPrice, $interval)
 {
@@ -317,12 +315,6 @@ function generatePriceRanges($products, $minPrice, $maxPrice, $interval)
     return $ranges;
 }
 
-// function getRelatedProdectName($productsID){
-//         $productName = Product::select('name')->where($productsID);
-//         return $productName ;
-// }
-<<<<<<< HEAD
-=======
 
 
->>>>>>> origin/main
+

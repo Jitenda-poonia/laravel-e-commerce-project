@@ -47,23 +47,16 @@ class AttributeController extends Controller
         ]);
         $data = $request->all();
 
-<<<<<<< HEAD
-        // $nameKey = $data['name_key'];
-        // $name = $data['name'];
-
-        $nameKey = $data['name_key'] ?? $data['name'];;
-=======
         $nameKey = $data['name_key'];
         $name = $data['name'];
         $nameKey = $nameKey ?? $name;
->>>>>>> origin/main
         $data['name_key'] = attrNameKey($nameKey);
 
         $atrData = Attribute::create($data);
 
         $atrVluNames = $request->atrName;
         $atrVluStatus = $request->atrStatus;
-        
+
         foreach ($atrVluNames as $key => $name) {
             $status = $atrVluStatus[$key];
             AttributeValue::create([
@@ -117,11 +110,7 @@ class AttributeController extends Controller
             'is_variant' => $request->is_variant,
         ]);
 
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> origin/main
         $atrValueId = $request->atrvalueId;
         $atrValueNames = $request->atrName;
         $atrValueStatus = $request->atrStatus;
@@ -152,7 +141,7 @@ class AttributeController extends Controller
             }
         }
 
-        
+
 
         return redirect()->route('attribute.index')->with('success', 'Data update Successfully');
     }

@@ -5,11 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Slider;
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Gate;
-=======
-use Gate;
->>>>>>> origin/main
 
 class SliderController extends Controller
 {
@@ -28,11 +24,7 @@ class SliderController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> origin/main
     {
         abort_unless(Gate::allows("slider_create"), 403);
 
@@ -50,17 +42,14 @@ class SliderController extends Controller
             "status" => "required",
             "image" => "required",
         ]);
-<<<<<<< HEAD
-=======
 
         $slider = Slider::create($data);
         if ($request->hasFile('image') && $request->File('image')->isValid()) {
             $slider->addMediaFromRequest('image')->toMediaCollection('image');
 
         }
-        
+
         return redirect()->route('slider.index')->with("success", "Record Save Successfullay");
->>>>>>> origin/main
 
         $slider = Slider::create($data);
         if ($request->hasFile('image') && $request->File('image')->isValid()) {
@@ -75,10 +64,6 @@ class SliderController extends Controller
      */
     public function show(string $id)
     {
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
     }
 
     /**
@@ -90,10 +75,6 @@ class SliderController extends Controller
 
         $slider = Slider::find($id);
         return view("admin.slider.edit", compact("slider"));
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
     }
 
     /**
@@ -116,15 +97,10 @@ class SliderController extends Controller
         }
         if ($request->remove) {
             $slider->clearMediaCollection('image');
-<<<<<<< HEAD
-        }
-        return redirect()->route('slider.index')->with("success", "Record Update Successfullay");
-=======
 
         }
         return redirect()->route('slider.index')->with("success", "Record Update Successfullay");
 
->>>>>>> origin/main
     }
 
     /**
@@ -136,9 +112,5 @@ class SliderController extends Controller
         $slider->delete();
         $slider->getFirstMediaUrl('id');
         return redirect()->route('slider.index')->with("success", "Record Delete Successfullay");
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
     }
 }

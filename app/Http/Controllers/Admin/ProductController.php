@@ -74,21 +74,10 @@ class ProductController extends Controller
 
         // get prodect Id
         $productId = $product->id;
-<<<<<<< HEAD
+
         $attributesId = $request->input('attributes');
         $attributeValuesId = $request->input('attribute_values');
-=======
-        
-        $attributesId = $request->input('attributes');
-        $attributeValuesId = $request->input('attribute_values');
-        // echo "<pre>";
-        // print_r($attributeValuesId);
-        // die();
-        foreach ($attributesId as $attributeId) {
-        //   dd($attributeId);    
-            foreach ($attributeValuesId[$attributeId] as $attributeValueId) {
-        //   dd($attributeValueId);
->>>>>>> origin/main
+
 
         foreach ($attributesId as $attributeId) {
 
@@ -115,7 +104,7 @@ class ProductController extends Controller
             $product->addMediaFromRequest('thumbnail_image')->toMediaCollection('thumbnail_image');
         }
 
-        // product and category  relationship insert to Product_catogries table 
+        // product and category  relationship insert to Product_catogries table
         if ($request->has('categories')) {
             $product->categories()->sync($request->input('categories'));
         }
@@ -129,7 +118,7 @@ class ProductController extends Controller
         }
     }
 
-    /**   
+    /**
      * Display the specified resource.
      */
     public function show(string $id)
@@ -139,7 +128,7 @@ class ProductController extends Controller
         return view('admin.product.show', compact('product'));
     }
 
-    /** 
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
@@ -227,21 +216,6 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
-<<<<<<< HEAD
-        // Detach all categories related to the product
-        $product->categories()->detach();
-        // Now you can delete the product
-        $product->delete();
-        // Retrieve and delete all media items associated with the product
-        $product->getFirstMediaUrl('id');
-
-        // Delete associated product attributes
-        ProductAttribute::where('product_id', $id)->delete();
-
-        return back()->with('success', 'Data Deleted Successfully');
-=======
-
->>>>>>> origin/main
     }
-   
+
 }

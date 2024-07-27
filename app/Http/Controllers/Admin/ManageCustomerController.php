@@ -13,11 +13,7 @@ class ManageCustomerController extends Controller
     public function index()
     {
         abort_unless(Gate::allows('manage_customer'), 403);
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> origin/main
         $users = User::all();
         return view('admin.customer.index', compact('users'));
     }
