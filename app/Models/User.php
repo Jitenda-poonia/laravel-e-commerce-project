@@ -48,4 +48,7 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->morphMany(Image::class, 'imagable');
     }
+    public function wishlist(){
+        return $this->hasMany(Wishlist::class);
+    }
 }

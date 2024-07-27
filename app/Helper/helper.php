@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Str;
 use App\Models\UserLog;
-use Illuminate\Support\Facades\Auth;
 
 if (!function_exists('generateUniqueUrlKey')) {
     function generateUniqueUrlKey($name)
