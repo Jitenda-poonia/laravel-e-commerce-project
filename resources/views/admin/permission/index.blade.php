@@ -19,7 +19,7 @@
             <li class="active">Permission List</li>
         </ol>
     </section>
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="box">
             @if (session()->has('success'))
                 <div class="callout callout-success">
@@ -66,8 +66,8 @@
 
 
     </div>
-     <!-- Datatable initialization script -->
-     <script>
+    <!-- Datatable initialization script -->
+    <script>
         $(document).ready(function() {
             $('#myTable').DataTable();
         });

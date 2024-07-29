@@ -16,7 +16,7 @@ class AttributeController extends Controller
     public function index()
     {
         abort_unless(Gate::allows('attribute_index'), 403);
-        $attributes  =  Attribute::all();
+        $attributes = Attribute::all();
         return view('admin.attribute.index', compact('attributes'));
     }
 
@@ -42,17 +42,25 @@ class AttributeController extends Controller
             'atrStatus.0' => 'required',
         ], [
             'is_variant.required' => 'please select variant',
-            'atrName.0.required' => 'Attribute value  name is required',
+            'atrName.0.required' => 'Attribute value name is required',
             'atrStatus.0.required' => 'Attribute value status is required'
         ]);
+
         $data = $request->all();
 
+<<<<<<< HEAD
+        // $nameKey = $data['name_key'];
+        // $name = $data['name'];
+
+        $nameKey = $data['name_key'] ?? $data['name'];;
+=======
         $nameKey = $data['name_key'];
         $name = $data['name'];
         $nameKey = $nameKey ?? $name;
+>>>>>>> origin/main
         $data['name_key'] = attrNameKey($nameKey);
 
-        $atrData = Attribute::create($data);
+        $attribute = Attribute::create($data);
 
         $atrVluNames = $request->atrName;
         $atrVluStatus = $request->atrStatus;
@@ -60,11 +68,12 @@ class AttributeController extends Controller
         foreach ($atrVluNames as $key => $name) {
             $status = $atrVluStatus[$key];
             AttributeValue::create([
-                'attribute_id' => $atrData->id,
+                'attribute_id' => $attribute->id,
                 'name' => $name,
                 'status' => $status
             ]);
         }
+
         return redirect()->route('attribute.index')->with('success', 'Data Save Successfully');
     }
 
@@ -74,7 +83,7 @@ class AttributeController extends Controller
     public function show(string $id)
     {
         abort_unless(Gate::allows('attribute_show'), 403);
-        $attribute = Attribute::find($id);
+        $attribute = Attribute::findOrFail($id);
         return view('admin.attribute.show', compact('attribute'));
     }
 
@@ -83,8 +92,9 @@ class AttributeController extends Controller
      */
     public function edit(string $id)
     {
-
-        return view('admin.attribute.edit', ['attribute' => Attribute::findOrFail($id)]);
+        abort_unless(Gate::allows('attribute_edit'), 403);
+        $attribute = Attribute::findOrFail($id);
+        return view('admin.attribute.edit', compact('attribute'));
     }
 
     /**
@@ -100,44 +110,41 @@ class AttributeController extends Controller
             'atrStatus.0' => 'required',
         ], [
             'is_variant.required' => 'please select variant',
-            'atrName.0.required' => 'Attribute value  name is required',
+            'atrName.0.required' => 'Attribute value name is required',
             'atrStatus.0.required' => 'Attribute value status is required'
         ]);
 
-        Attribute::where('id', $id)->update([
+        $attribute = Attribute::findOrFail($id);
+        $attribute->update([
             'name' => $request->name,
             'status' => $request->status,
             'is_variant' => $request->is_variant,
         ]);
 
-
         $atrValueId = $request->atrvalueId;
         $atrValueNames = $request->atrName;
         $atrValueStatus = $request->atrStatus;
 
-        if (empty($atrValueId)) {
-            AttributeValue::where('attribute_id', $atrValueId)->delete();
+        if (empty($attributeValueIds)) {
+            AttributeValue::where('attribute_id', $id)->delete();
         } else {
-            AttributeValue::whereNotIn('id', $atrValueId)->where('attribute_id', $id)->delete();
+            AttributeValue::whereNotIn('id', $attributeValueIds)->where('attribute_id', $id)->delete();
         }
 
-        if ($atrValueNames) {
-            foreach ($atrValueNames as $key => $name) {
-                $atrValue_Id = $atrValueId[$key] ?? 0;
+        foreach ($attributeValueNames as $key => $name) {
+            $attributeValueId = $attributeValueIds[$key] ?? 0;
 
-                if ($atrValue_Id) {
-                    AttributeValue::where('id', $atrValue_Id)->update([
-                        'name' => $name,
-                        'status' => $atrValueStatus[$key]
-                    ]);
-                } else {
-                    AttributeValue::create([
-                        'attribute_id' => $id,
-                        'name' => $name,
-                        'status' => $atrValueStatus[$key]
-
-                    ]);
-                }
+            if ($attributeValueId) {
+                AttributeValue::where('id', $attributeValueId)->update([
+                    'name' => $name,
+                    'status' => $attributeValueStatuses[$key]
+                ]);
+            } else {
+                AttributeValue::create([
+                    'attribute_id' => $id,
+                    'name' => $name,
+                    'status' => $attributeValueStatuses[$key]
+                ]);
             }
         }
 

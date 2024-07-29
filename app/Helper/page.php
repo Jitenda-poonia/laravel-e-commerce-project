@@ -91,7 +91,7 @@ function mostCategories()
 }
 function featuredProducts()
 {
-    $Products = Product::where('is_featured', 1)->limit(15)->get();
+    $Products = Product::where('is_featured', 1)->where('status', 1)->limit(15)->get();
     return $Products;
 }
 // getting related product
@@ -315,6 +315,12 @@ function generatePriceRanges($products, $minPrice, $maxPrice, $interval)
     return $ranges;
 }
 
+// function getRelatedProdectName($productsID){
+//         $productName = Product::select('name')->where($productsID);
+//         return $productName ;
+// }
+<<<<<<< HEAD
+=======
 
 
-
+>>>>>>> origin/main

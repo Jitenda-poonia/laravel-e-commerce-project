@@ -15,7 +15,7 @@
     </div>
     <!-- Breadcrumb End -->
 
-   
+
     <!-- Shop Start -->
     <div class="container-fluid">
         <div class="row px-xl-5">
@@ -172,7 +172,7 @@
                                         </select>
                                     </form>
                                 </div>
-                                
+
                             </div>
                         </div>
                         @if (session()->has('success'))
@@ -186,37 +186,45 @@
                         {{-- {{ $_product->name }} --}}
                         <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                             <div class="product-item bg-light mb-4">
-
                                 <div class="product-img position-relative overflow-hidden">
                                     <img class="img-fluid w-100" src="{{ $_product->getFirstMediaUrl('image') }}"
                                         alt="" style="height: 250px">
                                     <div class="product-action">
-                                     
-                                        <form action="{{ route('wishlist.store') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" value="{{ Auth::user()->id ?? '' }}" name="user_id">
-                                            <input type="hidden" value="{{ $_product->id }}" name="product_id">
-                                            <button type="submit" class="btn btn-outline-dark btn-square"><i
-                                                    class="far fa-heart"></i></button>
-                                        </form>
-
-
-                                       
+                                        @if ($_product->stock_status == 1)
+                                            <form action="{{ route('wishlist.store') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" value="{{ Auth::user()->id ?? '' }}"
+                                                    name="user_id">
+                                                <input type="hidden" value="{{ $_product->id }}" name="product_id">
+                                                <button type="submit" class="btn btn-outline-dark btn-square">
+                                                    <i class="far fa-heart"></i>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button class="btn btn-outline-dark btn-square" disabled>
+                                                <i class="far fa-heart"></i>
+                                            </button>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="text-center py-4">
                                     <a class="h6 text-decoration-none text-truncate"
-                                        href="{{ route('productData', $_product->url_key) }}">{{ $_product->name }}</a>
+                                        href="{{ route('productData', $_product->url_key) }}">
+                                        {{ $_product->name }}
+                                    </a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
-
                                         {{ getProductPriceShow($_product->id) }}
-
                                     </div>
-                                   
+                                    @if ($_product->stock_status == 2)
+                                        <div class="text-center mt-2">
+                                            <span class="text-danger">Out of Stock</span>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     @endforeach
+
 
                     {{ $products->links() }}
 

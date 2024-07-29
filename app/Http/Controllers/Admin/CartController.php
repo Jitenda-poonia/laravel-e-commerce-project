@@ -26,8 +26,8 @@ class CartController extends Controller
 
         $cart_id = Session::get('cart_id');
 
-         // Get the authenticated user
-          $user = Auth::user();
+        // Get the authenticated user
+        $user = Auth::user();
 
         if ($cart_id) {
             // echo $cart_id . 'Update time';
@@ -63,7 +63,7 @@ class CartController extends Controller
             Session::put('cart_id', $cart_id);
             // echo $cart_id . "First time";
 
-         
+
             $quote = Quote::create([
                 'cart_id' => $cart_id,
                 'user_id' => $user->id ?? 0,
@@ -85,7 +85,7 @@ class CartController extends Controller
         recalculateCart();
 
         return redirect()->route('cart');
-        
+
     }
 
 
@@ -123,7 +123,7 @@ class CartController extends Controller
             // dd($coupon);
             // $quote = Quote::where('id', $quoteId)->first();
             // dd($quote);
-            if ($coupon) { 
+            if ($coupon) {
                 if (($coupon->valid_from <= now()) && ($coupon->valid_to >= now()) && $coupon->discount_amount < $quote->subtotal) {
                     $quote = Quote::where('id', $quoteId)->update([
                         'coupon' => $coupon->coupon_code,
@@ -154,17 +154,17 @@ class CartController extends Controller
     {
         // dd($request->all());
         $quoteItem = QuoteItem::find($id);
-      
+
         $qty = $request->qty;
         $rowTotal = $quoteItem->price * $qty;
-      QuoteItem::where('id', $id)->update([
+        QuoteItem::where('id', $id)->update([
             'qty' => $qty,
             'row_total' => $rowTotal,
         ]);
-        
+
         recalculateCart();
         return redirect()->back();
-        
+
 
     }
 

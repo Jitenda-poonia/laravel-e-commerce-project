@@ -46,6 +46,7 @@ class ManageOrderController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
+        //order status update 
         $order = Order::findOrFail($id);
         $order->status = $request->input('status');
         $order->save();

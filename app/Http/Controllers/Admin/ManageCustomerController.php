@@ -18,12 +18,11 @@ class ManageCustomerController extends Controller
         return view('admin.customer.index', compact('users'));
     }
 
-
     public function show($id)
     {
         abort_unless(Gate::allows('manage_customer'), 403);
 
-        $user = User::where('id', $id)->first();
+        $user = User::findOrFail($id);
         $orders = Order::where('user_id', $user->id)->get();
         return view('admin.customer.show', compact('user', 'orders'));
     }

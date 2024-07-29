@@ -14,7 +14,7 @@
 
         </ol>
     </section>
-    <div class="col-md-10">
+    <div class="col-md-12">
         <div class="box">
 
             @if (session()->has('success'))

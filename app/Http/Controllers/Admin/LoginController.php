@@ -31,10 +31,13 @@ class LoginController extends Controller
         ]);
         // dd($loginData);
         if (Auth::attempt($loginData)) {
+            $userId = Auth::user()->id;
 
             // Create user log for admin
-            UserLog::create(['user_id' => Auth::user()->id]);
+            UserLog::create(['user_id' => $userId]);
 
+            //return only the latest & second-to-last login recors
+            returnLatestTwoLogins($userId);
             return redirect()->route('dashboard')->with('success', 'User Login Successfully');
         } else {
             return redirect()->route('login')->with('error', 'Email and Password not valid, please try again');

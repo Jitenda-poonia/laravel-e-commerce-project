@@ -25,7 +25,7 @@
 
     <section class="content">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Add Coupon
@@ -45,26 +45,28 @@
                         <div class="box-body">
                             <div class="form-group">
                                 <label>Title</label>
-                                <input type="text" class="form-control" name="title" placeholder="Enter title" value="{{old('title')}}">
+                                <input type="text" class="form-control" name="title" placeholder="Enter title"
+                                    value="{{ old('title') }}">
                                 @error('title')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label>Coupon Code</label>
-                                <input type="text" class="form-control" name="coupon_code" placeholder="Enter coupon code" value="{{old('coupon_code')}}">
+                                <input type="text" class="form-control" name="coupon_code"
+                                    placeholder="Enter coupon code" value="{{ old('coupon_code') }}">
                                 @error('coupon_code')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label>Status</label>
                                 <select name="status" class="form-control">
                                     <option value="">Select status</option>
-                                    <option value="1" {{old('status' == 1 ? 'selected' : "")}}>Enable</option>
-                                    <option value="2" {{old('status' == 2 ? 'selected' : "")}}>Disable</option>
+                                    <option value="1" {{ old('status' == 1 ? 'selected' : '') }}>Enable</option>
+                                    <option value="2" {{ old('status' == 2 ? 'selected' : '') }}>Disable</option>
                                 </select>
                                 @error('status')
                                     <span class="text-danger">{{ $message }}</span>
@@ -73,23 +75,26 @@
 
                             <div class="form-group">
                                 <label>Valid From</label>
-                                <input type="datetime-local" class="form-control" name="valid_from" value="{{old('valid_from')}}">
+                                <input type="datetime-local" class="form-control" name="valid_from"
+                                    value="{{ old('valid_from') }}">
                                 @error('valid_from')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label>Valid To</label>
-                                <input type="datetime-local" class="form-control" name="valid_to" value="{{old('valid_to')}}">
+                                <input type="datetime-local" class="form-control" name="valid_to"
+                                    value="{{ old('valid_to') }}">
                                 @error('valid_to')
-                                <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
 
                             <div class="form-group">
                                 <label>Discount Amount</label>
-                                <input type="number" class="form-control" name="discount_amount" step="0.01" placeholder="Enter discount amount" value="{{old('discount_amount')}}">
+                                <input type="number" class="form-control" name="discount_amount" step="0.01"
+                                    placeholder="Enter discount amount" value="{{ old('discount_amount') }}">
                                 @error('discount_amount')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
