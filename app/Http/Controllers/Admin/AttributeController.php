@@ -47,26 +47,16 @@ class AttributeController extends Controller
         ]);
 
         $data = $request->all();
-
-<<<<<<< HEAD
-        // $nameKey = $data['name_key'];
-        // $name = $data['name'];
-
-        $nameKey = $data['name_key'] ?? $data['name'];;
-=======
-        $nameKey = $data['name_key'];
-        $name = $data['name'];
-        $nameKey = $nameKey ?? $name;
->>>>>>> origin/main
+        $nameKey = $data['name_key'] ?? $data['name'];
         $data['name_key'] = attrNameKey($nameKey);
 
         $attribute = Attribute::create($data);
 
-        $atrVluNames = $request->atrName;
-        $atrVluStatus = $request->atrStatus;
+        $attributeValueNames = $request->atrName;
+        $attributeValueStatuses = $request->atrStatus;
 
-        foreach ($atrVluNames as $key => $name) {
-            $status = $atrVluStatus[$key];
+        foreach ($attributeValueNames as $key => $name) {
+            $status = $attributeValueStatuses[$key];
             AttributeValue::create([
                 'attribute_id' => $attribute->id,
                 'name' => $name,
@@ -121,9 +111,9 @@ class AttributeController extends Controller
             'is_variant' => $request->is_variant,
         ]);
 
-        $atrValueId = $request->atrvalueId;
-        $atrValueNames = $request->atrName;
-        $atrValueStatus = $request->atrStatus;
+        $attributeValueIds = $request->atrvalueId;
+        $attributeValueNames = $request->atrName;
+        $attributeValueStatuses = $request->atrStatus;
 
         if (empty($attributeValueIds)) {
             AttributeValue::where('attribute_id', $id)->delete();
@@ -148,9 +138,7 @@ class AttributeController extends Controller
             }
         }
 
-
-
-        return redirect()->route('attribute.index')->with('success', 'Data update Successfully');
+        return redirect()->route('attribute.index')->with('success', 'Data Update Successfully');
     }
 
     /**

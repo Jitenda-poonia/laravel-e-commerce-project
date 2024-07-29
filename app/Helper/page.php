@@ -315,12 +315,3 @@ function generatePriceRanges($products, $minPrice, $maxPrice, $interval)
     return $ranges;
 }
 
-// function getRelatedProdectName($productsID){
-//         $productName = Product::select('name')->where($productsID);
-//         return $productName ;
-// }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> origin/main

@@ -38,8 +38,6 @@ class PermissionController extends Controller
         $permission = $request->validate([
             'name' => 'required|unique:permissions'
         ]);
-<<<<<<< HEAD
-=======
 
         Permission::create($permission);
 
@@ -48,7 +46,6 @@ class PermissionController extends Controller
       }else{
         return back()->with('success','permission Save Successfully');
       }
->>>>>>> origin/main
 
         Permission::create($permission);
 
