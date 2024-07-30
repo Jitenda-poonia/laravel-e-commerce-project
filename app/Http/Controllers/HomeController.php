@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\URL;
 use App\Models\AttributeValue;
 use App\Models\ProductAttribute;
 use App\Models\Attribute;
@@ -11,7 +10,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Models\Slider;
-use App\Models\Block;
+use Illuminate\Support\Facades\URL;
 
 //HomeController
 class HomeController extends Controller
@@ -19,7 +18,7 @@ class HomeController extends Controller
     public function index()
     {
 
-        $sliders = Slider::where("status", 1)->get();
+        $sliders = Slider::where("status", 1)->with('media')->get();
         return view("web.home", compact('sliders'));
     }
     public function contact()
@@ -44,7 +43,7 @@ class HomeController extends Controller
     public function category(Request $request, $url_key)
     {
         // Full URL
-        // $fullUrl = URL::full();
+        $fullUrl = URL::full();
 
 
         // Retrieve the category based on the provided URL key
@@ -54,9 +53,7 @@ class HomeController extends Controller
         $query = $category->products()->where('status', 1);
 
 
-        // $category = Category::with(['products' => function ($query) use ($request) {
-        // Extracted price range from the request
-        // Convert string values to integers
+
         // Apply filters based on the request parameters
         if ($request->has('price')) {
             $priceExp = explode('-', $request->price);
@@ -74,12 +71,7 @@ class HomeController extends Controller
             $query->orderBy('price', 'desc');
         }
         $products = $query->paginate(3);
-        // }])->where('url_key', $url_key)->first();
 
-        // echo "<pre>";
-        // print_r($category->products);
-        // die;
-        // //$products = $category->products()->paginate(9);
 
         if ($category) {
             return view('web.category', compact('category', 'products', 'request', 'fullUrl'));

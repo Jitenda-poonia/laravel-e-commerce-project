@@ -58,40 +58,35 @@ function subCategoryName($id)
 
 function frntcategories()
 {
-    $category = Category::where('category_parent_id', 0)->where('status', 1)->where('show_in_menu', 1)->get();
+    $category = Category::where('category_parent_id', 0)->where('status', 1)->where('show_in_menu', 1)->with('media')->get();
     return $category;
 }
 function frntSubCategories($id)
 {
-    $category = Category::where('category_parent_id', $id)->where('status', 1)->where('show_in_menu', 1)->get();
+    $category = Category::where('category_parent_id', $id)->where('status', 1)->where('show_in_menu', 1)->with('media')->get();
     return $category;
 }
-// Requirement according
-// function frntsubsubCategories($id)
-// {
-//     $category = Category::where('category_parent_id', $id)->where('status', 1)->where('show_in_menu', 1)->get();
-//     return $category;
-// }
+
 function products()
 {
-    $Products = Product::where('is_featured', 1)->where('status', 1)->get();
+    $Products = Product::where('is_featured', 1)->where('status', 1)->with('media')->get();
     return $Products;
 }
 function block($identifier)
 {
-    $block = Block::where('status', 1)->where('identifier', $identifier)->first();
+    $block = Block::where('status', 1)->where('identifier', $identifier)->with('media')->first();
     return $block;
 }
 
 //Home page pr limited category show
 function mostCategories()
 {
-    $categories = Category::where('status', 1)->orderBy('id', 'DESC')->limit(15)->get();
+    $categories = Category::where('status', 1)->orderBy('id', 'DESC')->limit(15)->with('media')->get();
     return $categories;
 }
 function featuredProducts()
 {
-    $Products = Product::where('is_featured', 1)->where('status', 1)->limit(15)->get();
+    $Products = Product::where('is_featured', 1)->where('status', 1)->with('media')->limit(15)->get();
     return $Products;
 }
 // getting related product
@@ -99,7 +94,7 @@ function getRelatedProducts($ids)
 {
     $ids = explode(', ', $ids);
     // dd($ids);
-    $relatedProducts = Product::whereIn('id', $ids)->get();
+    $relatedProducts = Product::whereIn('id', $ids)->with('media')->get();
     // SELECT * FROM products WHERE id IN (1, 2, 3, 4, 5);
 
     // dd($relatedProducts);
@@ -108,7 +103,7 @@ function getRelatedProducts($ids)
 // add last products
 function recentProducts()
 {
-    $recentProducts = Product::orderBy('id', 'DESC')->where('status', 1)->limit(8)->get();
+    $recentProducts = Product::orderBy('id', 'DESC')->where('status', 1)->with('media')->limit(8)->get();
     return $recentProducts;
 }
 function getAttribute()
@@ -167,7 +162,7 @@ function recalculateCart()
 
 function productImage($pId)
 {
-    $product = Product::find($pId);
+    $product = Product::find($pId)->with('media');
     return $product->getFirstMediaUrl('thumbnail_image');
 }
 
