@@ -9,4 +9,7 @@ class Coupon extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    public function scopeActive($query) {
+        return $query->where('status', 1);
+    }
 }

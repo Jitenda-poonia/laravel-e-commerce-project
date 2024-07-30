@@ -17,6 +17,9 @@ class Page extends Model implements HasMedia
         'url_key',
         'description',
         'parent_id'
-        
+
     ];
+    public function scopeActive($query) {
+        return $query->where('status', 1);
+    }
 }

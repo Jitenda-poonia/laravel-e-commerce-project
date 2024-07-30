@@ -25,4 +25,7 @@ class Category extends Model implements HasMedia
     public function products() {
         return $this->belongsToMany(Product::class, 'product_categories');
     }
+    public function scopeActive($query) {
+        return $query->where('status', 1);
+    }
 }

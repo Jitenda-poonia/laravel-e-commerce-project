@@ -10,10 +10,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
-// use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
-
 class CartController extends Controller
 {
     public function addToCart(Request $request, $productId)
@@ -63,7 +60,6 @@ class CartController extends Controller
             Session::put('cart_id', $cart_id);
             // echo $cart_id . "First time";
 
-
             $quote = Quote::create([
                 'cart_id' => $cart_id,
                 'user_id' => $user->id ?? 0,
@@ -88,8 +84,6 @@ class CartController extends Controller
 
     }
 
-
-
     // View Cart method
     public function viewCart()
     {
@@ -111,18 +105,13 @@ class CartController extends Controller
     // apply coupon method
     public function couponApply(Request $request, $quoteId)
     {
-
-        // dd($request->all());
-
         $couponCode = $request->coupon;
         $cartId = Session::get('cart_id');
         $quote = Quote::where('cart_id', $cartId)->first();
         if ($request->get('action') == 'apply_coupon') {
 
-            $coupon = Coupon::where('coupon_code', $couponCode)->where('status', 1)->first();
-            // dd($coupon);
-            // $quote = Quote::where('id', $quoteId)->first();
-            // dd($quote);
+            $coupon = Coupon::where('coupon_code', $couponCode)->active()->first();
+
             if ($coupon) {
                 if (($coupon->valid_from <= now()) && ($coupon->valid_to >= now()) && $coupon->discount_amount < $quote->subtotal) {
                     $quote = Quote::where('id', $quoteId)->update([
@@ -152,7 +141,6 @@ class CartController extends Controller
 
     public function cartUpdate(Request $request, $id)
     {
-        // dd($request->all());
         $quoteItem = QuoteItem::find($id);
 
         $qty = $request->qty;

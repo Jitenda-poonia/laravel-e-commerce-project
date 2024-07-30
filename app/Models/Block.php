@@ -16,7 +16,10 @@ class Block extends Model implements HasMedia
         'status',
         'description',
         'identifier',
-       
+
     ];
+    public function scopeActive($query) {
+        return $query->where('status', 1);
+    }
 }
 

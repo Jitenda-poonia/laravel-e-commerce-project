@@ -29,8 +29,7 @@ class HomeController extends Controller
     //get page.blade.php me
     public function page($urlkey)
     {
-        // $pages = Page::where('url_key', $urlkey)->where('status', 1)->first() ? Page::where('url_key', $urlkey)->where('status', 1)->first() : Block::where('identifier', $urlkey)->where('status', 1)->first();
-        $pages = Page::where('url_key', $urlkey)->where('status', 1)->first();
+        $pages = Page::where('url_key', $urlkey)->active()->first();
         if ($pages) {
             return view('web.page', compact('pages'));
         } else {
@@ -50,7 +49,7 @@ class HomeController extends Controller
         $category = Category::where('url_key', $url_key)->first();
 
         // Start building the product query based on the category
-        $query = $category->products()->where('status', 1);
+        $query = $category->products()->active();
 
 
 
@@ -81,7 +80,7 @@ class HomeController extends Controller
     }
     public function product($urlkey)
     {
-        $product = Product::where('url_key', $urlkey)->where('status', 1)->first();
+        $product = Product::where('url_key', $urlkey)->active()->first();
 
         $productAttributes = ProductAttribute::where('product_id', $product->id)->get();
         $attributes = [];

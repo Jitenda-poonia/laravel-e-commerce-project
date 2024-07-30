@@ -36,5 +36,7 @@ class Product extends Model implements HasMedia
     public function attributes() {
         return $this->hasMany(ProductAttribute::class);
     }
-
+    public function scopeActive($query) {
+        return $query->where('status', 1);
+    }
 }

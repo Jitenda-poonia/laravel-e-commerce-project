@@ -86,7 +86,7 @@ function mostCategories()
 }
 function featuredProducts()
 {
-    $Products = Product::where('is_featured', 1)->where('status', 1)->with('media')->limit(15)->get();
+    $Products = Product::where('is_featured', 1)->active()->with('media')->limit(15)->get();
     return $Products;
 }
 // getting related product

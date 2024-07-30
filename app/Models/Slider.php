@@ -8,13 +8,14 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\HasMedia;
 class Slider extends Model implements HasMedia
 {
-    
+
      use HasFactory, InteractsWithMedia;
     protected $fillable = [
         'title',
         'ordering',
         'status',
-       
-        
     ];
+    public function scopeActive($query) {
+        return $query->where('status', 1);
+    }
 }
