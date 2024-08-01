@@ -1,13 +1,12 @@
 <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
+    @php $user = Auth::user() @endphp
     <section class="sidebar">
-        <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{{ Auth::user()->getFirstMediaUrl('image') }}" class="img-circle" alt="User Image">
+                <img src="{{ $user->getFirstMediaUrl('image') }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>{{ Auth::user()->name }} <br>
+                <p>{{ $user->name }} <br>
                     <small>{{ lastlogintime() }}</small>
                 </p>
 
@@ -15,11 +14,7 @@
             </div>
         </div>
 
-        <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-
-
-
             @can('user_index')
                 <li class="treeview">
                     <a href="#">
@@ -31,7 +26,7 @@
                         <li><a href="{{ route('user.create') }}"><i class="fa fa-user"></i><i
                                     class="fa fa-plus-square"></i>User</a></li>
                         <li><a href="{{ route('user.index') }}"><i class="fa fa-users"></i>user List</a></li>
-                        <li><a href="{{ route('user.show', Auth::user()->id) }}"><i class="fa fa-user-md"></i><span>User
+                        <li><a href="{{ route('user.show', $user->id) }}"><i class="fa fa-user-md"></i><span>User
                                     Profile</span></a></li>
 
                     </ul>
@@ -208,5 +203,4 @@
 
         </ul>
     </section>
-    <!-- /.sidebar -->
 </aside>

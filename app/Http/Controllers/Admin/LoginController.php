@@ -29,7 +29,6 @@ class LoginController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
-        // dd($loginData);
         if (Auth::attempt($loginData)) {
             $userId = Auth::user()->id;
 

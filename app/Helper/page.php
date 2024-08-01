@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\Session;
 
 function getPages()
 {
-    $pages = Page::orderBy('ordering')->where('status', 1)->where('parent_id', 0)->get();
+    $pages = Page::orderBy('ordering')->active()->where('parent_id', 0)->get();
     return $pages;
 }
 function getSubPages($id)
 {
-    $pages = Page::oderBy('ordering')->where('status', 1)->where('parent_id', $id)->get();
+    $pages = Page::oderBy('ordering')->active()->where('parent_id', $id)->get();
     return $pages;
 }
 //category create/edit ke liye start
@@ -42,7 +42,7 @@ function subsubCategories($id)
 
 function enquiryCount()
 {
-    $enquiryCount = Enquiry::where('status', 1)->count();
+    $enquiryCount = Enquiry::active()->count();
     return $enquiryCount;
 }
 
@@ -58,30 +58,30 @@ function subCategoryName($id)
 
 function frntcategories()
 {
-    $category = Category::where('category_parent_id', 0)->where('status', 1)->where('show_in_menu', 1)->with('media')->get();
+    $category = Category::where('category_parent_id', 0)->active()->where('show_in_menu', 1)->with('media')->get();
     return $category;
 }
 function frntSubCategories($id)
 {
-    $category = Category::where('category_parent_id', $id)->where('status', 1)->where('show_in_menu', 1)->with('media')->get();
+    $category = Category::where('category_parent_id', $id)->active()->where('show_in_menu', 1)->with('media')->get();
     return $category;
 }
 
 function products()
 {
-    $Products = Product::where('is_featured', 1)->where('status', 1)->with('media')->get();
+    $Products = Product::where('is_featured', 1)->active()->with('media')->get();
     return $Products;
 }
 function block($identifier)
 {
-    $block = Block::where('status', 1)->where('identifier', $identifier)->with('media')->first();
+    $block = Block::active()->where('identifier', $identifier)->with('media')->first();
     return $block;
 }
 
 //Home page pr limited category show
 function mostCategories()
 {
-    $categories = Category::where('status', 1)->orderBy('id', 'DESC')->limit(15)->with('media')->get();
+    $categories = Category::active()->orderBy('id', 'DESC')->limit(15)->with('media')->get();
     return $categories;
 }
 function featuredProducts()
@@ -103,7 +103,7 @@ function getRelatedProducts($ids)
 // add last products
 function recentProducts()
 {
-    $recentProducts = Product::orderBy('id', 'DESC')->where('status', 1)->with('media')->limit(8)->get();
+    $recentProducts = Product::orderBy('id', 'DESC')->active()->with('media')->limit(8)->get();
     return $recentProducts;
 }
 function getAttribute()

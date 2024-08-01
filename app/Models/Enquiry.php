@@ -14,4 +14,7 @@ class Enquiry extends Model
         "phone",
         "message",
     ];
+    public function scopeActive($query){
+        return $query->where("status", 1);
+    }
 }
