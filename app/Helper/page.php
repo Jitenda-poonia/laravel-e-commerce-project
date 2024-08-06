@@ -198,9 +198,15 @@ function wishlistCount()
 {
     // Use the authenticated user to get the wishlist count
     $user = auth()->user();
-    return $user?->wishlist->count()?:0;
 
+    // Check if the user and the wishlist exist
+    if ($user && $user->wishlist) {
+        return $user->wishlist->count();
+    }
+
+    return 0;
 }
+
 
 // get Auth User Id
 function getAuthUserId()
@@ -304,13 +310,3 @@ function generatePriceRanges($products, $minPrice, $maxPrice, $interval)
 
     return $ranges;
 }
-
-// function getRelatedProdectName($productsID){
-//         $productName = Product::select('name')->where($productsID);
-//         return $productName ;
-// }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> origin/main

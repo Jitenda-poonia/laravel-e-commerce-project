@@ -31,7 +31,8 @@ class LoginController extends Controller
         if (Auth::attempt($loginData)) {
 
             // Create user log for admin
-            UserLog::create(['user_id' => Auth::user()->id]);
+            $userId =  Auth::user()->id;
+            UserLog::create(['user_id' =>$userId ]);
 
             //return only the latest & second-to-last login recors
             returnLatestTwoLogins($userId);

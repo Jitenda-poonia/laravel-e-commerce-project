@@ -15,15 +15,9 @@ class PageController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        abort_unless(Gate::allows('page_index'), 403);
-        // $pages = Page::orderBy("id", "desc")->get();
-        $pages = Page::latest()->get();
-=======
         abort_unless(Gate::allows('page_index'),403);
         $pages = Page::orderBy("id", "desc")->get();
         // $pages = Page::latest()->get();
->>>>>>> origin/main
         return view("admin.page.index", compact("pages"));
     }
 
@@ -51,21 +45,12 @@ class PageController extends Controller
             "description" => "required",
             "image" => "required",
         ]);
-<<<<<<< HEAD
-        $urlKey =  $request->url_key ?? $data['title'];
-=======
         $urlKey =  $request->url_key ?? $data['title'] ;
->>>>>>> origin/main
         $data['url_key'] = generateUniqueUrlKey($urlKey);
         $data['title'] = ucwords($data['title']);
 
-<<<<<<< HEAD
-        $data['parent_id'] = $request->parent_id ?? 0;
-
-=======
        $data['parent_id'] = $request->parent_id ?? 0;
 
->>>>>>> origin/main
         $page = Page::create($data);
         $page->addMediaFromRequest('image')->toMediaCollection('image');
         return redirect()->route('page.index')->with('success', 'Data Save Successfully');

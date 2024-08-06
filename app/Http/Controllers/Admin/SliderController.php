@@ -24,11 +24,6 @@ class SliderController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-<<<<<<< HEAD
-
-=======
-
->>>>>>> origin/main
     {
         abort_unless(Gate::allows("slider_create"), 403);
 
@@ -54,30 +49,15 @@ class SliderController extends Controller
         }
 
         return redirect()->route('slider.index')->with("success", "Record Save Successfullay");
->>>>>>> origin/main
 
-        $slider = Slider::create($data);
-        if ($request->hasFile('image') && $request->File('image')->isValid()) {
-            $slider->addMediaFromRequest('image')->toMediaCollection('image');
-        }
-
-        return redirect()->route('slider.index')->with("success", "Record Save Successfully");
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
         abort_unless(Gate::allows("slider_edit"), 403);
@@ -86,9 +66,7 @@ class SliderController extends Controller
         return view("admin.slider.edit", compact("slider"));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, string $id)
     {
         $data = $request->validate([
@@ -104,15 +82,10 @@ class SliderController extends Controller
         }
         if ($request->remove) {
             $slider->clearMediaCollection('image');
-<<<<<<< HEAD
-        }
-        return redirect()->route('slider.index')->with("success", "Record Update Successfullay");
-=======
 
         }
         return redirect()->route('slider.index')->with("success", "Record Update Successfullay");
 
->>>>>>> origin/main
     }
 
     /**
@@ -124,9 +97,5 @@ class SliderController extends Controller
         $slider->delete();
         $slider->getFirstMediaUrl('id');
         return redirect()->route('slider.index')->with("success", "Record Delete Successfullay");
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/main
     }
 }

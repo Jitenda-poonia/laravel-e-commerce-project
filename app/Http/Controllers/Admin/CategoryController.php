@@ -45,21 +45,12 @@ class CategoryController extends Controller
 
         $data = $request->all();
 
-<<<<<<< HEAD
-        $data['category_parent_id'] = $data['category_parent_id'] ?? 0;
-=======
         $ctgryPrnt = $data['category_parent_id'];
         $data['category_parent_id'] = $ctgryPrnt ?? 0;
->>>>>>> origin/main
 
         $urlKey = $data['url_key'] ?? $data['name'];
         $data['url_key'] = categoryUniqueUrlKey($urlKey);
         $data['name'] = ucwords($data['name']);
-<<<<<<< HEAD
-
-        // Data create in categories table
-=======
->>>>>>> origin/main
         $category = Category::create($data);
 
         if ($request->hasFile('image') && $request->File('image')) {
@@ -111,13 +102,8 @@ class CategoryController extends Controller
         ]);
 
         $data = $request->all();
-<<<<<<< HEAD
-
-        $data['category_parent_id'] = $data['category_parent_id'] ?? 0;
-=======
         $ctgryPrnt = $data['category_parent_id'];
         $data['category_parent_id'] = $ctgryPrnt ?? 0;
->>>>>>> origin/main
         $data['name'] = ucwords($data['name']);
 
         $category = Category::findOrFail($id);

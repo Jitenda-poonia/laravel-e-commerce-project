@@ -38,11 +38,7 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users|email',
-<<<<<<< HEAD
-            'password' => ['required', new \App\Rules\StrongPassword],
-=======
             'password' => 'required',
->>>>>>> origin/main
             'confirm_password' => 'required|same:password',
             'roles' => 'required',
         ]);
@@ -58,13 +54,8 @@ class UserController extends Controller
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $user->addMediaFromRequest('image')->toMediaCollection('image');
         }
-<<<<<<< HEAD
-
-        $user->syncRoles($request->roles);
-=======
 
         $user->syncRoles($request->input('roles'));
->>>>>>> origin/main
         return redirect()->route('user.index')->with('success', 'Your details Save Successfully');
     }
 
@@ -107,20 +98,6 @@ class UserController extends Controller
         } else {
             $data = $request->validate([
                 "name" => "required",
-<<<<<<< HEAD
-                'password' => ['required', new \App\Rules\StrongPassword],
-                "confirm_password" => "required|min:3|same:password",
-                'roles' => 'required',
-
-            ]);
-            $user = User::where('id', $id)->update([
-                "name" => $data["name"],
-
-                "password" => bcrypt($data["password"]),
-                'designation' => $request->designation
-
-            ]);
-=======
 
                 "password" => "required|min:3",
                 "confirm_password" => "required|min:3|same:password",
@@ -135,7 +112,6 @@ class UserController extends Controller
 
             ]);
 
->>>>>>> origin/main
         }
 
         $user = User::findOrFail($id);
