@@ -9,6 +9,7 @@ use App\Models\Enquiry;
 use App\Models\Quote;
 use App\Models\QuoteItem;
 use App\Models\Wishlist;
+use PHPUnit\Metadata\Version\Requirement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
@@ -86,7 +87,7 @@ function mostCategories()
 }
 function featuredProducts()
 {
-    $Products = Product::where('is_featured', 1)->active()->with('media')->limit(15)->get();
+    $Products = Product::where('is_featured', 1)->limit(15)->get();
     return $Products;
 }
 // getting related product
@@ -94,7 +95,7 @@ function getRelatedProducts($ids)
 {
     $ids = explode(', ', $ids);
     // dd($ids);
-    $relatedProducts = Product::whereIn('id', $ids)->with('media')->get();
+    $relatedProducts = Product::whereIn('id', $ids)->get();
     // SELECT * FROM products WHERE id IN (1, 2, 3, 4, 5);
 
     // dd($relatedProducts);
@@ -197,14 +198,8 @@ function wishlistCount()
 {
     // Use the authenticated user to get the wishlist count
     $user = auth()->user();
+    return $user?->wishlist->count()?:0;
 
-    if ($user) {
-        $wishlist = Wishlist::where('user_id', $user->id)->count();
-        return $wishlist;
-    } else {
-
-        return 0;
-    }
 }
 
 // get Auth User Id
@@ -310,3 +305,12 @@ function generatePriceRanges($products, $minPrice, $maxPrice, $interval)
     return $ranges;
 }
 
+// function getRelatedProdectName($productsID){
+//         $productName = Product::select('name')->where($productsID);
+//         return $productName ;
+// }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/main

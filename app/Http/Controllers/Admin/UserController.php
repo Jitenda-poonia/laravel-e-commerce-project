@@ -38,25 +38,33 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users|email',
+<<<<<<< HEAD
+            'password' => ['required', new \App\Rules\StrongPassword],
+=======
             'password' => 'required',
+>>>>>>> origin/main
             'confirm_password' => 'required|same:password',
             'roles' => 'required',
-
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'password' => bcrypt($request->password),
             'email' => $request->email,
-            'password' => Bcrypt($request->password),
-            'roles' => $request->roles,
             'is_admin' => 1,
-            'designation' => $request->designation
+            'designation' => $request->designation,
         ]);
-        if ($request->hasFile('image') && $request->File('image')->isValid()) {
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $user->addMediaFromRequest('image')->toMediaCollection('image');
         }
+<<<<<<< HEAD
+
+        $user->syncRoles($request->roles);
+=======
 
         $user->syncRoles($request->input('roles'));
+>>>>>>> origin/main
         return redirect()->route('user.index')->with('success', 'Your details Save Successfully');
     }
 
@@ -77,7 +85,7 @@ class UserController extends Controller
         abort_unless(Gate::allows("user_edit"), 403);
         $user = User::findOrFail($id);
         $roles = Role::select('name')->get();
-        $slctRole = $user->Roles->pluck('name')->toArray();
+        $slctRole = $user->roles->pluck('name')->toArray();
         return view('admin.user.edit', compact('user', 'roles', 'slctRole'));
     }
 
@@ -87,19 +95,32 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (!($request->password)) {
+        if (!$request->password) {
             $data = $request->validate([
                 'name' => 'required',
+                'roles' => 'required',
+            ]);
+            User::where('id', $id)->update([
+                "name" => $data["name"],
+                'designation' => $request->designation,
+            ]);
+        } else {
+            $data = $request->validate([
+                "name" => "required",
+<<<<<<< HEAD
+                'password' => ['required', new \App\Rules\StrongPassword],
+                "confirm_password" => "required|min:3|same:password",
                 'roles' => 'required',
 
             ]);
             $user = User::where('id', $id)->update([
                 "name" => $data["name"],
+
+                "password" => bcrypt($data["password"]),
                 'designation' => $request->designation
+
             ]);
-        } else {
-            $data = $request->validate([
-                "name" => "required",
+=======
 
                 "password" => "required|min:3",
                 "confirm_password" => "required|min:3|same:password",
@@ -114,6 +135,7 @@ class UserController extends Controller
 
             ]);
 
+>>>>>>> origin/main
         }
 
         $user = User::findOrFail($id);
@@ -122,8 +144,9 @@ class UserController extends Controller
             $user->clearMediaCollection('image');
             $user->addMediaFromRequest('image')->toMediaCollection('image');
         }
+
         $user->syncRoles($request->roles);
-        return redirect()->route("user.index")->with("success", "your details update Successfully");
+        return redirect()->route("user.index")->with("success", "Your details updated Successfully");
     }
 
     /**
@@ -131,7 +154,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        user::where('id', $id)->delete();
-        return redirect()->route("user.index")->with("success", "user delete Successfully");
+        User::where('id', $id)->delete();
+        return redirect()->route("user.index")->with("success", "User deleted Successfully");
     }
 }

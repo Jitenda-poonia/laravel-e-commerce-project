@@ -1,4 +1,3 @@
- <!-- Topbar Start -->
  <div class="container-fluid">
      <div class="row bg-secondary py-1 px-xl-5">
          <div class="col-lg-6 d-none d-lg-block">
@@ -12,34 +11,23 @@
                      <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My
                          Account</button>
                      <div class="dropdown-menu dropdown-menu-right">
-                         @if (Auth::user())
+                         @auth
                              <a class="dropdown-item" href="{{ route('customer.profile') }}"><i class="fas fa-user"></i>
                                  Profile</a>
                              <a class="dropdown-item" href="{{ route('customer.logout') }}"><i
                                      class="fas fa-sign-out-alt"></i> Logout</a>
-                         @else
+                         @endauth
+                         @guest
                              <a class="dropdown-item" href="{{ route('customer.login') }}">Sign In</a>
                              <a class="dropdown-item" href="{{ route('customer.create') }}">Sign Up</a>
-                         @endif
+                         @endguest
+
                      </div>
                  </div>
 
 
              </div>
-             <div class="d-inline-flex align-items-center d-block d-lg-none">
 
-                 <a href="" class="btn px-0 ml-2">
-                     <i class="fas fa-heart text-dark"></i>
-                     <span class="badge text-dark border border-dark rounded-circle"
-                         style="padding-bottom: 2px;">0</span>
-                 </a>
-                 <a href="" class="btn px-0 ml-2">
-                     <i class="fas fa-shopping-cart text-dark"></i>
-                     <span class="badge text-dark border border-dark rounded-circle"
-                         style="padding-bottom: 2px;">0</span>
-                 </a>
-
-             </div>
          </div>
      </div>
      <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
@@ -58,4 +46,3 @@
          </div>
      </div>
  </div>
- <!-- Topbar End -->

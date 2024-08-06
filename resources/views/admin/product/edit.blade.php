@@ -254,11 +254,7 @@
                                             </div>
                                         @endforeach
                                     </div>
-<<<<<<< HEAD
 
-=======
-                                   
->>>>>>> origin/main
                                     <div class="box-footer">
                                         <button type="submit" class="btn btn-primary">Update</button>
 

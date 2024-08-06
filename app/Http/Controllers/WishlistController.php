@@ -9,41 +9,30 @@ use Illuminate\Support\Facades\Auth;
 
 class WishlistController extends Controller
 {
-    public function store(Request $request) {
-        // echo "test";
-
-        if(!Auth::user() == null) {
-            $data = $request->all();
-            // dd($data);
-            if(Wishlist::where('user_id', $request->user_id)->where('product_id', $request->product_id)->exists()) {
-                Wishlist::where('user_id', $request->user_id)->where('product_id', $request->product_id)->delete();
-                return redirect()->back();
-            } else {
-                Wishlist::create([
-                    'user_id' => $request->user_id,
-                    'product_id' => $request->product_id
-                ]);
-                return redirect()->back()->with('success', 'Product added to wishlist.');
-            }
+    public function addToWishlist($product_id)
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return redirect()->route('customer.login')->with('error', 'yor are login to add to product wishlist');
         }
 
-        return redirect()->route('customer.login');
+        $prrms = [
+            'user_id' => $user->id,
+            'product_id' => $product_id
+        ];
+        $wishlist = Wishlist::where($prrms);
+        if ($wishlist->count() > 0) {
+            $wishlist->delete();
 
-
-       
+        } else {
+            Wishlist::create($prrms);
+        }
+        return redirect()->back()->with('success', 'Product added to wishlist.');
     }
 
-
-
-    public function destroy($productId) {
-        // echo $productId;
-        $userId = Auth::user()->id;
-        $wishlist = Wishlist::where('product_id', $productId)->where('user_id', $userId)->delete();
-
+    public function removeFromWishlist($id)
+    {
+        Wishlist::where('id', $id)->delete();
         return redirect()->back()->with('success', "Item removed from wishlist.");
-        
     }
-
-    
-
 }

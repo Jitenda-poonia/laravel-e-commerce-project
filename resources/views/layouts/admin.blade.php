@@ -26,7 +26,6 @@
             @yield('content')
         </div><!-- /.content-wrapper -->
         @include('includes.footer')
-        @stack('custom-script')
 
 </body>
 

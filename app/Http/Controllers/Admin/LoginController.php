@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\UserLog;
 
 class LoginController extends Controller
@@ -14,7 +13,7 @@ class LoginController extends Controller
     {
         // Check if the user is already authenticated
         if (Auth::check()) {
-            // If the user is authenticated, redirect them to the dashboard (or any other desired route)
+            // If the user is authenticated, redirect them to the dashboard
             return redirect()->route('dashboard');
         }
 
@@ -30,10 +29,9 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
         if (Auth::attempt($loginData)) {
-            $userId = Auth::user()->id;
 
             // Create user log for admin
-            UserLog::create(['user_id' => $userId]);
+            UserLog::create(['user_id' => Auth::user()->id]);
 
             //return only the latest & second-to-last login recors
             returnLatestTwoLogins($userId);
@@ -50,3 +48,6 @@ class LoginController extends Controller
         return redirect()->route('login')->with('success', 'Logout Successfully');
     }
 }
+
+
+

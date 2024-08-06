@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\Gate;
 
-
 class CategoryController extends Controller
 {
     /**
@@ -46,12 +45,21 @@ class CategoryController extends Controller
 
         $data = $request->all();
 
+<<<<<<< HEAD
+        $data['category_parent_id'] = $data['category_parent_id'] ?? 0;
+=======
         $ctgryPrnt = $data['category_parent_id'];
         $data['category_parent_id'] = $ctgryPrnt ?? 0;
+>>>>>>> origin/main
 
         $urlKey = $data['url_key'] ?? $data['name'];
         $data['url_key'] = categoryUniqueUrlKey($urlKey);
         $data['name'] = ucwords($data['name']);
+<<<<<<< HEAD
+
+        // Data create in categories table
+=======
+>>>>>>> origin/main
         $category = Category::create($data);
 
         if ($request->hasFile('image') && $request->File('image')) {
@@ -59,7 +67,6 @@ class CategoryController extends Controller
         }
 
         $category->products()->sync($request->input('products'));
-
 
         if ($request->save) {
             return redirect()->route('category.index')->with('success', 'Data Save Successfully');
@@ -85,7 +92,6 @@ class CategoryController extends Controller
     {
         abort_unless(Gate::allows('category_edit'), 403);
 
-
         $category = Category::findOrFail($id);
         $products = Product::all();
         return view('admin.category.edit', compact('category', 'products'));
@@ -105,8 +111,13 @@ class CategoryController extends Controller
         ]);
 
         $data = $request->all();
+<<<<<<< HEAD
+
+        $data['category_parent_id'] = $data['category_parent_id'] ?? 0;
+=======
         $ctgryPrnt = $data['category_parent_id'];
         $data['category_parent_id'] = $ctgryPrnt ?? 0;
+>>>>>>> origin/main
         $data['name'] = ucwords($data['name']);
 
         $category = Category::findOrFail($id);
@@ -116,11 +127,12 @@ class CategoryController extends Controller
             $category->clearMediaCollection('image');
             $category->addMediaFromRequest('image')->toMediaCollection('image');
         }
+
         if ($request->has('products')) {
             $category->products()->sync($request->input('products'));
         }
+
         return redirect()->route('category.index')->with('success', 'Data Update Successfully');
-        //
     }
 
     /**

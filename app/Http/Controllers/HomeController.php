@@ -49,8 +49,7 @@ class HomeController extends Controller
         $category = Category::where('url_key', $url_key)->first();
 
         // Start building the product query based on the category
-        $query = $category->products()->active();
-
+        $query = $category->products();
 
 
         // Apply filters based on the request parameters

@@ -14,11 +14,11 @@
 
                     <div class="d-flex flex-column justify-content-start">
                         <a class="text-secondary mb-2" href="/"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                        
+
                         @foreach (getPages() as $page)
                         <a class="text-secondary mb-2" href="{{route('page',$page->url_key)}}"><i class="fa fa-angle-right mr-2"></i>{{$page->title}}</a>
                         @endforeach
-                        
+
                         <a class="text-secondary" href="{{route('contact')}}"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
             </p>
         </div>
         <div class="col-md-6 px-xl-0 text-center text-md-right">
-            <img class="img-fluid" src="{{asset('img/payments.png')}}" alt="">
+            {{-- <img class="img-fluid" src="{{asset('img/payments.png')}}" alt=""> --}}
         </div>
     </div>
 </div>

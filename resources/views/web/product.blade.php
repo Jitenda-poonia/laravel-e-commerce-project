@@ -48,7 +48,7 @@
 
                     <p class="mb-4">{{ $product->short_description }}</p>
 
-                    {{-- Add to Cart --}}
+                     {{-- Add to Cart --}}
                     <form action="{{ route('cart.store', $product->id) }}" method="POST">
                         @csrf
                         {{-- get HomeController --}}
@@ -82,10 +82,8 @@
 
                     {{-- wishlist --}}
 
-                    <form action="{{ route('wishlist.store') }}" method="post">
+                    <form action="{{ route('add-to-wishlist', $product->id) }}" method="post">
                         @csrf
-                        <input type="hidden" name="user_id" value="{{ Auth::user()->id ?? '' }}">
-                        <input type="hidden" name="product_id" value="{{ $product->id }}">
                         <button type="submit" class="btn btn-outline-dark btn-square"><i class="far fa-heart"></i></button>
                     </form>
 
@@ -127,10 +125,8 @@
                                 <div class="product-action">
 
                                     {{-- ----- wishlist--------------- --}}
-                                    <form action="{{ route('wishlist.store') }}" method="post">
+                                    <form action="{{ route('add-to-wishlist', $product->id) }}" method="post">
                                         @csrf
-                                        <input type="hidden" name="user_id" value="{{ Auth::user()->id ?? '' }}">
-                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <button type="submit" class="btn btn-outline-dark btn-square"><i
                                                 class="far fa-heart"></i></button>
                                     </form>

@@ -7,10 +7,7 @@ use App\Models\ProductAttribute;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\Attribute;
-use App\Models\AttributeValue;
 use Illuminate\Support\Facades\Gate;
-
 
 class ProductController extends Controller
 {
@@ -20,7 +17,6 @@ class ProductController extends Controller
     public function index()
     {
         abort_unless(Gate::allows("product_index"), 403);
-
         return view('admin.product.index', ['products' => Product::all()]);
     }
 
@@ -32,7 +28,6 @@ class ProductController extends Controller
         abort_unless(Gate::allows("product_create"), 403);
         $categories = Category::all();
         $relatedProducts = Product::all();
-
         return view('admin.product.create', compact('categories', 'relatedProducts'));
     }
 
@@ -41,7 +36,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'name' => 'required',
             'status' => 'required',
@@ -53,7 +47,6 @@ class ProductController extends Controller
             'price' => 'required',
             'short_description' => 'required',
             'description' => 'required',
-
         ], [
             'status.required' => 'Please select status',
             'is_featured.required' => 'Please select featured',
@@ -61,23 +54,33 @@ class ProductController extends Controller
             'qty.required' => 'Quantity is required',
             'stock_status.required' => 'Please select stock status',
         ]);
+
         $data = $request->all();
-
-
         $data['related_product'] = implode(', ', $data['related_product'] ?? ['No']);
         $urlKey = $data['url_key'] ?? $data['name'];
         $data['url_key'] = productUniqueUrlKey($urlKey);
         $data['name'] = ucwords($data['name']);
 
-        //Data insert Products table
+        // Insert data into Products table
         $product = Product::create($data);
 
         // get prodect Id
         $productId = $product->id;
+<<<<<<< HEAD
+        $attributesId = $request->input('attributes');
+        $attributeValuesId = $request->input('attribute_values');
+=======
 
         $attributesId = $request->input('attributes');
         $attributeValuesId = $request->input('attribute_values');
-
+        // echo "<pre>";
+        // print_r($attributeValuesId);
+        // die();
+        foreach ($attributesId as $attributeId) {
+        //   dd($attributeId);
+            foreach ($attributeValuesId[$attributeId] as $attributeValueId) {
+        //   dd($attributeValueId);
+>>>>>>> origin/main
 
         foreach ($attributesId as $attributeId) {
 
@@ -86,17 +89,16 @@ class ProductController extends Controller
                 //Data insert product_attributes table
 
                 ProductAttribute::create([
-                    'product_id' => $productId,
+                    'product_id' => $product->id,
                     'attribute_id' => $attributeId,
                     'attribute_value_id' => $attributeValueId
                 ]);
             }
         }
 
-        //images insert media table
-
-        if ($request->hasFile('image') && $images = $request->file('image')) {
-            foreach ($images as $image) {
+        // Insert images into media table
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
                 $product->addMedia($image)->toMediaCollection('image');
             }
         }
@@ -109,13 +111,9 @@ class ProductController extends Controller
             $product->categories()->sync($request->input('categories'));
         }
 
-
-
-        if ($request->save) {
-            return redirect()->route('product.index')->with('success', 'Data Save Successfully');
-        } else {
-            return back()->with('success', 'Data Save Successfully');
-        }
+        return $request->save
+            ? redirect()->route('product.index')->with('success', 'Data saved successfully')
+            : back()->with('success', 'Data saved successfully');
     }
 
     /**
@@ -124,7 +122,7 @@ class ProductController extends Controller
     public function show(string $id)
     {
         abort_unless(Gate::allows("product_show"), 403);
-        $product =  Product::findOrFail($id);
+        $product = Product::findOrFail($id);
         return view('admin.product.show', compact('product'));
     }
 
@@ -137,7 +135,6 @@ class ProductController extends Controller
         $categories = Category::all();
         $relatedProducts = Product::all();
         $productAttributes = ProductAttribute::where('product_id', $id)->get();
-        // dd($productAttributes);
         return view('admin.product.edit', compact('product', 'categories', 'relatedProducts', 'productAttributes'));
     }
 
@@ -158,7 +155,6 @@ class ProductController extends Controller
             'short_description' => 'required',
             'description' => 'required',
             'related_product' => 'nullable|array',
-
         ], [
             'status.required' => 'Please select status',
             'is_featured.required' => 'Please select featured',
@@ -166,8 +162,8 @@ class ProductController extends Controller
             'qty.required' => 'Quantity is required',
             'stock_status.required' => 'Please select stock status',
         ]);
-        $data = $request->all();
 
+        $data = $request->all();
         $data['related_product'] = implode(', ', $data['related_product'] ?? []);
         $data['name'] = ucwords($data['name']);
 
@@ -177,36 +173,34 @@ class ProductController extends Controller
         // Delete existing ProductAttribute records for the product
         ProductAttribute::where('product_id', $product->id)->delete();
 
-        $attributesId = $request->input('attributes');
-        $attributeValuesId = $request->input('attribute_values');
-
-
-        foreach ($attributesId as $attributeId) {
-
-            foreach ($attributeValuesId[$attributeId] ?? [] as $attributeValueId) {
-
+        // Insert updated data into ProductAttributes table
+        foreach ($request->input('attributes', []) as $attributeId) {
+            foreach ($request->input("attribute_values.{$attributeId}", []) as $attributeValueId) {
                 ProductAttribute::create([
-                    'product_id' => $id,
+                    'product_id' => $product->id,
                     'attribute_id' => $attributeId,
                     'attribute_value_id' => $attributeValueId
                 ]);
             }
         }
-        if ($request->hasFile('image') && $images = $request->file('image')) {
-            foreach ($images as $image) {
+
+        // Insert images into media table
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
                 $product->addMedia($image)->toMediaCollection('image');
             }
         }
-        if ($request->hasFile('thumbnail_image') && $request->File('thumbnail_image')->isValid()) {
+        if ($request->hasFile('thumbnail_image') && $request->file('thumbnail_image')->isValid()) {
             $product->clearMediaCollection('thumbnail_image');
             $product->addMediaFromRequest('thumbnail_image')->toMediaCollection('thumbnail_image');
         }
+
+        // Sync product with categories
         if ($request->has('categories')) {
             $product->categories()->sync($request->input('categories'));
         }
 
-        return redirect()->route('product.index')->with('success', 'Data Update Successfully');
-        //
+        return redirect()->route('product.index')->with('success', 'Data updated successfully');
     }
 
     /**
@@ -216,6 +210,21 @@ class ProductController extends Controller
     {
         $product = Product::find($id);
 
+<<<<<<< HEAD
+        // Detach all categories related to the product
+        $product->categories()->detach();
+        // Now you can delete the product
+        $product->delete();
+        // Retrieve and delete all media items associated with the product
+        $product->getFirstMediaUrl('id');
+
+        // Delete associated product attributes
+        ProductAttribute::where('product_id', $id)->delete();
+
+        return back()->with('success', 'Data Deleted Successfully');
+=======
+
+>>>>>>> origin/main
     }
 
 }
