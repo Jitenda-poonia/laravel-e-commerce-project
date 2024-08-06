@@ -17,6 +17,7 @@
         "league/flysystem": "^3.28",
         "league/flysystem-local": "^3.28",
         "razorpay/razorpay": "2.*",
+        "spatie/laravel-data": "^4.7",
         "spatie/laravel-medialibrary": "^10.15",
         "spatie/laravel-permission": "^6.3",
         "spatie/laravel-query-builder": "^5.7",

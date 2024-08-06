@@ -38,9 +38,10 @@
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        @if (auth()->user()->hasMedia('image'))
-                            <img src="{{ auth()->user()->getFirstMediaUrl('image') }}" class="user-image"
-                                alt="User Image">
+                        {{-- google image --}}
+                        @if ($user->hasMedia('profile_photos'))
+                        <img src="{{ $user->getFirstMediaUrl('profile_photos') }}" class="user-image" alt="User Image">
+
                         @else
                             <p>No profile photo </p>
                         @endif
