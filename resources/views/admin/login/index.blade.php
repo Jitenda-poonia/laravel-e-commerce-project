@@ -25,20 +25,7 @@
         </div><!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Sign in to start your session</p>
-
-            <div class="form-group has-error">
-                <label class="control-label" for="">
-                    {{ session()->get('error') }}
-                </label>
-            </div>
-
-            @if (session()->has('success'))
-                <div class="form-group has-success">
-                    <label class="control-label" for="">
-                        {{ session()->get('success') }}
-                    </label>
-                </div>
-            @endif
+            @include('includes.alert-message')
 
             <form action="{{ route('login.post') }}" method="POST">
                 @csrf

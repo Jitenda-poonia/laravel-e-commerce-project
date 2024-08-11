@@ -1,26 +1,12 @@
 @extends('layouts.web')
 @section('content')
     <!-- Breadcrumb Start -->
-    <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="col-12">
-                <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="#">Home</a>
-                    <a class="breadcrumb-item text-dark" href="#">Shop</a>
-                    <span class="breadcrumb-item active">{{ $category->name }}</span>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!-- Breadcrumb End -->
-
+    {{ Breadcrumbs::render('category', $category) }}
 
     <!-- Shop Start -->
     <div class="container-fluid">
         <div class="row px-xl-5">
-            <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-4">
-                <!-- Price Start -->
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by
                         price</span></h5>
                 <div class="bg-light p-4 mb-30">
@@ -48,10 +34,8 @@
                         @endforeach
                     </form>
                 </div>
-                <!-- Price End -->
-            </div>
-            <!-- Shop Sidebar End -->
 
+            </div>
 
             <!-- Shop Product Start -->
             <div class="col-lg-9 col-md-8">
@@ -88,12 +72,9 @@
 
                             </div>
                         </div>
-                        @if (session()->has('success'))
-                            <p style="background: #FFD333; padding: 15px; color: #000; font-weight: 500;">
-                                {{ session()->get('success') }}</p>
-                        @endif
-                    </div>
+                        @include('web.alert-message')
 
+                    </div>
 
                     @foreach ($products as $_product)
                         {{-- {{ $_product->name }} --}}
@@ -104,16 +85,10 @@
                                         alt="" style="height: 250px">
                                     <div class="product-action">
 
-                                        <form action="{{ route('wishlist.store') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" value="{{ Auth::user()->id ?? '' }}" name="user_id">
-                                            <input type="hidden" value="{{ $_product->id }}" name="product_id">
+                                        <form action="{{ route('add-to-wishlist',['product_id' => $_product->id]) }}" method="POST">
                                             <button type="submit" class="btn btn-outline-dark btn-square"><i
                                                     class="far fa-heart"></i></button>
                                         </form>
-
-
-
                                     </div>
                                 </div>
                                 <div class="text-center py-4">
@@ -138,8 +113,6 @@
 
                 </div>
             </div>
-            <!-- Shop Product End -->
         </div>
     </div>
-    <!-- Shop End -->
 @endsection

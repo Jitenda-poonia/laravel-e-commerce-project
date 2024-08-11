@@ -35,14 +35,8 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Edit Coupon
+                            @include('includes.alert-message')
 
-                            @if (session()->has('success'))
-                                <div class="form-group has-success">
-                                    <label class="control-label" for="">
-                                        {{ session()->get('success') }}
-                                    </label>
-                                </div>
-                            @endif
                         </h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->

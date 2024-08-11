@@ -11,7 +11,7 @@
         <ol class="breadcrumb">
             <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
             <li>Manage Role</li>
-            
+
             @can('manage_role')
                 <li>
                     <a href="{{ route('role.create') }}"><i class="fa fa-plus-square"></i> Role</a>
@@ -28,7 +28,12 @@
             <div class="col-md-9">
 
                 <div class="box box-primary">
-                   
+                    <div class="box-header">
+                        <h3 class="box-title">Add Product
+                            @include('includes.alert-message')
+
+                        </h3>
+                    </div>
                     <form role="form" action="{{ route('role.update', $role->id) }}" method="POST">
                         @csrf
                         @method('PUT')

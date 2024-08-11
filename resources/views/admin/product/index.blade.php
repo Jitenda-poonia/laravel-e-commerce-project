@@ -21,14 +21,7 @@
     </section>
     <div class="col-md-12">
         <div class="box">
-
-            @if (session()->has('success'))
-                <div class="form-group has-success">
-                    <label class="control-label" for="">
-                        {{ session()->get('success') }}
-                    </label>
-                </div>
-            @endif
+            @include('includes.alert-message')
             <div class="box-body">
                 <table class="table table-striped table-bordered table-hover display" id="myTable">
                     <thead>
@@ -58,7 +51,7 @@
                                    <button class="btn btn-block btn-success btn-sm">Active</button>
                                    @else
                                    <button class="btn btn-block btn-danger btn-sm">Inactive</button>
-                                   
+
                                    @endif
                                 </td>
                                 <td>{{ $product->is_featured == 1 ? 'Yes' : 'No' }}</td>
@@ -69,14 +62,14 @@
                                 <button class="btn btn-block btn-info btn-sm">In stock</button>
                                 @else
                                 <button class="btn btn-block btn-warning btn-sm">Out of stock</button>
-                                
+
                                 @endif
                                 </td>
 
                                 <td>{{ $product->weight }}</td>
                                 <td>{{ $product->price }}</td>
                                 <td>{{ $product->special_price }}</td>
-                                
+
                                 <td>{{ implode(', ', $product->categories()->pluck('name')->toArray()) }}</td>
                                 <td>
                                     @can('product_edit')

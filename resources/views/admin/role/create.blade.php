@@ -25,7 +25,12 @@
             <div class="col-md-9">
 
                 <div class="box box-primary">
-                    
+                    <div class="box-header">
+                        <h3 class="box-title">Add Product
+                            @include('includes.alert-message')
+
+                        </h3>
+                    </div>
                     <form role="form" action="{{ route('role.store') }}" method="POST">
                         @csrf
 
@@ -63,7 +68,7 @@
                                 </label>
                             </div>
                         </div>
-                        
+
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

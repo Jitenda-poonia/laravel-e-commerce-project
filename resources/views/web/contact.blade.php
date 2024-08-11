@@ -9,11 +9,7 @@
         <div class="row px-xl-5">
             <div class="col-lg-7 mb-5">
                 <div class="contact-form bg-light p-30">
-                    @if (session()->has('success'))
-                        <div class="help-block text-success">
-                            {{ session()->get('success') }}
-                        </div>
-                    @endif
+                  @include('web.alert-message')
                     <form method="POST" action="{{ route('enquiry.store') }}">
                         @csrf
                         <div class="control-group">

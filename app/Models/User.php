@@ -42,5 +42,18 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaCollection('profile_photos')
             ->singleFile(); // Allows only one file per collection (for profile photos)
     }
+    public function wishlist(){
+        return $this->hasMany(Wishlist::class);
+    }
+    // user address
+    public function address()
+    {
+        return $this->hasMany(OrderAddress::class);
+    }
+    // order
+    public function orders()
+    {
+        return $this->hasMany(Order::class,'user_id','id');
+    }
 }
 ?>

@@ -28,17 +28,9 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Add Catogry
-
-                            @if (session()->has('success'))
-                                <div class="form-group has-success">
-                                    <label class="control-label" for="">
-                                        {{ session()->get('success') }}
-                                    </label>
-                                </div>
-                            @endif
+                        @include('includes.alert-message')
                         </h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
+                    </div>
                     <form role="form" action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="box-body">
@@ -152,7 +144,7 @@
                                 </div> <!-- col-md-6 end -->
 
                                 <div class="col-md-6">
-                                  
+
                                     <div class="form-group">
                                         <label>Description</label>
                                         <textarea name="description" id="editor1" class="form-control" cols="10" rows="4">{{ old('description') }}</textarea>
@@ -165,18 +157,18 @@
                                         <label>Products</label>
                                         <select name="products[]"  class="form-control" multiple>
                                             @foreach ($products as $_product)
-                                                <option value="{{$_product->id}}">{{$_product->name}}</option>    
+                                                <option value="{{$_product->id}}">{{$_product->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label >image upload</label>
                                         <input type="file"  name="image" multiple>
-    
+
                                         @error('image')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
-    
+
                                     </div>
                                     <div class="box-footer">
                                         <input type="submit" name="save" class="btn btn-primary" value="Save">

@@ -27,15 +27,11 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title"> Add Permission</h3>
-
+                        @include('includes.alert-message')
                     </div>
                     <form role="form" action="{{ route('permission.store') }}" method="POST">
                         @csrf
-                        @if (session()->has('success'))
-                            <div class="callout callout-success">
-                                {{ session()->get('success') }}
-                            </div>
-                        @endif
+
                         <div class="box-body">
                             <label for="exampleInputEmail1">Permission Name</label>
                             <div class="form-group @error('name') has-error @enderror">

@@ -29,7 +29,7 @@
                         <h3 class="box-title">Category information</h3>
                         <a href="{{ route('category.index') }}" class="btn btn-primary fa fa-reply"
                             style="float: right;">Back</a>
-                    </div><!-- /.box-header -->
+                    </div>
                     <div class="box-body">
                         <table class="table table-bordered">
 
@@ -78,7 +78,7 @@
                                 <th>Meta Description</th>
                                 <td>{{ $category->meta_description ?? 'No' }}</td>
                             </tr>
-                           
+
                         </table>
                     </div><!-- /.box-body -->
                 </div><!-- /.box -->

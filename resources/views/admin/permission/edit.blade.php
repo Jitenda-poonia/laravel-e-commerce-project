@@ -27,6 +27,7 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Edit Permission</h3>
+                        @include('includes.alert-message')
                     </div>
                     <form role="form" action="{{ route('permission.update', $permission->id) }}" method="POST">
                         @csrf

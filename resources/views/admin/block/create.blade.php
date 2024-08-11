@@ -24,11 +24,15 @@
             <div class="col-md-12">
 
                 <div class="box box-primary">
-                   
+                    <div class="box-header">
+                        <h3 class="box-title">Add Attribute
+                            @include('includes.alert-message')
+                        </h3>
+                    </div>
                     <form action="{{ route('block.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="box-body">
-                            
+
                             <div class="form-group">
                                 <label>Title</label>
                                 <input type="text" name="title" class="form-control" placeholder="Enter title"
@@ -112,5 +116,5 @@
             </div>
         </div>
     </section>
-   
+
 @endsection

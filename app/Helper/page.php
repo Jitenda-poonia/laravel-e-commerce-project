@@ -8,43 +8,40 @@ use App\Models\Product;
 use App\Models\Enquiry;
 use App\Models\Quote;
 use App\Models\QuoteItem;
-use App\Models\Wishlist;
-use PHPUnit\Metadata\Version\Requirement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 function getPages()
 {
-    $pages = Page::orderBy('ordering')->active()->where('parent_id', 0)->get();
-    return $pages;
+    return Page::orderBy('ordering')->active()->where('parent_id', 0)->get();
 }
+
 function getSubPages($id)
 {
-    $pages = Page::oderBy('ordering')->active()->where('parent_id', $id)->get();
-    return $pages;
+    return Page::oderBy('ordering')->active()->where('parent_id', $id)->get();
 }
+
 //category create/edit ke liye start
 function categories()
 {
-    $category = Category::where('category_parent_id', 0)->get();
-    return $category;
+    return Category::where('category_parent_id', 0)->get();
 }
+
 function SubCategories($id)
 {
-    $category = Category::where('category_parent_id', $id)->get();
-    return $category;
+    return Category::where('category_parent_id', $id)->get();
 }
+
 function subsubCategories($id)
 {
-    $category = Category::where('category_parent_id', $id)->get();
-    return $category;
+    return  Category::where('category_parent_id', $id)->get();
 }
 //category create/edit ke liye end
 
 function enquiryCount()
 {
-    $enquiryCount = Enquiry::active()->count();
-    return $enquiryCount;
+    return Enquiry::active()->count();
+
 }
 
 //show file me Category ka name show ke liye
@@ -54,63 +51,54 @@ function subCategoryName($id)
     return $category->name ?? 'No parent category';
 }
 
-
 //fornted category ke liye
-
 function frntcategories()
 {
-    $category = Category::where('category_parent_id', 0)->active()->where('show_in_menu', 1)->with('media')->get();
-    return $category;
+    return  Category::where('category_parent_id', 0)->active()->where('show_in_menu', 1)->with('media')->get();
+
 }
 function frntSubCategories($id)
 {
-    $category = Category::where('category_parent_id', $id)->active()->where('show_in_menu', 1)->with('media')->get();
-    return $category;
+    return Category::where('category_parent_id', $id)->active()->where('show_in_menu', 1)->with('media')->get();
+
 }
 
 function products()
 {
-    $Products = Product::where('is_featured', 1)->active()->with('media')->get();
-    return $Products;
+    return Product::where('is_featured', 1)->active()->with('media')->get();
 }
 function block($identifier)
 {
-    $block = Block::active()->where('identifier', $identifier)->with('media')->first();
-    return $block;
+    return Block::active()->where('identifier', $identifier)->with('media')->first();
 }
 
 //Home page pr limited category show
 function mostCategories()
 {
-    $categories = Category::active()->orderBy('id', 'DESC')->limit(15)->with('media')->get();
-    return $categories;
+    return Category::active()->orderBy('id', 'DESC')->limit(15)->with('media')->get();
 }
 function featuredProducts()
 {
-    $Products = Product::where('is_featured', 1)->limit(15)->get();
-    return $Products;
+    return Product::where('is_featured', 1)->limit(15)->get();
+
 }
 // getting related product
 function getRelatedProducts($ids)
 {
     $ids = explode(', ', $ids);
-    // dd($ids);
-    $relatedProducts = Product::whereIn('id', $ids)->get();
-    // SELECT * FROM products WHERE id IN (1, 2, 3, 4, 5);
+    return Product::whereIn('id', $ids)->get();
 
-    // dd($relatedProducts);
-    return $relatedProducts;
 }
 // add last products
 function recentProducts()
 {
-    $recentProducts = Product::orderBy('id', 'DESC')->active()->with('media')->limit(8)->get();
-    return $recentProducts;
+    return Product::orderBy('id', 'DESC')->active()->with('media')->limit(8)->get();
+
 }
 function getAttribute()
 {
-    $attributes = Attribute::all();
-    return $attributes;
+    return Attribute::all();
+
 }
 
 function getProductPrice($pId)
@@ -163,8 +151,7 @@ function recalculateCart()
 
 function productImage($pId)
 {
-    $product = Product::find($pId)->with('media');
-    return $product->getFirstMediaUrl('thumbnail_image');
+    return Product::find($pId)->getFirstMediaUrl('thumbnail_image');
 }
 
 function getProductPriceShow($pId)
@@ -198,24 +185,15 @@ function wishlistCount()
 {
     // Use the authenticated user to get the wishlist count
     $user = auth()->user();
+    return $user?->wishlist->count()?:0;
 
-    // Check if the user and the wishlist exist
-    if ($user && $user->wishlist) {
-        return $user->wishlist->count();
-    }
-
-    return 0;
 }
 
 
 // get Auth User Id
 function getAuthUserId()
 {
-    if (Auth::user()) {
-        return Auth::user()->id;
-    } else {
-        return 0;
-    }
+    return Auth::user()->id?:0;
 }
 
 /**

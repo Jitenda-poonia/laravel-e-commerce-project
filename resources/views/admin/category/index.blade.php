@@ -21,14 +21,8 @@
     </section>
     <div class="col-md-12">
         <div class="box">
+            @include('includes.alert-message')
 
-            @if (session()->has('success'))
-                <div class="form-group has-success">
-                    <label class="control-label" for="">
-                        {{ session()->get('success') }}
-                    </label>
-                </div>
-            @endif
             <div class="box-body">
                 <table class="table table-striped table-bordered table-hover display" id="myTable">
                     <thead>

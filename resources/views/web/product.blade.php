@@ -3,17 +3,8 @@
     <title>MultiShop |{{ $product->url_key }} </title>
 @endsection
 @section('content')
-    <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="col-12">
-                <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="{{ '/' }}">Home</a>
-                    <span class="breadcrumb-item">Shop</span>
-                    <a class="breadcrumb-item text">{{ $product->name }}</a>
-                </nav>
-            </div>
-        </div>
-    </div>
+{{ Breadcrumbs::render('product', $product) }}
+
     <!-- Shop Detail Start -->
     <div class="container-fluid pb-5">
         <div class="row px-xl-5">
@@ -43,7 +34,6 @@
                 <div class="h-100 bg-light p-30">
                     <h3> {{ $product->name }}</h3>
 
-                    {{-- according to conditon price &&  special price show --}}
                     {{ getProductPriceShow($product->id) }}
 
                     <p class="mb-4">{{ $product->short_description }}</p>
@@ -51,7 +41,6 @@
                      {{-- Add to Cart --}}
                     <form action="{{ route('cart.store', $product->id) }}" method="POST">
                         @csrf
-                        {{-- get HomeController --}}
                         @foreach ($attributes as $attributeName => $attributeValues)
                             <br><strong class="text-dark mr-3">{{ $attributeName }} : </strong>
                             @foreach ($attributeValues as $attributeValue)
@@ -62,7 +51,6 @@
                                 </div>
                             @endforeach
                         @endforeach
-
 
                         <div class="d-flex align-items-center mb-4 pt-2">
                             <div class="input-group quantity" style="width: 130px;">
@@ -75,19 +63,12 @@
                                 Cart</button>
                         </div>
 
-
                     </form>
-                    {{-- ----------------------end Add to Cart----------------- --}}
-
-
                     {{-- wishlist --}}
-
                     <form action="{{ route('add-to-wishlist', $product->id) }}" method="post">
                         @csrf
                         <button type="submit" class="btn btn-outline-dark btn-square"><i class="far fa-heart"></i></button>
                     </form>
-
-
                 </div>
             </div>
         </div>
@@ -109,7 +90,6 @@
             </div>
         </div>
     </div>
-    <!-- Shop Detail End -->
     <!-- Products Start -->
     <div class="container-fluid py-5">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">You May
@@ -130,9 +110,6 @@
                                         <button type="submit" class="btn btn-outline-dark btn-square"><i
                                                 class="far fa-heart"></i></button>
                                     </form>
-                                    {{-- ----End- wishlist--------------- --}}
-
-
                                 </div>
                             </div>
                             <div class="text-center py-4">
@@ -157,5 +134,4 @@
             </div>
         </div>
     </div>
-    <!-- Products End -->
 @endsection

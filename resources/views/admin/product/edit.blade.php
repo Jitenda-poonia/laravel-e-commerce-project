@@ -34,8 +34,8 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title"> Edit Product</h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
+                        @include('includes.alert-message')
+                    </div>
 
                     <form role="form" action="{{ route('product.update', $product->id) }}" method="POST"
                         enctype="multipart/form-data">

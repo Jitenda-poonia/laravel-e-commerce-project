@@ -34,13 +34,8 @@
                     <div class="box-header">
                         <h3 class="box-title">Edit Attribute
 
-                            @if (session()->has('success'))
-                                <div class="form-group has-success">
-                                    <label class="control-label" for="">
-                                        {{ session()->get('success') }}
-                                    </label>
-                                </div>
-                            @endif
+                            @include('includes.alert-message')
+
                         </h3>
                     </div><!-- /.box-header -->
                     <!-- form start -->
@@ -147,7 +142,7 @@
         $(document).ready(function() {
             $(".add_more").click(function() {
                 var tabaleRow = ` <tr>
-                               
+
                                 <td>
                                     <input type="text" name="atrName[]" class="form-control">
                                 </td>

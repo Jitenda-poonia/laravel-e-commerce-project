@@ -17,6 +17,7 @@ return [
 
     'default' => env('BROADCAST_DRIVER', 'null'),
 
+     'view' => 'breadcrumbs::bootstrap5',
     /*
     |--------------------------------------------------------------------------
     | Broadcast Connections

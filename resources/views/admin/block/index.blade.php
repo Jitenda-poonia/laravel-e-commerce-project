@@ -22,11 +22,8 @@
     <div class="col-md-12">
         <div class="box">
 
-            @if (session()->has('success'))
-                <div class="callout callout-success">
-                    {{ session()->get('success') }}
-                </div>
-            @endif
+            @include('includes.alert-message')
+
             <div class="box-body">
                 <table class="table table-striped table-bordered table-hover display" id="myTable">
                     <thead>

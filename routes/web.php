@@ -25,17 +25,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TableCheckController;
 use App\Http\Controllers\OrderStatusNotificationController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 
 Route::group([], function () {
     Route::get('/check-table/{tableName}', [TableCheckController::class, 'checkTable']);
@@ -89,7 +78,7 @@ Route::group([], function () {
 
     //wishlist
     Route::group(['controller' => WishlistController::class], function () {
-        Route::post('add-to-c/{product_id}', 'addToWishlist')->name('add-to-wishlist');
+        Route::post('add-to-cart/{product_id}', 'addToWishlist')->name('add-to-wishlist');
         Route::delete('remove-from-wishlist/{id}', 'removeFromWishlist')->name('remove-from-wishlist');
     });
 

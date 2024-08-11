@@ -22,13 +22,8 @@
     <div class="col-md-12">
         <div class="box">
 
-            @if (session()->has('success'))
-                <div class="form-group has-success">
-                    <label class="control-label" for="">
-                        {{ session()->get('success') }}
-                    </label>
-                </div>
-            @endif
+            @include('includes.alert-message')
+
             <div class="box-body">
                 <table class="table table-striped table-bordered table-hover display" id="myTable">
                     <thead>
@@ -41,7 +36,7 @@
                             <th>Attribute Value</th>
                             <th style="width: 40px">Action</th>
                             <th style="width: 40px">view Detail</th>
-                            
+
                         </tr>
                     </thead>
                     <tbody>
@@ -66,7 +61,7 @@
                                 </td>
                                 <td>{{ $attribute->name_key }}</td>
                                 {{-- attributeValue -> Attribute MOdel se --}}
-                                <td>{{implode(', ',$attribute->attributeValue->pluck('name')->toArray())}}</td> 
+                                <td>{{implode(', ',$attribute->attributeValue->pluck('name')->toArray())}}</td>
                                 <td>
                                     @can('attribute_edit')
                                         <a href="{{ route('attribute.edit', $attribute->id) }}"

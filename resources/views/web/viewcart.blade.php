@@ -1,20 +1,7 @@
 @extends('layouts.web')
 
 @section('content')
-    <!-- Breadcrumb Start -->
-    <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="col-12">
-                <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="{{ '/' }}">Home</a>
-                    <span class="breadcrumb-item active">Cart</span>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!-- Breadcrumb End -->
-
-    <!-- Cart Start -->
+    {{ Breadcrumbs::render('cart') }}
     @if (cartSummaryCount())
         <div class="container-fluid">
             <div class="row px-xl-5">
@@ -34,7 +21,7 @@
                             @foreach ($quote->items as $item)
                                 <tr>
                                     <td class="align-middle"><img src="{{ productImage($item->product_id) }}" alt=""
-                                            style="width: 50px;">{{ $item->name }} <br>
+                                            style="width: 70px;">{{ $item->name }} <br>
                                         {{-- Decode and display custom options --}}
                                         @if ($item->custom_option)
                                             @php
@@ -61,8 +48,6 @@
                                             </form>
                                         </div>
                                     </td>
-                                    {{-- Quantity Update End --}}
-
                                     <td class="align-middle">₹ {{ $item->row_total }}</td>
 
                                     <td class="align-middle">
@@ -74,7 +59,8 @@
                                         </form>
                                     </td>
                                 </tr>
-                                @if ($item->stock_status != 1)
+
+                                @if ($item->produts->stock_status != 1)
                                     @php $allInStock = false; @endphp
                                 @endif
                             @endforeach
@@ -82,15 +68,8 @@
                     </table>
                 </div>
                 <div class="col-lg-4">
-                    @if (session()->has('error'))
-                        <div style="color: red;" class="callout callout-danger" style="margin-top: 20px;">
-                            {{ session()->get('error') }}
-                        </div>
-                    @elseif(session()->has('success'))
-                        <div style="color: green;" class="callout callout-success" style="margin-top: 20px;">
-                            {{ session()->get('success') }}
-                        </div>
-                    @endif
+
+                    @include('web.alert-message')
 
                     <form class="mb-30" action="{{ route('coupon.apply', $quote->id) }}" method="POST">
                         @csrf

@@ -31,8 +31,8 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Edit User</h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
+                        @include('includes.alert-message')
+                    </div>
                     <form role="form" action="{{ route('user.update', $user->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf

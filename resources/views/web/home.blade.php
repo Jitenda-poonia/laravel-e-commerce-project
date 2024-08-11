@@ -3,7 +3,7 @@
     <title>MultiShop</title>
 @endsection
 @section('content')
-    <!-- Carousel Start -->
+
     <div class="container-fluid mb-3">
         <div class="row px-xl-5">
             <div class="col-lg-8">
@@ -52,14 +52,12 @@
         </div>
     </div>
 
-
     @php
-        $featured = block('featured'); //Helper/page.php se
+        $featured = block('featured');
     @endphp
 
     {!! $featured->description !!}
-
-
+      <!-- Categories -->
     <div class="container-fluid pt-5">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span
                 class="bg-secondary pr-3">Categories</span></h2>
@@ -85,7 +83,6 @@
 
         </div>
     </div>
-    <!-- Categories End -->
 
     <!-- Featured Products Start -->
     <div class="container-fluid pt-5 pb-3">
@@ -125,15 +122,13 @@
             @endforeach
         </div>
     </div>
-    <!-- Featured Products End -->
-
     <!-- Offer Start -->
     @php
-        $specialOffer = block('special-offer'); //Helper/page.php se;
+        $specialOffer = block('special-offer');
     @endphp
 
+<!-- Offer -->
     {!! $specialOffer->description !!}
-    <!-- Offer End -->
 
     <!-- RECENT PRODUCTS Start -->
     <div class="container-fluid pt-5 pb-3">
@@ -172,15 +167,13 @@
             @endforeach
         </div>
     </div>
-    <!--RECENT PRODUCTS End -->
 
     <!-- Vendor Start -->
     @php
-        $Vendor = block('company'); //Helper/page.php se; where block = function & company = identifier(admin panel se)
+        $Vendor = block('company');
     @endphp
-
     {!! $Vendor->description !!}
-    <!-- Vendor End -->
+
 @endsection
 @push('custom-scripts')
 {{-- <script>

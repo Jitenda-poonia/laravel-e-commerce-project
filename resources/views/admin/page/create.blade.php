@@ -26,7 +26,11 @@
 
                 <div class="box box-primary">
                     <div class="box-header">
+                        <h3 class="box-title">Add Coupon
+                            @include('includes.alert-message')
 
+                        </h3>
+                    </div>
                         <form action="{{ route('page.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="box-body">
@@ -122,7 +126,7 @@
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </form>
-                    </div>
+
                 </div>
             </div>
     </section>

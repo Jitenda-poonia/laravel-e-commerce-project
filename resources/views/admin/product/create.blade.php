@@ -29,17 +29,9 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Add Product
-
-                            @if (session()->has('success'))
-                                <div class="form-group has-success">
-                                    <label class="control-label" for="">
-                                        {{ session()->get('success') }}
-                                    </label>
-                                </div>
-                            @endif
+                            @include('includes.alert-message')
                         </h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
+                    </div>
                     <form role="form" action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="box-body">

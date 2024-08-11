@@ -8,22 +8,7 @@
                 <div style="width: 60%;">
                     <h5 class="section-title position-relative text-uppercase mb-3"><span
                             class="bg-secondary pr-3">Login</span></h5>
-                    @if (session()->has('error'))
-                        <p
-                            style="background: #FFD333;
-            padding: 15px;
-            color: #FF0000;
-            font-weight: 500;">
-                            {{ session()->get('error') }}</p>
-                    @endif
-                    @if (session()->has('success'))
-                        <p
-                            style="background: #FFD333;
-            padding: 15px;
-            color: #000;
-            font-weight: 500;">
-                            {{ session()->get('success') }}</p>
-                    @endif
+                        @include('web.alert-message')
                     <div class="bg-light p-30 mb-5">
                         <form action="{{ route('customer.authenticate') }}" method="POST">
                             @csrf

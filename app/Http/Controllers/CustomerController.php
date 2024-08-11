@@ -84,11 +84,8 @@ class CustomerController extends Controller
     {
         $user = Auth::user();
         if ($user) {
-            $wishlistItems = Wishlist::where('user_id', $user->d)->get();
-            $orders = Order::where('user_id', $user->d)->get();
-            $billingAddress = OrderAddress::where('user_id', $user->id)->where('address_type', 'billing')->first();
-            $shippingAddress = OrderAddress::where('user_id', $user->d)->where('address_type', 'shipping')->first();
-            return view('web.customer.profile', compact('orders', 'billingAddress', 'shippingAddress', 'wishlistItems'));
+            $shippingAddress = OrderAddress::where('user_id', $user->id)->where('address_type', 'shipping')->first();
+            return view('web.customer.profile', compact('user','shippingAddress'));
         } else {
             return redirect()->route('customer.login');
         }

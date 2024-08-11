@@ -26,9 +26,9 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Add User</h3>
-
+                        @include('includes.alert-message')
                     </div>
-                    <!-- form start -->
+
                     <form role="form" action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="box-body">

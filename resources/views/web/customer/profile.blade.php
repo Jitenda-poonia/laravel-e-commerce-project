@@ -36,17 +36,7 @@
 
                     <div class="tab-content" style="float: left;width:70%;padding-right:15px;padding-left:15px;">
                         <div class="tab-pane fade show active" id="tab-pane-1">
-                            @if (session()->has('error'))
-                                <p style="background: #FFD333;padding: 15px;color: #000; font-weight: 500;">
-                                    {{ session()->get('error') }}
-                                </p>
-                            @endif
-                            @if (session()->has('success'))
-                                <p style="background: #FFD333; padding: 15px; color: #000; font-weight: 500;">
-                                    {{ session()->get('success') }}
-                                </p>
-                            @endif
-
+                            @include('web.alert-message')
                             <form action="{{ route('customer.update') }}" method="POST">
                                 @csrf
                                 <div class="row">
@@ -100,7 +90,7 @@
                         {{-- wishlist start  --}}
                         <div class="tab-pane fade show" id="tab-pane-2">
 
-                            @forelse ($wishlistItems  as $wishlistItem)
+                            @forelse ($user->wishlist  as $wishlistItem)
                                 <div
                                     style="width:100%;float:left;border:1px solid rgba(0, 0, 0, 0.1);margin-top:1rem;margin-bottom:1rem;">
                                     <a href="{{ route('productData', $wishlistItem->wishlistProduct->url_key) }}">
@@ -156,7 +146,8 @@
                                 </thead>
 
                                 <tbody>
-                                    @forelse($orders as $key =>  $_order)
+
+                                    @forelse($user->orders as $key =>  $_order)
                                         <tr>
                                             <td>{{ ++$key . '.' }}</td>
 

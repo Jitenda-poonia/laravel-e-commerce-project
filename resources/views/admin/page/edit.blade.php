@@ -11,12 +11,12 @@
         <ol class="breadcrumb">
             <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
             <li>Manage Page</li>
-            <li> 
+            <li>
                 @can('page_create')
                 <a href="{{ route('page.create') }}"><i class="fa fa-plus-square"></i> Page</a>
                 @endcan
             </li>
-            <li> 
+            <li>
                 @can('page_index')
                 <a href="{{ route('page.index') }}"><i class="fa fa-tasks"></i> Page List</a>
                 @endcan
@@ -25,13 +25,18 @@
             <li class="active">Edit Page</li>
         </ol>
     </section>
-   
+
     <section class="content">
         <div class="row">
             <div class="col-md-12">
 
                 <div class="box box-primary">
-                  
+                    <div class="box-header">
+                        <h3 class="box-title">Add Coupon
+                            @include('includes.alert-message')
+
+                        </h3>
+                    </div>
                     <form action="{{ route('page.update' ,$page->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -77,7 +82,7 @@
                                     @enderror
                                 </p>
                             </div>
-                           
+
                             <div class="form-group">
                                 <label>Status</label>
                                 <select class="form-control" name="status">
@@ -119,5 +124,5 @@
             </div>
         </div>
     </section>
-   
+
 @endsection

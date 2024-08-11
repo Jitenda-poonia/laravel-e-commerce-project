@@ -20,12 +20,8 @@
             <div class="box-header">
                 <h3 class="box-title">Customer List</h3>
             </div>
+            @include('includes.alert-message')
 
-            @if (session()->has('success'))
-                <div class="callout callout-success">
-                    {{ session()->get('success') }}
-                </div>
-            @endif
             <div class="box-body">
                 <table class="table table-striped table-bordered table-hover display" id="myTable">
                     <thead>

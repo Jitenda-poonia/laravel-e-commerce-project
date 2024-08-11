@@ -29,17 +29,10 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Add Attribute
-
-                            @if (session()->has('success'))
-                                <div class="form-group has-success">
-                                    <label class="control-label" for="">
-                                        {{ session()->get('success') }}
-                                    </label>
-                                </div>
-                            @endif
+                            @include('includes.alert-message')
                         </h3>
-                    </div><!-- /.box-header -->
-                    <!-- form start -->
+                    </div>
+
                     <form role="form" action="{{ route('attribute.store') }}" method="POST">
                         @csrf
                         <div class="box-body">

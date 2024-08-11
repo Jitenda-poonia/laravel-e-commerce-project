@@ -25,7 +25,11 @@
             <div class="col-md-6">
 
                 <div class="box box-primary">
-
+                    <div class="box-header">
+                        <h3 class="box-title">Add Product
+                            @include('includes.alert-message')
+                        </h3>
+                    </div>
                     <form action="{{ route('slider.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="box-body">

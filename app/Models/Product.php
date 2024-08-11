@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\HasMedia;
+
+use Spatie\Sluggable\SlugOptions;
+
 class Product extends Model implements HasMedia
 {
-    use HasFactory,InteractsWithMedia;
+    use HasFactory, InteractsWithMedia;
     protected $fillable = [
         'name',
         'status',
@@ -30,13 +33,29 @@ class Product extends Model implements HasMedia
         'meta_description'
     ];
 
-    public function categories() {
+    public function categories()
+    {
         return $this->belongsToMany(Category::class, 'product_categories');
     }
-    public function attributes() {
+    public function attributes()
+    {
         return $this->hasMany(ProductAttribute::class);
     }
-    public function scopeActive($query) {
+    public function scopeActive($query)
+    {
         return $query->where('status', 1);
+    }
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
+
+    }
+
+    public function getSlugUrl()
+    {
+        return route('customer.product.show', ['slug'=>$this->slug, 'id'=>$this->id]);
     }
 }

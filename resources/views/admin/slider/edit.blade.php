@@ -34,7 +34,11 @@
             <div class="col-md-6">
 
                 <div class="box box-primary">
-                    
+                    <div class="box-header">
+                        <h3 class="box-title">Add Product
+                            @include('includes.alert-message')
+                        </h3>
+                    </div>
                     <form action="{{ route('slider.update', $slider->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')

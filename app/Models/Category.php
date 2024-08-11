@@ -28,4 +28,6 @@ class Category extends Model implements HasMedia
     public function scopeActive($query) {
         return $query->where('status', 1);
     }
+
+
 }
