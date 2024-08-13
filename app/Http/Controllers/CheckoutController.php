@@ -22,8 +22,7 @@ class CheckoutController extends Controller
 
     public function CheckoutPlaceOrderStore(request $request)
     {
-        // Validation  start
-        // If 'ship_to_different_address' is checked, validate shipping fields
+
         if ($request->has('ship_to_different_address')) {
             $request->validate([
 
@@ -35,6 +34,7 @@ class CheckoutController extends Controller
                 'shipping_state' => 'required|string|max:25',
                 'shipping_city' => 'required|string|max:20',
                 'shipping_pincode' => 'required|string|max:6|min:6',
+
             ], [
                 'shipping_name.required' => 'name field is required.',
                 'shipping_email.required' => 'email field is required.',
@@ -52,6 +52,8 @@ class CheckoutController extends Controller
                 'billing_state' => 'required|string|max:25',
                 'billing_city' => 'required|string|max:20',
                 'billing_pincode' => 'required|string|max:6|min:6',
+                'shipping_method' => 'required',
+                'payment' => 'required',
             ], [
                 'billing_name.required' => 'name field is required.',
                 'billing_email.required' => 'email field is required.',
@@ -59,12 +61,8 @@ class CheckoutController extends Controller
                 'billing_address.required' => 'address field is required.',
             ]);
         }
-        $request->validate([
-            'shipping_method' => 'required',
-            'payment' => 'required',
-        ]);
 
-        // -----------------End validation -----------------------------------
+
 
         $data = $request->all();
 

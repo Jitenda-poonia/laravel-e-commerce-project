@@ -86,12 +86,7 @@
                                  @enderror
                              </div>
 
-                             <div class="col-md-12 form-group">
-                                 <div class="custom-control custom-checkbox">
-                                     <input type="checkbox" class="custom-control-input" id="newaccount">
-                                     <label class="custom-control-label" for="newaccount">Create an account</label>
-                                 </div>
-                             </div>
+
                              <div class="col-md-12">
                                  <div class="custom-control custom-checkbox">
                                      <input type="checkbox" name="ship_to_different_address" class="custom-control-input"
@@ -217,6 +212,9 @@
                                          (₹100)</label>
                                  </div>
                              </div>
+                             @error('shipping_method')
+                             <p class="text-danger">{{ $message }}</p>
+                         @enderror
                          </div>
                      </div>
                      {{-- spping method end  --}}

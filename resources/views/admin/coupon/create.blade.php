@@ -48,7 +48,7 @@
                             <div class="form-group">
                                 <label>Coupon Code</label>
                                 <input type="text" class="form-control" name="coupon_code"
-                                    placeholder="Enter coupon code" value="{{ old('coupon_code') }}">
+                                    placeholder="Enter coupon code" value="{{ $couponCode  }}">
                                 @error('coupon_code')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

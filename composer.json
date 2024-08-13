@@ -17,6 +17,7 @@
         "laravel/ui": "^4.5",
         "league/flysystem": "^3.28",
         "league/flysystem-local": "^3.28",
+        "proengsoft/laravel-jsvalidation": "^4.9",
         "razorpay/razorpay": "2.*",
         "spatie/laravel-data": "^4.7",
         "spatie/laravel-medialibrary": "^10.15",

@@ -25,8 +25,10 @@ class CouponController extends Controller
     public function create()
     {
         abort_unless(Gate::allows('coupon_create'), 403);
-
-        return view('admin.coupon.create');
+        $prefix = 'FEBRENTO';
+        $randomValue = rand(100, 999);
+        $couponCode = $prefix . $randomValue;
+        return view('admin.coupon.create',compact('couponCode'));
     }
 
     /**

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Data\Backend\User\UserData;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Gate;
-
+use Proengsoft\JsValidation\Facades\JsValidator;
 class UserController extends Controller
 {
     /**
@@ -27,6 +28,7 @@ class UserController extends Controller
     {
         abort_unless(Gate::allows("user_create"), 403);
         $roles = Role::select('name')->get();
+        // $validator = Jsvalidator::make(rules:UserData::getValidationRules([]),messages:UserData::messages(),selector:'#frmDetail');
         return view('admin.user.create', compact('roles'));
     }
 

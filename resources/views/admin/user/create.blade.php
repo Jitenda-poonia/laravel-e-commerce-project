@@ -139,6 +139,9 @@
             </div>
         </div>
     </section>
+   @isset($validator)
+       {!! $validator !!}
+   @endisset
     <script>
         function togglePassword(fieldId) {
             var field = document.getElementById(fieldId);
