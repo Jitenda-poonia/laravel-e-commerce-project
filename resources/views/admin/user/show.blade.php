@@ -1,6 +1,7 @@
 @extends('layouts.admin')
+
 @push('title')
-    <title> Admin | User Profile</title>
+    <title>Admin | User Profile</title>
 @endpush
 
 @section('content')
@@ -26,46 +27,35 @@
         </ol>
     </section>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="box">
             <div class="box-header">
                 <div class="pull-left">
-
                     @if ($user->hasMedia('image'))
-                        <img src="{{ auth()->user()->getFirstMediaUrl('image') }}" class="user-image" alt="User Image"
+                        <img src="{{ $user->getFirstMediaUrl('image') }}" class="user-image" alt="User Image"
                             style="border-radius: 70%; width: 50px; height: 50px;">
                     @else
                         <div class="user-icon-placeholder"
                             style="background-color: #ccc; border-radius: 70%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
-                            Na<i class="fa fa-user-circle user-icon" style="font-size: 30px; color: #666;"></i>
+                            <i class="fa fa-user-circle user-icon" style="font-size: 30px; color: #666;"></i>
                         </div>
                     @endif
                 </div>
-                <a href="{{ route('user.edit', $user->id) }}">
-                    <i class="fa fa-edit"></i>
-                    <h3 class="box-title">Edit Profile</h3>
-                </a>
+                <div class="pull-right">
+
+                    <a href="{{ route('user.edit', $user->id) }}">
+                        <i class="fa fa-edit"></i>
+                        <h3 class="box-title">Edit Profile</h3>
+                    </a>
+                </div>
             </div>
 
             <div class="box-body">
-                <table class="table table-bordered">
-                    <tr>
-                        <th>Name :</th>
-                        <td>{{ $user->name }}</td>
-                    </tr>
-                    <tr>
-                        <th>Email :</th>
-                        <td>{{ $user->email }}</td>
-                    </tr>
-                    <tr>
-                        <th>Designation :</th>
-                        <td>{{ $user->designation }}</td>
-                    </tr>
-                    <tr>
-                        <th>Member Since:</th>
-                        <td>{{ \Carbon\Carbon::parse($user->created_at)->format('d,M. Y') }}</td>
-                    </tr>
-                </table>
+                <p><strong>Name:</strong>  {{ $user->name }}</p>
+                <p><strong>Email:</strong>  {{ $user->email }}</p>
+                <p><strong>Designation:</strong>  {{ $user->designation }}</p>
+                <p><strong>Member Since:</strong>  {{ $user->created_at->format('d, M. Y') }}</p>
+
             </div>
         </div>
     </div>

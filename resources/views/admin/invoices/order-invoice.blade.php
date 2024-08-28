@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
-                    
+
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -32,8 +32,6 @@
                         <br><br>
                         <div class="row">
                             <div class="col-md-12">
-
-
                                 <h3 style="font-weight:600;">Address Information</h3>
                                 <hr style="margin: 0; border-width:2px;">
 
@@ -74,12 +72,12 @@
                                     <div class="col-md-6">
                                         <h4 style="font-weight:600;">Payment Information</h4>
                                         <p><strong>Payment Method:</strong>  {{ucwords(str_replace('_', ' ', $order->payment_method)) }}</p>
-                                        
+
                                     </div>
                                     <div class="col-md-6">
                                         <h4 style="font-weight:600;">Shipping Information</h4>
                                         <p><strong>Shipping Method:</strong>  {{ ucwords(str_replace('_', ' ', $order->shipping_method)) }}</p>
-                                       
+
                                     </div>
                                 </div>
 
@@ -154,14 +152,14 @@
                                             <th>{{ $order->total }}</th>
                                         </tr>
                                     </table>
-                                   
+
                                 </div>
                             </div>
                         </div>
 
-                    </div><!-- /.box-body -->
-                </div><!-- /.box -->
-            </div><!-- /.col -->
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </body>

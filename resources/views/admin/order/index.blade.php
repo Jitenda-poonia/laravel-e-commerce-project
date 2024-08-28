@@ -17,27 +17,14 @@
         <div class="box">
             @include('includes.alert-message')
             <div class="box-body">
-                <table id="myTable" class="table table-bordered display" style="overflow: auto;display:block;">
+                <table id="myTable" class="table table-bordered display">
+                    {{-- <table id="myTable" class="table table-bordered display" style="overflow: auto;display:block;"> --}}
                     <thead>
                         <tr>
-                            <th style="width: 10px">#</th>
                             <th>Order ID</th>
-                            <th>User ID</th>
                             <th>Name</th>
-                            <th>Email</th>
                             <th>Phone</th>
-                            <th>Address</th>
-                            <th>City</th>
-                            <th>State</th>
-                            {{-- <th>Country</th> --}}
-                            <th>Pincode</th>
-                            {{-- <th>Subtotal</th>
-                            <th>Coupon</th>
-                            <th>Coupon Discount</th>
-                            <th>Shipping Cost</th> --}}
                             <th>Total Amount</th>
-                            {{-- <th>Payment Method</th> --}}
-                            {{-- <th>Shipping Method</th> --}}
                             <th>Order Date</th>
                             <th>Update Status</th>
                             <th>View Detail</th>
@@ -45,38 +32,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            $i = 1;
-                        @endphp
-                        @foreach ($orders as $order)
+                      @foreach ($orders as $order)
                             <tr>
-                                <td>{{ $i++ }}</td>
                                 <td>{{ $order->order_increment_id }}</td>
-                                <td>
-                                    @if ($order->user_id == 0)
-                                        {{ 'user not registered' }}
-                                    @else
-                                        {{ $order->user_id }}
-                                    @endif
-
-                                </td>
                                 <td>{{ $order->name }}</td>
-                                <td>{{ $order->email }}</td>
                                 <td>{{ $order->phone }}</td>
-                                <td>{{ $order->address }}</td>
-                                <td>{{ $order->city }}</td>
-                                <td>{{ $order->state }}</td>
-                                {{-- <td>{{ $order->country }}</td> --}}
-                                <td>{{ $order->pincode }}</td>
-                                {{-- <td>{{ $order->subtotal }}</td>
-                                <td>{{ $order->coupon ?? 'No' }}</td>
-                                <td>{{ $order->coupon_discount }}</td>
-                                <td>{{ $order->shipping_cost }}</td> --}}
-                                <td>₹{{ $order->total }}</td>
-                                {{-- <td>{{ ucwords(str_replace('_', ' ', $order->payment_method)) }}</td> --}}
-                                {{-- <td>{{ ucwords(str_replace('_', ' ', $order->shipping_method)) }}</td> --}}
-                                <td>{{ $order->created_at }}</td>
-
+                               <td>₹{{ $order->total }}</td>
+                               <td>{{ $order->created_at->format('d-M-Y') }}</td>
                                 <td>
                                     <form action="{{ route('order.updateStatus', $order->id) }}" method="POST">
                                         @csrf

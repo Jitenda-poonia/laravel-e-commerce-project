@@ -82,20 +82,6 @@ function returnLatestTwoLogins($userId)
         ->delete();
 }
 
-function retainLatestTwoLogins($userId)
-{
-    // Get the latest two login records for the user
-    $latestTwoLogins = UserLog::where('user_id', $userId)
-        ->orderBy('id', 'desc')
-        ->take(2)
-        ->pluck('id')
-        ->toArray();
-
-    // Delete all other login records
-    UserLog::where('user_id', $userId)
-        ->whereNotIn('id', $latestTwoLogins)
-        ->delete();
-}
 
 if (!function_exists('productUniqueUrlKey')) {
     function productUniqueUrlKey($name)
