@@ -77,3 +77,4 @@
       $('#myTable').DataTable();
   });
 </script>
+@stack('custom-script')

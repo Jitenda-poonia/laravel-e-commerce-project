@@ -10,6 +10,7 @@ class WishlistController extends Controller
     {
         $user = auth()->user();
         if (!$user) {
+            session(['url.intended' =>url()->previous()]);
             return redirect()->route('customer.login')->with('error', 'yor are login to add to product wishlist');
         }
 

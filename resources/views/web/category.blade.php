@@ -86,6 +86,7 @@
                                     <div class="product-action">
 
                                         <form action="{{ route('add-to-wishlist',['product_id' => $_product->id]) }}" method="POST">
+                                            @csrf
                                             <button type="submit" class="btn btn-outline-dark btn-square"><i
                                                     class="far fa-heart"></i></button>
                                         </form>

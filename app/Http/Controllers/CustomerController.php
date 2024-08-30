@@ -57,7 +57,6 @@ class CustomerController extends Controller
     // User login
     public function login(Request $request)
     {
-
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -70,6 +69,7 @@ class CustomerController extends Controller
             return redirect()->back()->with('error', "Your login details do not match our records. Please check and try again.");
         }
     }
+
 
 
     public function logout(Request $request)
