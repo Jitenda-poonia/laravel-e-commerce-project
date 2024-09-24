@@ -16,10 +16,10 @@ class UserSeeder extends Seeder
         $data = [
             'name' => 'jitendra choudhary',
             'email' =>'jitendrakumar00632@gmail.com',
-            'password' => bcrypt(123),
+            'password' => bcrypt(123456),
             'is_admin' =>1
 
         ];
-        user::create($data);
+        // user::create($data);
     }
 }

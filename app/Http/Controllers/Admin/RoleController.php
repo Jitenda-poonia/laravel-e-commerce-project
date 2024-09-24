@@ -43,21 +43,12 @@ class RoleController extends Controller
         $role = Role::create([
             'name' => ucfirst($request->name)
         ]);
+        // dd($request->permissions);
         $role->syncPermissions($request->permissions);
         return redirect()->route('role.index')->with('success', 'Data Add Successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         abort_unless(Gate::allows("manage_role"), 403);

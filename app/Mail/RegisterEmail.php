@@ -13,19 +13,15 @@ class RegisterEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
     public $user;
-    public function __construct($user)
+    public $file;
+
+    public function __construct($user, $file)
     {
         $this->user = $user;
-
+        $this->file = $file;
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -33,9 +29,6 @@ class RegisterEmail extends Mailable
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
@@ -43,13 +36,22 @@ class RegisterEmail extends Mailable
         );
     }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
+    public function build()
     {
-        return [];
+        // Build the email with attachment
+        $email = $this->view('email.register')
+                      ->subject('Register Email');
+
+        // Attach file from MediaLibrary
+        if ($this->file) {
+            $email->attach($this->file->getPath(), [
+                'as' => $this->file->file_name,  
+                'mime' => $this->file->mime_type, 
+            ]);
+        }
+
+        return $email;
     }
 }
+
+

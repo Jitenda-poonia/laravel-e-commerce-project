@@ -50,6 +50,11 @@
                         </div>
                         <div class="box-body">
                             <label>Permissions:-</label>
+                            <div class="radio" style="float: right;">
+                                <label><input type="radio" id="select_all">
+                                    Sellect All
+                                </label>
+                            </div>
                             <div class="form-group @error('name') has-error @enderror">
                                 @error('permissions')
                                     <label class="control-label" for="inputError"><i
@@ -60,7 +65,7 @@
                                 <label>
                                     @foreach ($permissions as $permission)
                                         <input type="checkbox" name="permissions[]" value="{{ $permission->name }}"
-                                            {{ in_array($permission->name, $slctdPrmsn) ? 'checked' : '' }}>{{ $permission->name }}
+                                            {{ in_array($permission->name, $slctdPrmsn) ? 'checked' : '' }}>{{ ucwords(str_replace('_',' ',$permission->name)) }}
                                     @endforeach
 
                                 </label>
@@ -75,4 +80,12 @@
             </div>
         </div>
     </section>
+    <script>
+        $(document).ready(function(){
+            $('#select_all').click(function(){
+                $(".checkbox input[type = 'checkbox']").prop('checked', true);
+
+            });
+        });
+    </script>
 @endsection

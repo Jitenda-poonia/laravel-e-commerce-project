@@ -10,7 +10,7 @@ use App\Models\Quote;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Order;
-use App\Models\Wishlist;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -38,9 +38,12 @@ class CustomerController extends Controller
 
 
         ]);
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+          $file =   $user->addMediaFromRequest('file')->toMediaCollection('file');
+        }
 
         // Send email
-        Mail::to($request->email)->send(new RegisterEmail($user));
+        Mail::to($request->email)->send(new RegisterEmail($user,$file));
         return redirect()->route('customer.login')->with('success', 'User account created successfully.');
 
     }

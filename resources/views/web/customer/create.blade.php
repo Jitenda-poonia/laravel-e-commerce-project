@@ -10,7 +10,7 @@
             @include('web.alert-message')
 
             <div class="bg-light p-30 mb-5">
-                <form action="{{ route('customer.store') }}" method="POST">
+                <form action="{{ route('customer.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                 <div class="row">
                     <div class="col-md-6 form-group">
@@ -35,6 +35,11 @@
                         @error('password')
                             <p style="color: red;">{{ $message }}</p>
                         @enderror
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>File</label>
+                        <input class="form-control" name="file" value="" type="file">
+
                     </div>
                     <div class="col-md-6 form-group">
                         <button type="submit" class="form-control btn btn-primary" style="width: 50%;">Create</button>

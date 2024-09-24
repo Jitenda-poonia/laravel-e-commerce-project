@@ -58,6 +58,7 @@ class UserController extends Controller
             $user->addMediaFromRequest('image')->toMediaCollection('image');
         }
 
+
         $user->syncRoles($request->input('roles'));
         return redirect()->route('user.index')->with('success', 'Your details Save Successfully');
     }

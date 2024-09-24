@@ -8,6 +8,8 @@
 </head>
 <body>
     <h1>Welcome, {{ $user->name }}!</h1>
+    <h1>Mobile, {{ $user->mobile }}!</h1>
+
     <p>Your account has been successfully created. Thank you for joining us!</p>
 </body>
 </html>

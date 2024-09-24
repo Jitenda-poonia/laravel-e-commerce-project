@@ -23,6 +23,7 @@ use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TableCheckController;
+use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\OrderStatusNotificationController;
 
 
@@ -111,6 +112,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'front_user']], func
     Route::resource("category", CategoryController::class);
     Route::resource("attribute", AttributeController::class);
     Route::resource("coupon", CouponController::class);
+    Route::resource('email-template',EmailTemplateController::class);
 
     //enquiry
     Route::group(['controller' => EnquiryController::class], function () {

@@ -38,7 +38,9 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $role->name }}</td>
-                                <td>{{ implode(' ,', $role->permissions->pluck('name')->toArray()) }}</td>
+                                <td>{{ implode(', ', $role->permissions->pluck('name')->map(function ($name) {
+                                    return ucwords(str_replace('_', ' ', $name));
+                                })->toArray()) }}</td>
                                 @can('manage_role')
                                     <td>
                                         <a href="{{ route('role.edit', $role->id) }}" class="btn btn-block btn-primary"><i
