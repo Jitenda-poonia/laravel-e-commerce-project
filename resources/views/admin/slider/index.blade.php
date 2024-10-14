@@ -19,7 +19,7 @@
             <li class="active">Slider List</li>
         </ol>
     </section>
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="box">
             @include('includes.alert-message')
             <div class="box-body">

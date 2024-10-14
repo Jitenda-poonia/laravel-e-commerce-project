@@ -48,7 +48,8 @@ class SliderController extends Controller
 
         }
 
-        return redirect()->route('slider.index')->with("success", "Record Save Successfullay");
+        return redirect()->route('slider.edit',$slider->id)->with("success", "Record Save Successfullay");
+        // return redirect()->route('slider.index')->with("success", "Record Save Successfullay");
 
     }
 

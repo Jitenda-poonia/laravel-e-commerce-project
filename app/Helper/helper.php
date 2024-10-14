@@ -156,3 +156,10 @@ if (!function_exists('nameKeyExists')) {
         return \App\Models\Attribute::where('name_key', $nameKey)->exists();
     }
 }
+
+// function public hasPermiision($permission){
+//     if(Auth::guard('admin')->user()->type=='SUPPERADMIN'){
+//         return true;
+//     }
+//    return Auth::guard('admin')->user()->hasPermmissionTo($permission);
+// }

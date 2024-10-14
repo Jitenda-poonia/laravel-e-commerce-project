@@ -42,8 +42,8 @@ class RoleController extends Controller
         ]);
         $role = Role::create([
             'name' => ucfirst($request->name)
+
         ]);
-        // dd($request->permissions);
         $role->syncPermissions($request->permissions);
         return redirect()->route('role.index')->with('success', 'Data Add Successfully');
     }

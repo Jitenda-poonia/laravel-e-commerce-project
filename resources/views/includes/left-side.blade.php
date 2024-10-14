@@ -19,38 +19,25 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-user"></i>
-                        <span>Manage User</span>
+                        <span>Admin</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ route('user.create') }}"><i class="fa fa-user"></i><i
-                                    class="fa fa-plus-square"></i>User</a></li>
-                        <li><a href="{{ route('user.index') }}"><i class="fa fa-users"></i>user List</a></li>
-                        <li><a href="{{ route('user.show', $user->id) }}"><i class="fa fa-user-md"></i><span>User
+                                    class="fa fa-plus-square"></i>Admin</a></li>
+                        <li><a href="{{ route('user.index') }}"><i class="fa fa-users"></i>Admin List</a></li>
+                        <li><a href="{{ route('user.show', $user->id) }}"><i class="fa fa-user-md"></i><span>Admin
                                     Profile</span></a></li>
 
                     </ul>
                 </li>
             @endcan
-            @can('manage_permission')
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-lock"></i>
-                        <span>Manage permission</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="{{ route('permission.create') }}"><i class="fa fa-unlock"></i>Add Permission</a></li>
-                        <li><a href="{{ route('permission.index') }}"><i class="fa  fa-list"></i>Permission List</a></li>
 
-                    </ul>
-                </li>
-            @endcan
             @can('manage_role')
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-laptop"></i>
-                        <span>Manage Role</span>
+                        <span>Role</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
@@ -65,7 +52,7 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-sliders"></i>
-                        <span>Manage Slider</span>
+                        <span>Slider</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
@@ -80,7 +67,7 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa  fa-file-text-o"></i>
-                        <span>Manage Page</span>
+                        <span> Page</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
@@ -95,7 +82,7 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa  fa-circle-o"></i>
-                        <span>Manage Block</span>
+                        <span> Blog</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
@@ -109,7 +96,7 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-yelp"></i>
-                        <span>Manage Product</span>
+                        <span>Product</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
@@ -123,7 +110,7 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-puzzle-piece"></i>
-                        <span>Manage Category</span>
+                        <span>Category</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
@@ -137,7 +124,7 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-tag"></i>
-                        <span>Manage Attribute</span>
+                        <span>Attribute</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
@@ -152,7 +139,7 @@
                 <li class="treeview">
                     <a href="#">
                         <i class="fa fa-gift"></i>
-                        <span>Manage Coupon</span>
+                        <span>Coupon</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
@@ -166,7 +153,7 @@
                 <li class="treeview">
                     <a href="{{ route('order.index') }}">
                         <i class="fa fa-shopping-cart"></i> <!-- Choose a suitable icon for orders -->
-                        <span>Manage Order</span>
+                        <span>Order</span>
                     </a>
                 </li>
             @endcan
@@ -175,13 +162,10 @@
                 <li class="treeview">
                     <a href="{{ route('customer.index') }}">
                         <i class="fa fa-users"></i> <!-- Choose a suitable icon for customers -->
-                        <span>Manage Customer</span>
+                        <span> Customer</span>
                     </a>
                 </li>
             @endcan
-
-
-
             @can('enquiry')
                 <li class="treeview">
                     <a href="{{ route('enquiry') }}">

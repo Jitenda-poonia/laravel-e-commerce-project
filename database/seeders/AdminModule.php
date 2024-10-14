@@ -52,9 +52,9 @@ class AdminModule extends Seeder
             'manage_customer',
         ];
         foreach ($permissions as $permission) {
-            if(!Permission::where('name',$permission )->where('guard_name' ,'admin')->exists()){
+            if(!Permission::where('name',$permission )->where('guard_name' ,'web')->exists()){
 
-                Permission::create(['name' => $permission, 'guard_name' => 'admin']);
+                Permission::create(['name' => $permission, 'guard_name' => 'web']);
             }
 
         }

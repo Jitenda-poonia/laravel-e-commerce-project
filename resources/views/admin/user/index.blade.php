@@ -1,22 +1,22 @@
 @extends('layouts.admin')
 @push('title')
-    <title> Admin | user list</title>
+    <title> Admin | Admin list</title>
 @endpush
 @section('content')
     <section class="content-header">
         <h1>
-            User List
+            Admin List
             <small></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li>Manage User</li>
+            <li>Admin</li>
             <li>
                 @can('user_create')
-                    <a href="{{ route('user.create') }}"><i class="fa fa-user"></i>Add User</a>
+                    <a href="{{ route('user.create') }}"><i class="fa fa-user"></i>Add Admin</a>
                 @endcan
             </li>
-            <li class="active">User List</li>
+            <li class="active">Admin List</li>
         </ol>
     </section>
     <div class="col-md-12">

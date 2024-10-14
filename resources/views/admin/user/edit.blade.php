@@ -1,27 +1,26 @@
 @extends('layouts.admin')
 @push('title')
-    <title> Admin |edit user</title>
+    <title> Admin |edit admin</title>
 @endpush
 @section('content')
     <section class="content-header">
         <h1>
-            Edit User
-            <small>Preview</small>
+            Admin
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li>Manage User</li>
+            <li>Admin</li>
             <li>
                 @can('user_create')
-                    <a href="{{ route('user.create') }}"><i class="fa fa-user"></i>Add User</a>
+                    <a href="{{ route('user.create') }}"><i class="fa fa-user"></i>Add Admin</a>
                 @endcan
             </li>
             <li>
                 @can('user_index')
-                    <a href="{{ route('user.index') }}"><i class="fa fa-users"></i>User List</a>
+                    <a href="{{ route('user.index') }}"><i class="fa fa-users"></i>Admin List</a>
                 @endcan
             </li>
-            <li class="active">Edit user</li>
+            <li class="active">Edit Admin</li>
         </ol>
     </section>
     <section class="content">
@@ -30,7 +29,7 @@
 
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Edit User</h3>
+                        <h3 class="box-title">Edit Admin</h3>
                         @include('includes.alert-message')
                     </div>
                     <form role="form" action="{{ route('user.update', $user->id) }}" method="POST"

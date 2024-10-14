@@ -29,7 +29,6 @@ class UserController extends Controller
     {
         abort_unless(Gate::allows("user_create"), 403);
         $roles = Role::select('name')->get();
-        // $validator = Jsvalidator::make(rules:UserData::getValidationRules([]),messages:UserData::messages(),selector:'#frmDetail');
         return view('admin.user.create', compact('roles'));
     }
 

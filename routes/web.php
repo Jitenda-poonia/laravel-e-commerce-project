@@ -101,7 +101,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'front_user']], func
 
     Route::resource("user", UserController::class);
     Route::resource("role", RoleController::class);
-    Route::resource("permission", PermissionController::class);
 
     Route::resource("slider", SliderController::class);
     Route::resource("page", PageController::class);

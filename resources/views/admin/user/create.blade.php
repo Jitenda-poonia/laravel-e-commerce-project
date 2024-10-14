@@ -1,31 +1,31 @@
 @extends('layouts.admin')
 @push('title')
-    <title> Admin |add user</title>
+    <title> Admin |add admin</title>
 @endpush
 @section('content')
     <section class="content-header">
         <h1>
-            Add User
+             Admin
             <small></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li>Manage User</li>
-            <li class="active">Add user</li>
+            <li>Admin</li>
+            <li class="active">Add Admin</li>
             <li>
                 @can('user_index')
-                    <a href="{{ route('user.index') }}"><i class="fa fa-users"></i>User List</a>
+                    <a href="{{ route('user.index') }}"><i class="fa fa-users"></i>Admin List</a>
                 @endcan
             </li>
         </ol>
     </section>
     <section class="content">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
 
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Add User</h3>
+                        <h3 class="box-title">Add Admin</h3>
                         @include('includes.alert-message')
                     </div>
 
@@ -99,9 +99,6 @@
                                 @enderror
                             </div>
                         </div>
-
-
-
                         <div class="box-body">
                             <label>Roles :-</label>
                             <div class="form-group @error('roles') has-error @enderror">
@@ -125,16 +122,11 @@
 
                             </div>
                         </div>
-
-                        <!-- /.box-body -->
-
                         <div class="box-footer">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
                 </div><!-- /.box -->
-
-
 
             </div>
         </div>
